@@ -1,33 +1,14 @@
-# Docker React Template Project
-React Native template for projects built and running in Docker
+# Cook County Mobile App - Project Rainbow
 
-See this example project running here [techteam-react-template-268418.appspot.com](here)
+A mobile app allowing parents and children affeced by COVID-19 to access educational videos and materials created by the Cook County Board.
 
-Example react project credits: https://github.com/KarthikeyanRanasthala/react-unit-converter
 
 ## Prerequisites
 
-### Docker
-Make sure you have Docker installed. Follow the instructions for getting started [https://www.docker.com/get-started](https://www.docker.com/get-started)
+Built from [TechTeam React Native Docker template project](https://github.com/uchicagotechteam/Docker-React).
 
-### Yarn
-Make sure you have Yarn installed for package management.
+For prerequisites, see the [wiki page](https://github.com/uchicagotechteam/Cook-County-Mobile-App/wiki/Prerequisites).
 
-Check with `yarn --version`
-
-You might also want to upgrade Yarn if it's been a while.
-
-`brew upgrade yarn`
-
-If you don't have it, you can install Yarn with Homebrew. 
-
-`brew install yarn`
-
-Or with this shell script in macOS and generic Unix environments.
-
-`curl -o- -L https://yarnpkg.com/install.sh | bash`
-
-If you encounter any problems with installing Yarn, visit [https://classic.yarnpkg.com/en/docs/install](https://classic.yarnpkg.com/en/docs/install)
 
 ## Building and Running
 Run `make start` to build and run the Docker container. 
