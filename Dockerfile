@@ -1,5 +1,5 @@
 # base image
-FROM node:12.2.0-alpine
+FROM node:15.1.0-alpine3.10
 
 ARG build_env=dev
 

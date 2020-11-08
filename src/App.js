@@ -1,104 +1,63 @@
 import React from 'react';
 
-import convert from 'convert-units';
-
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-
-import Selector from './components/Selectors';
-import InputField from './components/InputField';
+const { google } = require('googleapis');
 
 class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            mainSelector: '',
-            firstQuantity: '',
-            secondQuantity: '',
-            firstInput: 0,
-            secondInput: 0,
-            flow: ''
+            urls: '?'
         }
     }
 
-    generateMainSelector = () => {
-        return (
-            convert().measures()
-                .map(ele => ele[0].toUpperCase() + ele.slice(1))
-        )
+    componentDidMount() {
+        this.getLinks().done()
     }
 
-    handleMainSelector = event => {
-        event.preventDefault();
-        this.setState({
-            mainSelector: event.target.value,
-            firstQuantity: '',
-            secondQuantity: '',
-            firstInput: 0,
-            secondInput: 0
-        })
-    }
+    async getChannelVids (channelId) {
+        try{
+            //CHANNEL LIST INFO RETRIEVER - just gets info from the channel. We get this channel by querying for the channel's unique channelId
+            let response = await google.youtube('v3').channels.list({    
+                key: "AIzaSyDjPXW02VUyBCE_NdYof8__iGIo8IoFJGQ",
+                part: 'contentDetails', 
+                id:channelId, 
+                maxResults:50 }
+            );
+            
+            //UPLOAD PLAYLIST INFO RETRIEVER - gets the uploads playtlist from the channel we found by querying for the channel's channel id. We can change this to different playlists the channel has as we go along though i.e a math playlist, science playlist, english playlist, etc
+            var channelPlaylistId = response.data.items[0].contentDetails.relatedPlaylists.uploads;
+            console.log(channelPlaylistId);
+            let resultList = await google.youtube('v3').playlistItems.list({    
+                key: "AIzaSyDjPXW02VUyBCE_NdYof8__iGIo8IoFJGQ",
+                part: 'snippet',  
+                playlistId:channelPlaylistId,
+                maxResults:50
+            });
+    
+            //UPLOADS CONSOLIDATOR - this gets the info of all the videos in uploads playlist. It just cycles through each item in the list of videos from the playlist and puts the info we want (that is only the URL for now) into our urlList array
+            var urlList = [];
+            resultList.data.items.forEach(item=>{
+                const videoId = item.snippet.resourceId.videoId;
+                const url = "http://www.youtube.com/watch?v="+videoId;
+                urlList.push(url);
+            });
+            return urlList; //spits out all the urls of the videos in the uploads playlist (I think it's capped at 50 rn but there's definitely a way to get more videos than that. We could do some more work into this later this week)
+        }catch(err){
+            console.log(err);
+            return err;
+        }
+    };
 
-    handleSelector = event => {
-        this.setState({[event.target.name]: event.target.value, firstInput: 0, secondInput: 0})
-    }
-
-    handleInputFields = event => {
-        event.preventDefault();
-        if(event.target.name === 'firstInput') {
-            this.setState({
-                firstInput: event.target.value,
-                flow: 'L2R'
-            },
-            () => this.handleConversion())
-        }
-        else if(event.target.name === 'secondInput') {
-            this.setState({
-                secondInput: event.target.value,
-                flow: 'R2L'
-            },
-            () => this.handleConversion())
-        }
-    }
-
-    handleConversion = () => {
-        if(this.state.flow === 'L2R') {
-            this.setState({
-                secondInput: convert(this.state.firstInput).from(this.state.firstQuantity).to(this.state.secondQuantity)
-            })
-        }
-        else if(this.state.flow === 'R2L') {
-            this.setState({
-                firstInput: convert(this.state.secondInput).from(this.state.secondQuantity).to(this.state.firstQuantity)
-            })
-        }
-    }
+    async getLinks(){
+        const channelId = 'UC-lHJZR3Gqxm24_Vd_AJ5Yw'; //temp channel id
+        let urlList = await App.getChannelVids(channelId);
+        this.setState({urlList})
+    };
 
     render() {
-        console.log(convert().possibilities())
         return (
-            <Container>
-                <Grid container justify='center' align='center' spacing={3}>
-                    <Selector data={{ size: 12, label: 'Measurement', measurements: convert().measures(), populateType: 'mainSelector', populateWith: this.generateMainSelector(), selectedValue: this.state.mainSelector }} handleSelector={this.handleMainSelector} />
-                    {
-                        this.state.mainSelector ? (
-                            <>
-                                <Selector data={{ size: 6, label: 'Quantity', populateType: 'firstQuantity', populateWith: convert().list(this.state.mainSelector), selectedValue: this.state.firstQuantity }} handleSelector={this.handleSelector} />
-                                <Selector data={{ size: 6, label: 'Quantity', populateType: 'secondQuantity', populateWith: convert().list(this.state.mainSelector), selectedValue: this.state.secondQuantity }} handleSelector={this.handleSelector} />
-                            </>
-                        ) :(<></>)
-                    }
-                    {
-                        this.state.firstQuantity && this.state.secondQuantity ? (
-                            <>
-                                <InputField data={{ currentValue: this.state.firstInput, input: this.state.firstQuantity, label: this.state.firstLabel, name: 'firstInput' }} handleInput={this.handleInputFields} />
-                                <InputField data={{ currentValue: this.state.secondInput, input: this.state.secondQuantity, label: this.state.secondLabel, name: 'secondInput' }} handleInput={this.handleInputFields} />
-                            </>
-                        ) : (<></>)
-                    }
-                </Grid>
-            </Container>
-        )
+                "Hello world"
+        );
     }
 }
 
