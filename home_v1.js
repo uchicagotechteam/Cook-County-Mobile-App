@@ -1,14 +1,43 @@
 import * as React from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+renderText = () => {
+  return (
+    <Text style={styles.baseText}>
+      <Text style={styles.titleText}>
+        {this.state.titleText + '\n\n'}
+      </Text>
+      <Text numberOfLines={5}>
+        {this.state.bodyText}
+      </Text>
+    </Text>
+  );
+}
+
+var styles = StyleSheet.create({
+  baseText: {
+    fontFamily: 'Cochin',
+    textAlign: 'center',
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+}
+)
+
 function HomeScreen({ navigation }) {
   return (
+    
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
+      <Text style={styles.titleText}>
+        Welcome to the Rainbow Project learning app! I am a:
+      </Text>
       <Button
-        title="Go Adult Page"
+        title="Go to Adult Page"
         onPress={() => navigation.navigate('Adult Page')}
       />
       <Button
@@ -50,3 +79,4 @@ function App() {
 }
 
 export default App;
+
