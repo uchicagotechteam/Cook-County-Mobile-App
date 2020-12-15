@@ -1,105 +1,89 @@
-import React from 'react';
+import * as React from 'react';
+import { Button, View, Text, StyleSheet, Dimensions} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import convert from 'convert-units';
+renderText = () => {
+  return (
+    <Text style={styles.baseText}>
+      <Text style={styles.titleText}>{this.state.titleText + '\n\n'}</Text>
+      <Text numberOfLines={5}>{this.state.bodyText}</Text>
+    </Text>
+  );
+};
 
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+var styles = StyleSheet.create({
+  baseText: {
+    fontFamily: 'Cochin',
+    textAlign: 'center',
+  },
+  titleText: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
 
-import Selector from './components/Selectors';
-import InputField from './components/InputField';
+const MyTheme = {
+  dark: false,
+  colors: {
+    primary: 'rgb(255, 0, 0)',
+    background: 'rgb(0, 0, 242)',
+  },
+};
 
-class App extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            mainSelector: '',
-            firstQuantity: '',
-            secondQuantity: '',
-            firstInput: 0,
-            secondInput: 0,
-            flow: ''
-        }
-    }
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text style={styles.titleText}>
+        Welcome to the Rainbow Project learning app! I am a:
+      </Text>
+      <View style={{margin:20}}>
+      <Button
+        title="Teacher"
+        onPress={() => navigation.navigate('Adult Page')}
+      />
+      </View>
+      <Button
+        title="Student"
+        onPress={() => navigation.navigate('Child Page')}
+      />
+    </View>
+  );
+}
 
-    generateMainSelector = () => {
-        return (
-            convert().measures()
-                .map(ele => ele[0].toUpperCase() + ele.slice(1))
-        )
-    }
+function ChildScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Child View</Text>
+    </View>
+  );
+}
 
-    handleMainSelector = event => {
-        event.preventDefault();
-        this.setState({
-            mainSelector: event.target.value,
-            firstQuantity: '',
-            secondQuantity: '',
-            firstInput: 0,
-            secondInput: 0
-        })
-    }
+function AdultScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Adult View</Text>
+    </View>
+  );
+}
 
-    handleSelector = event => {
-        this.setState({[event.target.name]: event.target.value, firstInput: 0, secondInput: 0})
-    }
+const Stack = createStackNavigator();
 
-    handleInputFields = event => {
-        event.preventDefault();
-        if(event.target.name === 'firstInput') {
-            this.setState({
-                firstInput: event.target.value,
-                flow: 'L2R'
-            },
-            () => this.handleConversion())
-        }
-        else if(event.target.name === 'secondInput') {
-            this.setState({
-                secondInput: event.target.value,
-                flow: 'R2L'
-            },
-            () => this.handleConversion())
-        }
-    }
-
-    handleConversion = () => {
-        if(this.state.flow === 'L2R') {
-            this.setState({
-                secondInput: convert(this.state.firstInput).from(this.state.firstQuantity).to(this.state.secondQuantity)
-            })
-        }
-        else if(this.state.flow === 'R2L') {
-            this.setState({
-                firstInput: convert(this.state.secondInput).from(this.state.secondQuantity).to(this.state.firstQuantity)
-            })
-        }
-    }
-
-    render() {
-        console.log(convert().possibilities())
-        return (
-            <Container>
-                <Grid container justify='center' align='center' spacing={3}>
-                    <Selector data={{ size: 12, label: 'Measurement', measurements: convert().measures(), populateType: 'mainSelector', populateWith: this.generateMainSelector(), selectedValue: this.state.mainSelector }} handleSelector={this.handleMainSelector} />
-                    {
-                        this.state.mainSelector ? (
-                            <>
-                                <Selector data={{ size: 6, label: 'Quantity', populateType: 'firstQuantity', populateWith: convert().list(this.state.mainSelector), selectedValue: this.state.firstQuantity }} handleSelector={this.handleSelector} />
-                                <Selector data={{ size: 6, label: 'Quantity', populateType: 'secondQuantity', populateWith: convert().list(this.state.mainSelector), selectedValue: this.state.secondQuantity }} handleSelector={this.handleSelector} />
-                            </>
-                        ) :(<></>)
-                    }
-                    {
-                        this.state.firstQuantity && this.state.secondQuantity ? (
-                            <>
-                                <InputField data={{ currentValue: this.state.firstInput, input: this.state.firstQuantity, label: this.state.firstLabel, name: 'firstInput' }} handleInput={this.handleInputFields} />
-                                <InputField data={{ currentValue: this.state.secondInput, input: this.state.secondQuantity, label: this.state.secondLabel, name: 'secondInput' }} handleInput={this.handleInputFields} />
-                            </>
-                        ) : (<></>)
-                    }
-                </Grid>
-            </Container>
-        )
-    }
+function App() {
+  return (
+    <NavigationContainer theme={MyTheme}>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} options={{title:''}} />
+        <Stack.Screen name="Child Page" component={ChildScreen} />
+        <Stack.Screen name="Adult Page" component={AdultScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
 export default App;
+
+
+
+
