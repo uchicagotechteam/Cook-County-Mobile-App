@@ -16,7 +16,8 @@
     "react-native-safe-area-context": "3.1.4",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-screens": "~2.10.1",
-    "react-native-tab-view": "^2.15.1"
+    "react-native-tab-view": "^2.15.1",
+    "react-scripts": "3.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
