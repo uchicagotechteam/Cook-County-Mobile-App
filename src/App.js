@@ -3,14 +3,7 @@ import { Button, View, Text, StyleSheet, Dimensions} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-renderText = () => {
-  return (
-    <Text style={styles.baseText}>
-      <Text style={styles.titleText}>{this.state.titleText + '\n\n'}</Text>
-      <Text numberOfLines={5}>{this.state.bodyText}</Text>
-    </Text>
-  );
-};
+
 
 var styles = StyleSheet.create({
   baseText: {
