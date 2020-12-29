@@ -34,7 +34,8 @@ export default function App() {
 
  // TODO: right now the url passed into axios just gets basic stats of the channel by username
  // read Youtube Data API docs to find what methods we need to list the channel's playlists and list videos for a playlist
- // we need a video ID 
+ // we need a video ID to be able to render that video in the IFrame
+ // docs here: https://developers.google.com/youtube/v3/docs/channels/list
 
   // logic to fetch data from youtube api
   const fetchData = useCallback(() => {
