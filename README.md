@@ -23,36 +23,25 @@ Lower Priority:
 
 ### How to setup for local development
 
-Use expo for development and testing in both iOS and Android
+We use expo for development and testing in both iOS and Android
 
-Note that:
+1. Clone down this repo
+1. Put in a real API key on line 33 of `App.js`
+1. Run `yarn install` to install all the required modules
+1. run `yarn ios` to run on iPhone emulator (requires Mac and iPhone emulator setup) or run `yarn android` to run on Android Emulator (requires AndroidStudio and AndroidEmulator setup)
+
+Some things to note:
 1. Whenever you want to install a new package, you have to do `expo install <package-name>` instead of `yarn add ...` or `npm install ...` so that expo can manage the cross-device deps
 1. Features such as webview (required for youtube iframe) do not work in web client, but they do work in iOS and Android
+1. If you haven't developed in XCode with an iOS simulator before, you'll need to set up a simulator
+1. Likewise you'll need to make sure you have AndroidStudio installed and set up an Android Emulator
 
-#### Install dependencies
-Starting from a clean working directory
-(assuming you've already installed node on your system)
-1. yarn global add expo-cli
-1. expo init name-of-project
-1. cd name-of-project
-1. expo install expo-constants
-1. expo install react-native-webview
-1. expo install react-native-youtube-iframe
 
-#### Running on iOS
-Note that you need a mac to run an iOS simulator
-If you haven't developed in XCode with an iOS simulator before, you'll need to set up a simulator
-
-run `yarn ios`
-
-#### Running on Android
-Likewise you'll need to make sure you have AndroidStudio installed and set up an Android Emulator
-
-run `yarn android`
+#### Misc documentation
 
 Docs for youtube iframe: https://lonelycpp.github.io/react-native-youtube-iframe/component-props
 
-Based on these instructions:
+Setup is based on these instructions:
 
 https://reactnative.dev/docs/environment-setup
 
