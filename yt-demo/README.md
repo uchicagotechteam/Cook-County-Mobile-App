@@ -2,7 +2,9 @@
 
 Use expo for development and testing in both iOS and Android
 
-Note that features such as webview (required for youtube iframe) do not work in web client, but they do work in iOS and Android
+Note that:
+1. Whenever you want to install a new package, you have to do `expo install <package-name>` instead of `yarn add ...` or `npm install ...` so that expo can manage the cross-device deps
+1. Features such as webview (required for youtube iframe) do not work in web client, but they do work in iOS and Android
 
 #### Install dependencies
 Starting from a clean working directory
