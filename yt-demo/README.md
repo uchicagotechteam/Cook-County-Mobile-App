@@ -1,4 +1,27 @@
-## How to setup youtube iframe and run locally
+## Youtube API
+
+### Status
+1. When user opens the app, a hardcoded youtube video appears along with a play/pause button.
+1. When the screen loads, we make an http request to Youtube Data API that dumps the response onto the page
+
+Note that the Youtube Data API call won't work if you run it before inserting a real API key on line 33 of `App.js`
+
+Reach out to Dallon on slack/email (dasnes@uchicago.edu)/FB for any questions or to get the api key
+
+### Next steps
+`TODOs` with more details are in `App.js` file
+
+High Priority:
+1. Modify query string of http request to Youtube Data API to pull down list of playlists for that channel as well as videoIds for videos in each playlist
+1. Modify styling to match wireframe that Abbey posted in `youtube-api` slack channel
+1. Extract spaghetti code into components/variables
+1. Figure out to handle API key. Current questions are 1) how to embed API key in env variable, 2) is it even safe to put the API key in an .env file if that is exposed to client after build process and 3) should we make an org gmail acct/API key so that we stop using Rithvik's personal key?
+
+Lower Priority:
+1. Integrate expo build process with Docker
+1. Add a unit test suite
+
+### How to setup for local development
 
 Use expo for development and testing in both iOS and Android
 
@@ -12,6 +35,7 @@ Starting from a clean working directory
 1. yarn global add expo-cli
 1. expo init name-of-project
 1. cd name-of-project
+1. expo install expo-constants
 1. expo install react-native-webview
 1. expo install react-native-youtube-iframe
 
