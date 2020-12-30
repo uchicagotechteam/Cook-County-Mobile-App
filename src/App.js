@@ -14,6 +14,7 @@ var styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: 'bold',
     textAlign: 'center',
+    color: 'rgb(255, 255, 255)'
   },
 });
 
@@ -29,7 +30,7 @@ function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text style={styles.titleText}>
-        Welcome to the Rainbow Project learning app! I am a:
+        Welcome to the Project Rainbow learning app! I am a:
       </Text>
       <View style={{margin:20}}>
       <Button
@@ -48,7 +49,13 @@ function HomeScreen({ navigation }) {
 function ChildScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Child View</Text>
+      <img
+        src={require('./images/rainbow.jpg')}
+        width="230"
+        height="130"
+        alternate="rainbow image"
+      />
+      <Text style={styles.titleText}>Child View</Text>
     </View>
   );
 }
@@ -56,7 +63,7 @@ function ChildScreen({ navigation }) {
 function AdultScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Adult View</Text>
+      <Text style={styles.titleText}>Adult View</Text>
     </View>
   );
 }
@@ -67,7 +74,7 @@ function App() {
   return (
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{title:''}} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{title:'Project Rainbow'}} />
         <Stack.Screen name="Child Page" component={ChildScreen} />
         <Stack.Screen name="Adult Page" component={AdultScreen} />
       </Stack.Navigator>
