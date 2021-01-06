@@ -2,6 +2,7 @@
 
 A mobile app allowing parents and children affeced by COVID-19 to access educational videos and materials created by the Cook County Board.
 
+We are using expo at snack.expo.io to emulate on Android
 
 ## Prerequisites
 

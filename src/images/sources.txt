@@ -1,0 +1,8 @@
+Image Sources in this directory:
+
+  - cook_county_seal.png: https://urbancoyoteresearch.com/partners
+  - rainbow.jpg: https://parenting.firstcry.com/articles/70-rainbow-baby-names-for-boys-and-girls/
+  - documents.png: https://support.1password.com/files/
+  - simple_rainbow.png: https://commons.wikimedia.org/wiki/File:Rainbow-diagram-ROYGBIV.svg
+  - up_arrow.png: https://www.onlinewebfonts.com/icon/118804
+  - nav_layout.png: created via Figma - temporary
