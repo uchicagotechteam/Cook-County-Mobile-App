@@ -56,7 +56,7 @@ https://docs.expo.io/versions/latest/sdk/webview/
 https://lonelycpp.github.io/react-native-youtube-iframe/
 
 
-## We have shifted development workflow to snack.expo.io. See instructions below on how to open the project as a snack. youtube-api and base-page branches have been merged.
+## We have shifted development workflow to snack.expo.io. See instructions below on how to open the project as an Expo snack. youtube-api and base-page branches have been merged.
 
 ## Alternatively,
 you can run the project as a snack on snack.expo.io by (1) importing the git repository, (2) installing the 
