@@ -56,3 +56,23 @@ https://docs.expo.io/versions/latest/sdk/webview/
 https://lonelycpp.github.io/react-native-youtube-iframe/
 
 
+## We have shifted development workflow to snack.expo.io. See instructions below on how to open the project as a snack. youtube-api and base-page branches have been merged.
+
+## Alternatively,
+you can run the project as a snack on snack.expo.io by (1) importing the git repository, (2) installing the 
+necessary dependencies, and (3) running it on the provided Android emulator on snack.expo.io.
+
+### (1) Importing the git repository
+Go to snack.expo.io and click the 3 vertical dots directly to the right of "Project" on the left side 
+of the page. Then click "Import git repository". In the given field, type in the URL of the git repository 
+that you want to import as a snack (in this case, use "https://github.com/uchicagotechteam/Cook-County-Mobile-App/tree/base-page").
+
+### (2) Installing the necessary dependencies
+Once the git repository has been imported as a snack, at the bottom of the development environment there will be 
+text in red recommended dependencies that are needed to run the project. Click on the text in red to install 
+all the necessary dependencies until they are all installed.
+
+### (3) Run the project on an Android emulator
+On the right hand side of the page, click the "Android" button, followed by "Tap to play". Soon, the project 
+should open on the Android emulator (you may have to wait in a queue for a bit).
+If you want to see the uploaded sample video, click "STUDENT" and play the video at the top of the page.
