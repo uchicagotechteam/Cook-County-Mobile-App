@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Button, View, Alert, Text, Image, ImageBackground, ScrollView, TouchableHighlight, StyleSheet} from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
+import { Dimensions } from 'react-native';
 
 
 var styles = StyleSheet.create({
@@ -82,14 +84,51 @@ function ChildScreen({ navigation }) {
 
     // logic to maintain state of video play status
     const [playing, setPlaying] = useState(false);
+    const [finished, setFinished] = useState(false);
+    const playerRef = useRef();
+    const [elapsed, setElapsed] = useState(0);
+    const [once, setOnce] = useState(0);
 
     // logic to send alert when video ends
-    const onStateChange = useCallback((state) => {
+    // logic to send alert when video ends
+    const onStateChange = useCallback(async (state) => {
+      if (state === "unstarted"){
+        if(once === 0){
+          const curTime = await AsyncStorage.getItem('playingTime');
+          if(curTime !== null){
+            playerRef.current.seekTo(parseInt(curTime));
+          }
+        }
+        setOnce(1)
+      }
       if (state === "ended") {
+        const done = await AsyncStorage.getItem('finished');
+        var times = 0;
+        if(done !== null){
+          times = parseInt(done) + 1;
+        }
+        if (done !== null) {
+          Alert.alert("video has finished playing. Times: " + done);
+        } else {
+          Alert.alert("video has finished playing for the first time!");
+        }
         setPlaying(false);
-        Alert.alert("video has finished playing!");
+        setFinished(true);
+        // Alert.alert("video has finished playing!");
+        try {
+          await AsyncStorage.setItem(
+            'finished',
+            times.toString()
+          );
+        } catch (error) {
+          Alert.alert("Error saving status")
+        }
       }
     }, []);
+
+    const onTimeChange = useCallback((currentTime) => {
+      Alert.alert("Time changed")
+    }, [])
 
     // logic for play/pause button
     const togglePlaying = useCallback(() => {
@@ -132,6 +171,28 @@ function ChildScreen({ navigation }) {
     // beware of infinite loops
     useEffect(() => {
       fetchData()
+      const interval = setInterval(async () => {
+        if(!playing){
+          const elapsed_time = await playerRef.current.getCurrentTime(); // this is a promise. dont forget to await
+          const elapsed_sec = Math.floor(elapsed_time)
+
+          if(elapsed_sec > 1){
+            try {
+              await AsyncStorage.setItem(
+                'playingTime',
+                elapsed_sec.toString()
+              );
+            } catch (error) {
+              Alert.alert("Error saving time!")
+            }
+          }
+          setElapsed(elapsed_sec.toString());
+        }
+      }, 1000);
+
+      return () => {
+        clearInterval(interval);
+      };
     }, [fetchData])
 
   return (
@@ -139,12 +200,25 @@ function ChildScreen({ navigation }) {
       {/* Vertical padding */}
       <View style={{ height: 1100, }} />
 
-      <YoutubePlayer
-        height={300}
-        play={playing}
-        videoId={"iee2TATGMyI"}
-        onChangeState={onStateChange}
-      />
+      <View style={{flexGrow: 1, alignItems: 'center'}}>
+        <YoutubePlayer
+          height={300}
+          width={"80%"}
+          play={playing}
+          videoId={"iee2TATGMyI"}
+          onChangeState={onStateChange}
+          ref={playerRef}
+        />
+        {finished ? (
+          <View style={{height: Dimensions.get('window').width * 0.45,
+            backgroundColor: 'black',
+            position: 'absolute',
+            top: 0,
+            width: '80%'}}>
+          </View>
+        ) : null}
+        <Text style={styles.titleText}>{elapsed}</Text>
+      </View>
       <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
       <Text>{JSON.stringify(responseData)}</Text>
 
