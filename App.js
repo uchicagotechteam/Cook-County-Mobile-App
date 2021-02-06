@@ -7,6 +7,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { Dimensions } from 'react-native';
+import RainbowChannel from "./Components/RainbowChannel.js";
 
 
 var styles = StyleSheet.create({
@@ -88,6 +89,17 @@ function ChildScreen({ navigation }) {
     const playerRef = useRef();
     const [elapsed, setElapsed] = useState(0);
     const [once, setOnce] = useState(0);
+    const videoArray = [
+      {
+        videoId : "piYmyxstsXY",
+        title : "Video 1 title",
+        date : "February 4th, 2021"
+      },
+      {
+        videoId : "iee2TATGMyI",
+        title : "Video 2 title",
+        date : "February 5th, 2021"
+      }];
 
     // logic to send alert when video ends
     // logic to send alert when video ends
@@ -133,6 +145,12 @@ function ChildScreen({ navigation }) {
     // logic for play/pause button
     const togglePlaying = useCallback(() => {
       setPlaying((prev) => !prev);
+    }, []);
+
+    const replayClicked = useCallback(() => {
+      setPlaying(true);
+      setFinished(false);
+      playerRef.current.seekTo(0);
     }, []);
 
     // logic to maintain state of request to youtube API
@@ -198,7 +216,9 @@ function ChildScreen({ navigation }) {
   return (
     <ScrollView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       {/* Vertical padding */}
-      <View style={{ height: 1100, }} />
+      <View style={{ height: 1050 + (300 * videoArray.length) }} />
+
+      <RainbowChannel videoArray={videoArray} />
 
       <View style={{flexGrow: 1, alignItems: 'center'}}>
         <YoutubePlayer
@@ -211,10 +231,21 @@ function ChildScreen({ navigation }) {
         />
         {finished ? (
           <View style={{height: Dimensions.get('window').width * 0.45,
-            backgroundColor: 'black',
-            position: 'absolute',
-            top: 0,
-            width: '80%'}}>
+              position: 'absolute',
+              top: 0,
+              width: '80%',
+              alignItems: 'center'}}>
+            <View style={{height: "100%", width: '100%', backgroundColor: 'black'
+            }} />
+            <TouchableHighlight style={{height: "100%",
+                        bottom: "95%",
+                        width: "45%"}}
+              onPress={() => replayClicked()}>
+                <Image
+                  style={{width: "100%", height: "100%"}}
+                  source={require('./images/replay.png')}
+                />
+            </TouchableHighlight>
           </View>
         ) : null}
         <Text style={styles.titleText}>{elapsed}</Text>
