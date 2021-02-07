@@ -224,77 +224,152 @@ function ChildScreen({ navigation }) {
     }, [fetchData])
 
   return (
-    <ScrollView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      {/* Vertical padding */}
-      <View style={{ height: 1050 + (300 * videoArray.length) }} />
+    <ScrollView>
+      <ScrollView horizontal={true} style={{ flex: 1, justifyContent: 'center' }}>
+        {/* Horizontal padding */}
+        <View style={{ width: 1050 + (550 * videoArray.length) }} />
 
-      <RainbowChannel videoArray={videoArray} />
+        <RainbowChannel videoArray={videoArray} />
 
-      <View style={{flexGrow: 1, alignItems: 'center'}}>
-        <YoutubePlayer
-          height={300}
-          width={"80%"}
-          play={playing}
-          videoId={"iee2TATGMyI"}
-          onChangeState={onStateChange}
-          ref={playerRef}
-        />
-        {finished ? (
-          <View style={{height: Dimensions.get('window').width * 0.45,
-              position: 'absolute',
-              top: 0,
-              width: '80%',
-              alignItems: 'center'}}>
-            <View style={{height: "100%", width: '100%', backgroundColor: 'black'
-            }} />
-            <TouchableHighlight style={{height: "100%",
-                        bottom: "95%",
-                        width: "45%"}}
-              onPress={() => replayClicked()}>
-                <Image
-                  style={{width: "100%", height: "100%"}}
-                  source={require('./images/replay.png')}
-                />
-            </TouchableHighlight>
-          </View>
-        ) : null}
-        <Text style={styles.titleText}>{elapsed}</Text>
-      </View>
-      <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
-      <Text>{JSON.stringify(responseData)}</Text>
-
-      <Image
-        style={styles.regLogo}
-        source={require('./images/rainbow.jpg')}
-      />
-      <View style={{ height: 20, }} />
-
-      <Text style={styles.titleText}> Child View </Text>
-
-      {/* Vertical padding */}
-      <View style={{ height: 60, }} />
-
-      <Image
-        style={{width: 380, height: 410, alignItems: 'center', justifyContent: 'center'}}
-        source={require('./images/nav_layout.png')}
-      />
-      <Text style={styles.baseText}> * Need to replace the above image with a similar layout navigation bar, with videos ordered by date and title </Text>
-
-      {/* Vertical padding */}
-      <View style={{ height: 60, }} />
-
-      {/* Download video button */}
-      <Text style={styles.titleText}> Download Today's {"\n"} Video! </Text>
-      {/* Vertical padding */}
-      <View style={{ height: 20, }} />
-      <TouchableHighlight
-        onPress={() => alert('Button clicked (change later)')}
-        style={{alignItems: 'center',}}>
-          <Image
-            style={{width: 100, height: 125, transform: [{ rotate: '180deg' }]}}
-            source={require('./images/up_arrow.png')}
+        <View style={{flexGrow: 1, alignItems: 'center'}}>
+          <YoutubePlayer
+            height={300}
+            width={"80%"}
+            play={playing}
+            videoId={"iee2TATGMyI"}
+            onChangeState={onStateChange}
+            ref={playerRef}
           />
-      </TouchableHighlight>
+          {finished ? (
+            <View style={{height: Dimensions.get('window').width * 0.45,
+                position: 'absolute',
+                top: 0,
+                width: '80%',
+                alignItems: 'center'}}>
+              <View style={{height: "100%", width: '100%', backgroundColor: 'black'
+              }} />
+              <TouchableHighlight style={{height: "100%",
+                          bottom: "95%",
+                          width: "45%"}}
+                onPress={() => replayClicked()}>
+                  <Image
+                    style={{width: "100%", height: "100%"}}
+                    source={require('./images/replay.png')}
+                  />
+              </TouchableHighlight>
+            </View>
+          ) : null}
+          <Text style={styles.titleText}>{elapsed}</Text>
+        </View>
+        <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
+        <Text>{JSON.stringify(responseData)}</Text>
+
+        <Image
+          style={styles.regLogo}
+          source={require('./images/rainbow.jpg')}
+        />
+        <View style={{ height: 20, }} />
+
+        <Text style={styles.titleText}> Child View </Text>
+
+        {/* Vertical padding */}
+        <View style={{ height: 60, }} />
+
+        <Image
+          style={{width: 380, height: 410, alignItems: 'center', justifyContent: 'center'}}
+          source={require('./images/nav_layout.png')}
+        />
+        <Text style={styles.baseText}> * Need to replace the above image with a similar layout navigation bar, with videos ordered by date and title </Text>
+
+        {/* Vertical padding */}
+        <View style={{ height: 60, }} />
+
+        {/* Download video button */}
+        <Text style={styles.titleText}> Download Today's {"\n"} Video! </Text>
+        {/* Vertical padding */}
+        <View style={{ height: 20, }} />
+        <TouchableHighlight
+          onPress={() => alert('Button clicked (change later)')}
+          style={{alignItems: 'center',}}>
+            <Image
+              style={{width: 100, height: 125, transform: [{ rotate: '180deg' }]}}
+              source={require('./images/up_arrow.png')}
+            />
+        </TouchableHighlight>
+      </ScrollView>
+
+      <ScrollView horizontal={true} style={{ flex: 1, justifyContent: 'center' }}>
+        {/* Horizontal padding */}
+        <View style={{ width: 1050 + (550 * videoArray.length) }} />
+
+        <RainbowChannel videoArray={videoArray} />
+
+        <View style={{flexGrow: 1, alignItems: 'center'}}>
+          <YoutubePlayer
+            height={300}
+            width={"80%"}
+            play={playing}
+            videoId={"iee2TATGMyI"}
+            onChangeState={onStateChange}
+            ref={playerRef}
+          />
+          {finished ? (
+            <View style={{height: Dimensions.get('window').width * 0.45,
+                position: 'absolute',
+                top: 0,
+                width: '80%',
+                alignItems: 'center'}}>
+              <View style={{height: "100%", width: '100%', backgroundColor: 'black'
+              }} />
+              <TouchableHighlight style={{height: "100%",
+                          bottom: "95%",
+                          width: "45%"}}
+                onPress={() => replayClicked()}>
+                  <Image
+                    style={{width: "100%", height: "100%"}}
+                    source={require('./images/replay.png')}
+                  />
+              </TouchableHighlight>
+            </View>
+          ) : null}
+          <Text style={styles.titleText}>{elapsed}</Text>
+        </View>
+        <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
+        <Text>{JSON.stringify(responseData)}</Text>
+
+        <Image
+          style={styles.regLogo}
+          source={require('./images/rainbow.jpg')}
+        />
+        <View style={{ height: 20, }} />
+
+        <Text style={styles.titleText}> Child View </Text>
+
+        {/* Vertical padding */}
+        <View style={{ height: 60, }} />
+
+        <Image
+          style={{width: 380, height: 410, alignItems: 'center', justifyContent: 'center'}}
+          source={require('./images/nav_layout.png')}
+        />
+        <Text style={styles.baseText}> * Need to replace the above image with a similar layout navigation bar, with videos ordered by date and title </Text>
+
+        {/* Vertical padding */}
+        <View style={{ height: 60, }} />
+
+        {/* Download video button */}
+        <Text style={styles.titleText}> Download Today's {"\n"} Video! </Text>
+        {/* Vertical padding */}
+        <View style={{ height: 20, }} />
+        <TouchableHighlight
+          onPress={() => alert('Button clicked (change later)')}
+          style={{alignItems: 'center',}}>
+            <Image
+              style={{width: 100, height: 125, transform: [{ rotate: '180deg' }]}}
+              source={require('./images/up_arrow.png')}
+            />
+        </TouchableHighlight>
+      </ScrollView>
     </ScrollView>
   );
 }
