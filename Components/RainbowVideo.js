@@ -29,6 +29,7 @@ class RainbowVideo extends React.Component {
       shouldSave : false,
       finished: false,
       thumbnail : null,
+      watching : false,
       once: 0
     };
 
@@ -36,6 +37,7 @@ class RainbowVideo extends React.Component {
     this.onStateChange = this.onStateChange.bind(this);
     this.replayClicked = this.replayClicked.bind(this);
     this.recordTime = this.recordTime.bind(this);
+    this.getPauseImage = this.getPauseImage.bind(this);
   }
 
   async onStateChange(state) {
@@ -93,6 +95,20 @@ class RainbowVideo extends React.Component {
     }
   }
 
+  getPauseImage(){
+    if(this.state.watching){
+      return (<Image
+              style={{width: "100%", height: "100%"}}
+              source={require('../images/green-play.png')}
+            />);
+    } else {
+      return (<Image
+                style={{width: "100%", height: "100%"}}
+                source={require('../images/check.png')}
+              />);
+    }
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot){
     if(prevState.shouldSave === false && this.state.shouldSave === true){
       this.saveTime = setInterval(
@@ -109,9 +125,21 @@ class RainbowVideo extends React.Component {
 
   async componentDidMount(){
     const storageFinished = this.props.videoId + '.finished';
+    const storageTime = this.props.videoId + '.playingTime';
     AsyncStorage.getItem(storageFinished).then(alreadyWatched => {
       if(alreadyWatched === "true"){
         this.setState({finished : true})
+      }
+    });
+    AsyncStorage.getItem(storageTime).then(curTime => {
+      if(curTime !== null){
+        // Alert.alert("I'm watching!" + curTime);
+        this.playerRef.getDuration().then(duration => {
+          // Alert.alert("Watch time: " + curTime + " Duration: " + (Math.floor(duration) - 1));
+          if(parseInt(curTime) <= Math.floor(duration) - 1){
+            this.setState({watching : true})
+          }
+        });
       }
     });
     getYoutubeMeta(this.props.videoId).then(meta => {
@@ -144,10 +172,7 @@ class RainbowVideo extends React.Component {
                           bottom: "95%",
                           width: "55%"}}
                 onPress={() => this.replayClicked()}>
-                  <Image
-                    style={{width: "100%", height: "100%"}}
-                    source={require('../images/replay.png')}
-                  />
+                  {this.getPauseImage()}
               </TouchableHighlight>
             </View>
           ) : null}

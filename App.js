@@ -99,6 +99,16 @@ function ChildScreen({ navigation }) {
         videoId : "iee2TATGMyI",
         title : "Video 2 title",
         date : "February 5th, 2021"
+      },
+      {
+        videoId : "iee2TATGMyI",
+        title : "Video 3 title",
+        date : "February 6th, 2021"
+      },
+      {
+        videoId : "iee2TATGMyI",
+        title : "Video 4 title",
+        date : "February 6th, 2021"
       }];
 
     // logic to send alert when video ends
