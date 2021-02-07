@@ -91,8 +91,6 @@ function ChildScreen({ navigation }) {
     const [once, setOnce] = useState(0);
     const [videoArray, setVideoArray] = useState([]);
 
-    // logic to send alert when video ends
-    // logic to send alert when video ends
     const onStateChange = useCallback(async (state) => {
       if (state === "unstarted"){
         if(once === 0){
@@ -219,7 +217,7 @@ function ChildScreen({ navigation }) {
         <View style={{flexGrow: 1, alignItems: 'center'}}>
           <YoutubePlayer
             height={300}
-            width={"80%"}
+            width={Dimensions.get('window').width * 0.8}
             play={playing}
             videoId={"iee2TATGMyI"}
             onChangeState={onStateChange}
@@ -229,7 +227,7 @@ function ChildScreen({ navigation }) {
             <View style={{height: Dimensions.get('window').width * 0.45,
                 position: 'absolute',
                 top: 0,
-                width: '80%',
+                width: Dimensions.get('window').width * 0.8,
                 alignItems: 'center'}}>
               <View style={{height: "100%", width: '100%', backgroundColor: 'black'
               }} />
@@ -247,7 +245,6 @@ function ChildScreen({ navigation }) {
           <Text style={styles.titleText}>{elapsed}</Text>
         </View>
         <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
-        <Text>{JSON.stringify(responseData)}</Text>
 
         <Image
           style={styles.regLogo}
@@ -320,7 +317,6 @@ function ChildScreen({ navigation }) {
           <Text style={styles.titleText}>{elapsed}</Text>
         </View>
         <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
-        <Text>{JSON.stringify(responseData)}</Text>
 
         <Image
           style={styles.regLogo}
