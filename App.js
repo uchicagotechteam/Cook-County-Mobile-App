@@ -253,32 +253,7 @@ function ChildScreen({ navigation }) {
           style={styles.regLogo}
           source={require('./images/rainbow.jpg')}
         />
-<<<<<<< HEAD
-        {finished ? (
-          <View style={{height: Dimensions.get('window').width * 0.45,
-              position: 'absolute',
-              top: 0,
-              width: '80%',
-              alignItems: 'center'}}>
-            <View style={{height: "100%", width: '100%', backgroundColor: 'black'
-            }} />
-            <TouchableHighlight style={{height: "100%",
-                        bottom: "95%",
-                        width: "45%"}}
-              onPress={() => replayClicked()}>
-                <Image
-                  style={{width: "100%", height: "100%"}}
-                  source={require('./images/replay.png')}
-                />
-            </TouchableHighlight>
-          </View>
-        ) : null}
-        <Text style={styles.titleText}>{elapsed}</Text>
-      </View>
-      <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
-=======
         <View style={{ height: 20, }} />
->>>>>>> f68f52fc2fec9471ee89d517c5d8c4c7cccd1423
 
         <Text style={styles.titleText}> Child View </Text>
 
