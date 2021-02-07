@@ -89,27 +89,7 @@ function ChildScreen({ navigation }) {
     const playerRef = useRef();
     const [elapsed, setElapsed] = useState(0);
     const [once, setOnce] = useState(0);
-    const videoArray = [
-      {
-        videoId : "piYmyxstsXY",
-        title : "Video 1 title",
-        date : "February 4th, 2021"
-      },
-      {
-        videoId : "iee2TATGMyI",
-        title : "Video 2 title",
-        date : "February 5th, 2021"
-      },
-      {
-        videoId : "iee2TATGMyI",
-        title : "Video 3 title",
-        date : "February 6th, 2021"
-      },
-      {
-        videoId : "iee2TATGMyI",
-        title : "Video 4 title",
-        date : "February 6th, 2021"
-      }];
+    const [videoArray, setVideoArray] = useState([]);
 
     // logic to send alert when video ends
     // logic to send alert when video ends
@@ -182,11 +162,16 @@ function ChildScreen({ navigation }) {
     const fetchData = useCallback(() => {
       axios({
         "method": "GET",
-        "url": `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&forUsername=GoogleDevelopers&key=${API_KEY}`
+        "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=PLydZ2Hrp_gPTfidzAvRI524ZM0S2ZefF7&key=" + API_KEY // `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&forUsername=GoogleDevelopers&key=${API_KEY}`
         
       })
       .then((response) => {
         setResponseData(response.data)
+        setVideoArray(response.data.items.map(video => ({
+          videoId: video.contentDetails.videoId,
+          title: video.snippet.title,
+          date : video.snippet.publishedAt
+        })));
         console.log(response.data)
       })
       .catch((error) => {
@@ -261,7 +246,6 @@ function ChildScreen({ navigation }) {
         <Text style={styles.titleText}>{elapsed}</Text>
       </View>
       <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
-      <Text>{JSON.stringify(responseData)}</Text>
 
       <Image
         style={styles.regLogo}

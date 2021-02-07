@@ -30,12 +30,13 @@ class RainbowVideo extends React.Component {
       finished: false,
       thumbnail : null,
       watching : false,
+      atStart : true,
       once: 0
     };
 
     // bind methods
     this.onStateChange = this.onStateChange.bind(this);
-    this.replayClicked = this.replayClicked.bind(this);
+    this.thumbnailClicked = this.thumbnailClicked.bind(this);
     this.recordTime = this.recordTime.bind(this);
     this.getPauseImage = this.getPauseImage.bind(this);
   }
@@ -53,7 +54,7 @@ class RainbowVideo extends React.Component {
     if (state === "unstarted"){
       if(this.state.once === 0){
         const curTime = await AsyncStorage.getItem(storageTime);
-        if(curTime !== null){
+        if(curTime !== null && curTime != "atEnd"){
           await this.playerRef.seekTo(parseInt(curTime));
         }
       }
@@ -67,45 +68,56 @@ class RainbowVideo extends React.Component {
           storageFinished,
           "true"
         );
+        await AsyncStorage.setItem(
+          storageTime,
+          "atEnd"
+        );
       } catch (error) {
         Alert.alert("Error saving status")
       }
     }
   }
 
-  async replayClicked() {
-    this.setState({playing:true, finished:false});
-    await this.playerRef.seekTo(0);
+  async thumbnailClicked() {
+    if(this.state.finished){
+      this.setState({playing:true, finished:false, atStart : false});
+    } else {
+      this.setState({playing:true, atStart : false});
+    }
   }
 
   async recordTime(pRef){
     const storageTime = this.props.videoId + '.playingTime';
     const elapsed_time = await pRef.getCurrentTime();
     const elapsed_sec = Math.floor(elapsed_time)
-
-    if(elapsed_sec > 1){
-      try {
-        await AsyncStorage.setItem(
-          storageTime,
-          elapsed_sec.toString()
-        );
-      } catch (error) {
-        Alert.alert("Error saving time!")
-      }
+    try {
+      await AsyncStorage.setItem(
+        storageTime,
+        elapsed_sec.toString()
+      );
+    } catch (error) {
+      Alert.alert("Error saving time!")
     }
   }
 
   getPauseImage(){
-    if(this.state.watching){
+    if(this.state.finished){
       return (<Image
-              style={{width: "100%", height: "100%"}}
-              source={require('../images/green-play.png')}
-            />);
-    } else {
-      return (<Image
-                style={{width: "100%", height: "100%"}}
+                style={{width: "70%", height: "70%"}}
                 source={require('../images/check.png')}
               />);
+    } else {
+      if (this.state.watching){
+         return (<Image
+              style={{width: "70%", height: "70%"}}
+              source={require('../images/green-play.png')}
+            />)
+      } else {
+          return (<Image
+              style={{width: "70%", height: "70%"}}
+              source={require('../images/white-play.png')}
+            />);
+      }
     }
   }
 
@@ -126,20 +138,18 @@ class RainbowVideo extends React.Component {
   async componentDidMount(){
     const storageFinished = this.props.videoId + '.finished';
     const storageTime = this.props.videoId + '.playingTime';
-    AsyncStorage.getItem(storageFinished).then(alreadyWatched => {
-      if(alreadyWatched === "true"){
-        this.setState({finished : true})
-      }
-    });
+    // AsyncStorage.getItem(storageFinished).then(alreadyWatched => {
+    //   if(alreadyWatched === "true"){
+    //     this.setState({finished : true})
+    //   }
+    // });
     AsyncStorage.getItem(storageTime).then(curTime => {
-      if(curTime !== null){
-        // Alert.alert("I'm watching!" + curTime);
-        this.playerRef.getDuration().then(duration => {
-          // Alert.alert("Watch time: " + curTime + " Duration: " + (Math.floor(duration) - 1));
-          if(parseInt(curTime) <= Math.floor(duration) - 1){
-            this.setState({watching : true})
-          }
-        });
+      if(curTime == null || (curTime != "atEnd" && parseInt(curTime) == 0)){
+        this.setState({watching : false});
+      } else if(curTime != "atEnd"){
+        this.setState({watching : true});
+      } else if(curTime == "atEnd"){
+        this.setState({finished : true})
       }
     });
     getYoutubeMeta(this.props.videoId).then(meta => {
@@ -152,30 +162,29 @@ class RainbowVideo extends React.Component {
       <View style={{flex: 1, flexDirection: 'column'}}>
       <Text style={styles.baseText}> {this.props.title} - {this.props.date} </Text>
       <View style={{flexGrow: 1, alignItems: 'center'}}>
-          <YoutubePlayer
-          height={240}
-          width={"80%"}
-          play={this.state.playing}
-          videoId={this.props.videoId}
-          onChangeState={this.onStateChange}
-          ref={this.setPlayerRef}
-        />
-          {this.state.finished ? (
-            <View style={{height: Dimensions.get('window').width * 0.55,
-                position: 'absolute',
+          {this.state.finished || this.state.atStart ? (
+            <View style={{height: 240,
                 top: 0,
                 width: '80%',
                 alignItems: 'center'}}>
-              {this.state.thumbnail === null ? (<View style={{height: "100%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "100%", width: '100%'}} source={{uri : this.state.thumbnail}}/>)
+              {this.state.thumbnail === null ? (<View style={{height: "78%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "78%", width: '100%'}} source={{uri : this.state.thumbnail}}/>)
               }
-              <TouchableHighlight style={{height: "90%",
-                          bottom: "95%",
-                          width: "55%"}}
-                onPress={() => this.replayClicked()}>
+              <TouchableHighlight style={{height: "75%",
+                          bottom: "67%",
+                          width: "55%",
+                          alignItems: 'center'}}
+                onPress={() => this.thumbnailClicked()}>
                   {this.getPauseImage()}
               </TouchableHighlight>
             </View>
-          ) : null}
+          ) : <YoutubePlayer
+            height={240}
+            width={"80%"}
+            play={this.state.playing}
+            videoId={this.props.videoId}
+            onChangeState={this.onStateChange}
+            ref={this.setPlayerRef}
+          />}
         </View>
         </View>
       );
