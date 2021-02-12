@@ -6,7 +6,12 @@ import { View, ScrollView, StyleSheet, Image, Text } from 'react-native';
 import {search} from '../scripts/Search.js';
 import { styles } from '../scripts/constants.js'
 
-
+// Props include
+//   channelImage : String  - value that is mapped to a hardcoded image or a default image if no match is found
+//   channelTitle : String  - the channels title
+//   currentSearch : String - string typed into the search bar
+//   isAdult : Bool         - if the channel should display extra content for the adult page
+//   videoArray : Array     - array of objects specifying a video. Follows the format [{videoId : String, title : String, date : Date, dateString : String, duration : String, description : String}, ...]
 class RainbowChannel extends React.Component {
   constructor(props) {
     super(props);
@@ -146,13 +151,13 @@ class RainbowChannel extends React.Component {
   // Returns the JSX needed to display each video which fits the search criteria
   getFilteredVideoArray(){
     if(this.props.videoArray == []){
-      return (<Text style={styles.emptySearch}>Looks like there are no videos in this channel. Check back later.</Text>)
+      return (<Text style={styles.emptySearch}>No videos in this channel. Check back later</Text>)
     }
     let searchResults = this.applySearch();
     let options = searchResults.options
     let displays = searchResults.displays
     if(options.length <= 0){
-      return (<Text style={styles.emptySearch}>No videos matches your search.</Text>)
+      return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
     return options.map(videoInfo =>
       <RainbowVideo videoId={videoInfo.videoId}
@@ -160,6 +165,8 @@ class RainbowChannel extends React.Component {
         date={videoInfo.date}
         duration={videoInfo.duration}
         display={displays[videoInfo.videoId]}
+        isAdult={this.props.isAdult}
+        description={videoInfo.description}
       />
     )
   }

@@ -10,6 +10,7 @@ const MyTheme = {
   colors: {
     primary: 'rgb(255, 0, 0)',
     background: 'rgb(0, 0, 242)',
+    text : 'rgb(255, 255, 255)'
   },
 };
 

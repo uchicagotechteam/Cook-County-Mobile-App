@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Image, TouchableHighlight, StyleSheet, Text, Alert } from 'react-native';
+import { Button, View, Image, TouchableHighlight, StyleSheet, Text, Alert, Linking } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import {getYoutubeMeta} from 'react-native-youtube-iframe';
 import { Dimensions } from 'react-native';
@@ -11,6 +11,13 @@ import LoadingThumbnail from "../components/LoadingThumbnail.js";
 import { styles } from '../scripts/constants.js'
 import moment from "moment";
 
+// Props include
+//   videoId : String      - youtube identifier to fetch the video
+//   duration : String     - ISO 8601 string corresponding to the duration of the video
+//   isAdult : Bool        - whether the video should display extra content for the adult page
+//   title : String        - title of the video
+//   display : Object      - object describing what parts of the title should be highlighted
+//   description : String  - the youtube video's description. Could be used to encode data instead of a database 
 class RainbowVideo extends React.Component {
   constructor(props) {
     super(props);
@@ -173,7 +180,7 @@ class RainbowVideo extends React.Component {
       <View style={{width: 340 }}>
         <View style={{height: 60}}>
           <AdjustableText
-            fontSize={20}
+            fontSize={30}
             text=<Text>{this.props.display !== undefined ? this.props.display["title"].map(s =>
                     s.mark ? <Text style={styles.search_highlight}>{s.seg}</Text> : <Text>{s.seg}</Text>) : this.props.title}
                     &nbsp;-&nbsp;
@@ -220,9 +227,19 @@ class RainbowVideo extends React.Component {
             <View style={{height: 240 * 0.67, width: 288, position: "absolute"}}>
               { this.state.isBuffering ? <LoadingThumbnail /> : null}
             </View>
-          </View>
+            { this.props.isAdult ? <View style={{height: 40, position: "absolute", bottom:15}}>
+              <AdjustableText
+                fontSize={20}
+                text={<Text style={{color: 'orange'}}
+                        onPress={() => Linking.openURL(this.props.description.split("\n")[0])}>
+                        Press here to see the video's documents
+                      </Text>}
+                style={styles.videoTitleText}
+                maxHeight={40}
+              />
+            </View> : null }
         </View>
-      );
+      </View>);
   }
 }
 

@@ -1,5 +1,12 @@
 import { StyleSheet } from 'react-native';
 
+// TODO: set up env vars with expo so that we can store API KEY in .env file
+// but we do need to see if there's a safer way to store the API key
+// since env variables are bundled into the app's build and thus can be exposed to clients after the app is shipped
+// more info here: https://docs.expo.io/guides/environment-variables/
+// const API_KEY = process.env.EXPO_CCMA_YT_API_KEY;
+export const api_key = "hello world"; // dummy value to build
+
 export const styles = StyleSheet.create({
   // Standard text for screens
   baseText: {
