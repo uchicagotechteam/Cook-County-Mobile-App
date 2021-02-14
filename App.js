@@ -19,9 +19,11 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <NavigationContainer theme={MyTheme}>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{title:'Project Rainbow'}} />
-        <Stack.Screen name="Child Page" component={ChildScreen} />
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen}
+          options={{ title:'Project Rainbow'}}
+        />
+        <Stack.Screen name="Child Page" component={ChildScreen} options={{headerStyle: { backgroundColor: '#1390A0' }}} />
         <Stack.Screen name="Adult Page" component={AdultScreen} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -29,7 +31,3 @@ function App() {
 }
 
 export default App;
-
-
-
-

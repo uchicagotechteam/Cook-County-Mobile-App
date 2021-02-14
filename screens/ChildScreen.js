@@ -1,41 +1,57 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, TouchableHighlight} from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import SearchArea from '../components/SearchArea';
 import ChannelCollection from "../components/ChannelCollection.js";
+import ToggleSearch from "../components/ToggleSearch.js";
 import { styles } from '../scripts/constants.js'
 
 function ChildScreen({ navigation }) {
-    // logic to maintain state of search text
-    const [searchText, setSearchText] = useState("");
+  // logic to maintain state of search area
+  const [searchText, setSearchText] = useState("");
+  const [searchActive, setSearchActive] = useState(false);
+  const [dateInfo, setDateInfo] = useState({dateRestriction : "Anytime", afterDate : null, beforeDate : null});
 
-    // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
-    const channels = [{
-      channelTitle : "Golden Hours",
-      channelImage : "golden",
-      playlistId : "PLydZ2Hrp_gPTfidzAvRI524ZM0S2ZefF7",
-    },
-    {
-      channelTitle : "Music Channel",
-      channelImage : "music",
-      playlistId : "PLydZ2Hrp_gPRpfRjuzArwtmlD5TDGIUql",
-    },
-    ];
+  // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
+  const channels = [{
+    channelTitle : "Golden Hours",
+    channelImage : "golden",
+    playlistId : "PLydZ2Hrp_gPTfidzAvRI524ZM0S2ZefF7",
+  },
+  {
+    channelTitle : "Music Channel",
+    channelImage : "music",
+    playlistId : "PLydZ2Hrp_gPRpfRjuzArwtmlD5TDGIUql",
+  },
+  ];
 
-    // Function to update the search results
-    const updateSearch = useCallback((search) => {
-      setSearchText(search);
-    }, []);
+  // Function to update the text search results
+  const updateSearch = useCallback((search) => {
+    setSearchText(search);
+  }, []);
+
+  // Function to update the date search results
+  const updateDates = useCallback((dateRestriction, afterDate, beforeDate) => {
+    console.log("New restriction: " + dateRestriction);
+    setDateInfo({dateRestriction, afterDate, beforeDate});
+  }, []);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <ToggleSearch onPress={active => {setSearchActive(active);}} />
+      ),
+    });
+  }, [navigation]);
 
   return (
     <View>
-    <SearchBar
-        placeholder="Search title or date"
-        onChangeText={updateSearch}
-        value={searchText}
-        platform={"android"}
-        round={true}
-      />
+    <SearchArea
+      updateSearch={updateSearch}
+      updateDates={updateDates}
+      searchText={searchText}
+      active={searchActive}
+    />
     <ScrollView>
       <View style={{ height: 5, }} />
       <Image
@@ -51,6 +67,7 @@ function ChildScreen({ navigation }) {
       <ChannelCollection
         channels={channels}
         searchText={searchText}
+        dateInfo={dateInfo}
         isAdult={false}
       />
 

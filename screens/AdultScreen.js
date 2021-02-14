@@ -7,20 +7,21 @@ import ChannelCollection from "../components/ChannelCollection.js";
 
 function AdultScreen({ navigation }) {
   // logic to maintain state of search text
-    const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [dateInfo, setDateInfo] = useState({dateRestriction : "Anytime", afterDate : null, beforeDate : null});
 
-    // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
-    const channels = [{
-      channelTitle : "Download Test",
-      channelImage : "music",
-      playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
-    }
-    ];
+  // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
+  const channels = [{
+    channelTitle : "Download Test",
+    channelImage : "music",
+    playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
+  }
+  ];
 
-    // Function to update the search results
-    const updateSearch = useCallback((search) => {
-      setSearchText(search);
-    }, []);
+  // Function to update the search results
+  const updateSearch = useCallback((search) => {
+    setSearchText(search);
+  }, []);
 
   return (
     <View>
@@ -45,6 +46,7 @@ function AdultScreen({ navigation }) {
       <ChannelCollection
         channels={channels}
         searchText={searchText}
+        dateInfo={dateInfo}
         isAdult={true}
       />
 

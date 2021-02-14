@@ -39,8 +39,8 @@ export const styles = StyleSheet.create({
   },
   // Intro page
   mainLogo: {
-    width: 200,
-    height: 200,
+    width: 320,
+    height: 150,
   },
   // Child page
   regLogo: {

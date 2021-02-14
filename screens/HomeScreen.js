@@ -6,12 +6,12 @@ import { styles } from '../scripts/constants.js'
 function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <ImageBackground style={styles.bgLogo} source={require('../images/simple_rainbow.png')}>
+      { /* <ImageBackground style={styles.bgLogo} source={require('../images/simple_rainbow.png')}> */ }
       <Image
         style={styles.mainLogo}
-        source={require('../images/cook_county_seal.png')}
+        source={require('../images/PR_logo_name.png')}
       />
-      </ImageBackground>
+      { /* </ImageBackground> */ }
       <Text style={styles.titleText}>
         Welcome to Project Rainbow! {"\n"} I am a:
       </Text>

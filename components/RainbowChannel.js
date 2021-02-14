@@ -31,20 +31,20 @@ class RainbowChannel extends React.Component {
   }
 
   // Function that looks at the videoArray and currentSearch in props and returns two objects – options which stores the videos that passed the search and displays which contains details on how to highlight the search results
-  applySearch(){
+  applySearch(dateVideoArray){
     // Split search string into individual lowercase terms
     let terms = this.props.currentSearch.split(' ')
       .filter(s => s.length > 0)
       .map(s => s.toLowerCase());
     let num_terms = terms.length;
 
-    if(this.props.videoArray == undefined){
+    if(dateVideoArray == undefined){
       return {options: [], displays : new Object()}
     }
 
     // Variables to hold the options list and the corresponding display strings
 
-    var options = this.props.videoArray;
+    var options = dateVideoArray;
     var displays = new Object();
 
     // Special case: If the search term is blank, match everything
@@ -153,7 +153,34 @@ class RainbowChannel extends React.Component {
     if(this.props.videoArray == []){
       return (<Text style={styles.emptySearch}>No videos in this channel. Check back later</Text>)
     }
-    let searchResults = this.applySearch();
+    var dateVideoArray = this.props.videoArray
+    let restriction = this.props.dateInfo.dateRestriction;
+    let afterDate = this.props.dateInfo.afterDate;
+    let beforeDate = this.props.dateInfo.beforeDate;
+    let afterNull = afterDate == null;
+    let beforeNull = beforeDate == null;
+    if(restriction == "After" && !afterNull){
+      dateVideoArray = dateVideoArray.filter(videoInfo =>
+        {
+          return videoInfo.date > afterDate;
+        })
+    }
+    if(restriction == "Before" && !beforeNull){
+      console.log("Before restriction: " + JSON.stringify(beforeDate));
+      console.log("First video time: " + JSON.stringify(dateVideoArray[0].date));
+      dateVideoArray = dateVideoArray.filter(videoInfo =>
+        {
+          return videoInfo.date < beforeDate;
+        });
+      
+    }
+    if(restriction == "Between"&& !afterNull && !beforeNull){
+      dateVideoArray = dateVideoArray.filter(videoInfo =>
+        {
+          return videoInfo.date < beforeDate && videoInfo.date > afterDate;
+        });
+    }
+    let searchResults = this.applySearch(dateVideoArray);
     let options = searchResults.options
     let displays = searchResults.displays
     if(options.length <= 0){

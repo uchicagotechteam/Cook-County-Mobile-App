@@ -32,6 +32,7 @@ function ChannelCollection(props) {
     // logic to fetch data from youtube api
     const fetchData = function(playlistId, index, localVideoArrays) {
       console.log(playlistId);
+      console.log(api_key);
       axios({
         "method": "GET",
         "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key
@@ -109,6 +110,7 @@ function ChannelCollection(props) {
         channelTitle={channel.channelTitle}
         channelImage={channel.channelImage}
         currentSearch={props.searchText}
+        dateInfo={props.dateInfo}
         isAdult={props.isAdult}
       />
     )
