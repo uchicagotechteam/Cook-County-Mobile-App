@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import axios from 'axios';
 import RainbowChannel from "../components/RainbowChannel.js";
 import { styles, api_key } from '../scripts/constants.js'
+import { View } from 'react-native';
 
 // Props include
 //   channels : Array    - array of objects that describe a channel. [{channelTitle : String, channelImage : String, playlistID : String}]
@@ -105,14 +106,17 @@ function ChannelCollection(props) {
 
   return (
     props.channels.map((channel, index) =>
-      <RainbowChannel
-        videoArray={getVideoArrayByIndex(channel, index)}
-        channelTitle={channel.channelTitle}
-        channelImage={channel.channelImage}
-        currentSearch={props.searchText}
-        dateInfo={props.dateInfo}
-        isAdult={props.isAdult}
-      />
+      <View key={channel.playlistId}>
+        <RainbowChannel
+          videoArray={getVideoArrayByIndex(channel, index)}
+          channelTitle={channel.channelTitle}
+          channelImage={channel.channelImage}
+          currentSearch={props.searchText}
+          dateInfo={props.dateInfo}
+          isAdult={props.isAdult}
+        />
+        <View style={styles.lineStyle} />
+      </View>
     )
   );
 }

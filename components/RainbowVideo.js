@@ -18,6 +18,7 @@ import moment from "moment";
 //   title : String        - title of the video
 //   display : Object      - object describing what parts of the title should be highlighted
 //   description : String  - the youtube video's description. Could be used to encode data instead of a database 
+//   date : Date           - video's date
 class RainbowVideo extends React.Component {
   constructor(props) {
     super(props);
@@ -135,6 +136,22 @@ class RainbowVideo extends React.Component {
       }
     }
   }
+  
+  // Converts and ISO 8601 duration into seconds. Used for the progress bar
+  parseDuration(){
+    return moment.duration(this.props.duration, moment.ISO_8601).asSeconds();
+  }
+
+  // Checks if the video was published within the last day and, if so, gives it a special "New" tag
+  isRecent(){
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 10);
+    if(this.props.date > yesterday){
+      return (<Text style={styles.highlightText}>New:&nbsp;</Text>)
+    } else {
+      return null
+    }
+  }
 
   // If the video goes from not playing to playing, starts an interval that records the time every second. If the video goes from playing to not playing, cancels the interval
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -150,9 +167,12 @@ class RainbowVideo extends React.Component {
       }
     }
   }
-
-  parseDuration(){
-    return moment.duration(this.props.duration, moment.ISO_8601).asSeconds();
+  
+  // Cancels the save interval if the component is about to unmount
+  componentWillUnmount(){
+    if(this.saveTime != null){
+      clearInterval(this.saveTime);
+    }
   }
 
   // Loads information from local storage once the component mounts and sets the state appropriately. Also queries the youtube API for the thumbnail URL
@@ -181,17 +201,19 @@ class RainbowVideo extends React.Component {
         <View style={{height: 60}}>
           <AdjustableText
             fontSize={30}
-            text=<Text>{this.props.display !== undefined ? this.props.display["title"].map(s =>
-                    s.mark ? <Text style={styles.search_highlight}>{s.seg}</Text> : <Text>{s.seg}</Text>) : this.props.title}
-                    &nbsp;-&nbsp;
-                    {this.props.display !== undefined ? this.props.display["dateString"].map(s =>
-                    s.mark ? <Text style={styles.search_highlight}>{s.seg}</Text> : <Text>{s.seg}</Text>) : this.props.title}
+            text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map(s =>
+                    s.mark ? <Text style={styles.search_highlight}>{s.seg}</Text> : <Text>{s.seg}</Text>)
+                  : this.props.title}
+                  &nbsp;-&nbsp;
+                  {this.props.display !== undefined ? this.props.display["dateString"].map(s =>
+                    s.mark ? <Text style={styles.search_highlight}>{s.seg}</Text> : <Text>{s.seg}</Text>)
+                  : this.props.title}
                   </Text>
             style={styles.videoTitleText}
             maxHeight={60}
           />
         </View>
-        <View style={{flexGrow: 1, alignItems: 'center'}}>
+        <View style={{flexGrow: 1, alignItems: 'center'}} key={this.props.videoId} >
             {this.state.finished || this.state.unplayed ? (
               <View style={{height: 240,
                   top: 0,
@@ -199,22 +221,23 @@ class RainbowVideo extends React.Component {
                   alignItems: 'center'}}>
                 {this.state.thumbnail === null ? (<View style={{height: "67%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "67%", width: '100%'}} source={{uri : this.state.thumbnail}}/>)
                 }
-                <TouchableHighlight style={{height: "75%",
+                <TouchableHighlight style={{height: "45%",
                             bottom: "58%",
-                            width: "60%",
+                            width: "36%",
                             alignItems: 'center'}}
                   onPress={() => this.thumbnailClicked()}>
                     <Image
-                      style={{width: "60%", height: "60%"}}
+                      style={{width: "100%", height: "100%"}}
                       source={this.getPauseImage()}
                     />
                 </TouchableHighlight>
-                <ProgressBar
-                  progress={this.state.progressFraction}
-                  width={259}
-                  color={"green"}
-                  style={{bottom: "83%"}}
-                />
+                <View style={{bottom: "55%", elevation:1, backgroundColor : "#FFFFFF"}}>
+                  <ProgressBar
+                    progress={this.state.progressFraction}
+                    width={259}
+                    color={"black"}
+                  />
+                </View>
               </View>
             ) : <YoutubePlayer
               height={240}

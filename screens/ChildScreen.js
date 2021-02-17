@@ -54,10 +54,12 @@ function ChildScreen({ navigation }) {
     />
     <ScrollView>
       <View style={{ height: 5, }} />
-      <Image
-        style={styles.flatLogo}
-        source={require('../images/simple_rainbow.png')}
-      />
+      <View style={styles.centerColumn}>
+        <Image
+          style={styles.miniLogo}
+          source={require('../images/PR_logo.png')}
+        />
+      </View>
       <View style={{ height: 20, }} />
 
       <Text style={styles.titleText}> Child View </Text>

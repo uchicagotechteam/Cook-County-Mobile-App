@@ -4,27 +4,19 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "./screens/HomeScreen.js";
 import ChildScreen from "./screens/ChildScreen.js";
 import AdultScreen from "./screens/AdultScreen.js";
-
-const MyTheme = {
-  dark: false,
-  colors: {
-    primary: 'rgb(255, 0, 0)',
-    background: 'rgb(0, 0, 242)',
-    text : 'rgb(255, 255, 255)'
-  },
-};
+import { theme, styles } from './scripts/constants.js'
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer theme={MyTheme}>
+    <NavigationContainer theme={theme}>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen}
-          options={{ title:'Project Rainbow'}}
+          options={{ title:'Project Rainbow', headerStyle: styles.searchColor}}
         />
-        <Stack.Screen name="Child Page" component={ChildScreen} options={{headerStyle: { backgroundColor: '#1390A0' }}} />
-        <Stack.Screen name="Adult Page" component={AdultScreen} />
+        <Stack.Screen name="Child Page" component={ChildScreen} options={{headerStyle: styles.searchColor}} />
+        <Stack.Screen name="Adult Page" component={AdultScreen} options={{headerStyle: styles.searchColor}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

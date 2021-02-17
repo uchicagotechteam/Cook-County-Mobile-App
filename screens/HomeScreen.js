@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
-import { Button, View, Text, Image, ImageBackground, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, Image, ImageBackground, StyleSheet } from 'react-native';
 import { styles } from '../scripts/constants.js'
+import RoundedButton from '../components/RoundedButton.js'
 
 function HomeScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={styles.centerColumn}>
       { /* <ImageBackground style={styles.bgLogo} source={require('../images/simple_rainbow.png')}> */ }
       <Image
         style={styles.mainLogo}
@@ -16,14 +17,18 @@ function HomeScreen({ navigation }) {
         Welcome to Project Rainbow! {"\n"} I am a:
       </Text>
       <View style={{margin:20}}>
-      <Button
-        title="Teacher"
+      <RoundedButton
         onPress={() => navigation.navigate('Adult Page')}
+        buttonStyle={styles.mainButtonStyle}
+        textStyle={styles.mainButtonText}
+        text={"Teacher"}
       />
       </View>
-      <Button
-        title="Student"
+      <RoundedButton
         onPress={() => navigation.navigate('Child Page')}
+        buttonStyle={styles.mainButtonStyle}
+        textStyle={styles.mainButtonText}
+        text={"Student"}
       />
     </View>
   );

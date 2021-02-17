@@ -1,6 +1,7 @@
 import React from 'react';
 import RainbowVideo from "../components/RainbowVideo.js";
 import AdjustableText from "../components/AdjustableText.js";
+import ToggleSort from "../components/ToggleSort.js";
 import { Dimensions } from 'react-native';
 import { View, ScrollView, StyleSheet, Image, Text } from 'react-native';
 import {search} from '../scripts/Search.js';
@@ -12,12 +13,19 @@ import { styles } from '../scripts/constants.js'
 //   currentSearch : String - string typed into the search bar
 //   isAdult : Bool         - if the channel should display extra content for the adult page
 //   videoArray : Array     - array of objects specifying a video. Follows the format [{videoId : String, title : String, date : Date, dateString : String, duration : String, description : String}, ...]
+//   dateInfo : Object      - Object containing the info about the search date filter {restriction : String, afterDate: Date, beforeDate : Date}
 class RainbowChannel extends React.Component {
   constructor(props) {
     super(props);
 
     // Constant hardcoding the keys in each video's object which will be targetted by the search
     this.searchVals = ["title", "dateString"];
+    // State includes
+    //   forward : Bool - Stores whether the videos should be shown from newest to oldest (true) or oldest to newest
+    this.state = {
+      forward : true
+    };
+    this.setOrder = this.setOrder.bind(this);
   }
 
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
@@ -150,10 +158,19 @@ class RainbowChannel extends React.Component {
 
   // Returns the JSX needed to display each video which fits the search criteria
   getFilteredVideoArray(){
+    // Returns message if the channel is empty
     if(this.props.videoArray == []){
       return (<Text style={styles.emptySearch}>No videos in this channel. Check back later</Text>)
     }
-    var dateVideoArray = this.props.videoArray
+    var dateVideoArray = [];
+    // Applies the sort order to the videos
+    if(!this.state.forward){
+      dateVideoArray = [...this.props.videoArray].reverse();
+    } else {
+      dateVideoArray = this.props.videoArray
+    }
+    
+    // Filters the videos by date. Either after, before or between dates (inclusive)
     let restriction = this.props.dateInfo.dateRestriction;
     let afterDate = this.props.dateInfo.afterDate;
     let beforeDate = this.props.dateInfo.beforeDate;
@@ -180,6 +197,8 @@ class RainbowChannel extends React.Component {
           return videoInfo.date < beforeDate && videoInfo.date > afterDate;
         });
     }
+    
+    // Applies the text search onto the remaining videos
     let searchResults = this.applySearch(dateVideoArray);
     let options = searchResults.options
     let displays = searchResults.displays
@@ -194,8 +213,15 @@ class RainbowChannel extends React.Component {
         display={displays[videoInfo.videoId]}
         isAdult={this.props.isAdult}
         description={videoInfo.description}
+        key={videoInfo.videoId}
       />
     )
+  }
+
+  // Changes the forward state when the sort icon is toggled
+  setOrder(forward){
+    console.log("IsForward: " + forward)
+    this.setState({ forward : forward });
   }
 
   render() {
@@ -203,20 +229,19 @@ class RainbowChannel extends React.Component {
     return (
       <ScrollView horizontal={true} style={{ flex: 1 }}>
          {/* Horizontal padding */}
-         <View style={{ width: 20, height:260}} />
+        <View style={{ width: 20, height:295}} />
         <View style={{width: 300, alignItems : "center"}}>
-          <View style={{height: 60,}}>
-            <AdjustableText
-              fontSize={35}
-              text={this.props.channelTitle  + " \u279E"}
-              style={styles.channelTitleText}
-              maxHeight={60}
-            />
-            <Image
-              source={this.getChannelImage()}
-              style={{width: 300, height : 200}}
-            />
-          </View>
+          <AdjustableText
+            fontSize={35}
+            text={this.props.channelTitle  + " \u279E"}
+            style={styles.channelTitleText}
+            maxHeight={60}
+          />
+          <Image
+            source={this.getChannelImage()}
+            style={{width: 300, height : 200}}
+          />
+          <ToggleSort style={{alignItems : "center"}} onPress={this.setOrder} />
         </View>
         { this.getFilteredVideoArray() }
         {/* Horizontal padding */}
