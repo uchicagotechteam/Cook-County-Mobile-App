@@ -197,7 +197,7 @@ class RainbowVideo extends React.Component {
 
   render() {
     return (
-      <View style={{width: 340 }}>
+      <View style={{width: 340 }} key={this.props.videoId}>
         <View style={{height: 60}}>
           <AdjustableText
             fontSize={30}
@@ -213,7 +213,7 @@ class RainbowVideo extends React.Component {
             maxHeight={60}
           />
         </View>
-        <View style={{flexGrow: 1, alignItems: 'center'}} key={this.props.videoId} >
+        <View style={{flexGrow: 1, alignItems: 'center'}} >
             {this.state.finished || this.state.unplayed ? (
               <View style={{height: 240,
                   top: 0,

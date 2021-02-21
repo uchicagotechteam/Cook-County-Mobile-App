@@ -155,7 +155,6 @@ class SearchArea extends React.Component {
     timeStamp -= timeStamp % (24 * 60 * 60 * 1000); //subtract amount of time since midnight
     timeStamp += new Date().getTimezoneOffset() * 60 * 1000; //add on the timezone offset
     timeStamp += 86399990;
-    console.log(new Date(timeStamp));
     return new Date(timeStamp);
   }
 
@@ -164,7 +163,6 @@ class SearchArea extends React.Component {
     let timeStamp = d.getTime();
     timeStamp -= timeStamp % (24 * 60 * 60 * 1000); //subtract amount of time since midnight
     timeStamp += new Date().getTimezoneOffset() * 60 * 1000; //add on the timezone offset
-    console.log(new Date(timeStamp));
     return new Date(timeStamp);
   }
 

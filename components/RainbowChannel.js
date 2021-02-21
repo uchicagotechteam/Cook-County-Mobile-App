@@ -183,8 +183,6 @@ class RainbowChannel extends React.Component {
         })
     }
     if(restriction == "Before" && !beforeNull){
-      console.log("Before restriction: " + JSON.stringify(beforeDate));
-      console.log("First video time: " + JSON.stringify(dateVideoArray[0].date));
       dateVideoArray = dateVideoArray.filter(videoInfo =>
         {
           return videoInfo.date < beforeDate;

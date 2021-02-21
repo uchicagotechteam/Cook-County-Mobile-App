@@ -253,15 +253,13 @@ export const styles = StyleSheet.create({
     paddingTop:5,
     paddingBottom:5,
     marginLeft:10,
-    marginRight:30,
+    marginRight:10,
     backgroundColor:'#00BCD4',
     borderRadius:20,
     borderWidth: 1,
     borderColor: '#000',
     paddingLeft:10,
     paddingRight:10,
-    marginLeft:10,
-    marginRight:10,
   },
   icon : {
     color: "#000000"
