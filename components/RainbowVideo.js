@@ -59,6 +59,8 @@ class RainbowVideo extends React.Component {
     this.onStateChange = this.onStateChange.bind(this);
     this.thumbnailClicked = this.thumbnailClicked.bind(this);
     this.getPauseImage = this.getPauseImage.bind(this);
+    this.reloadInfo = this.reloadInfo.bind(this);
+    this.resetOriginals = this.resetOriginals.bind(this);
   }
 
   async onStateChange(state) {
@@ -155,6 +157,14 @@ class RainbowVideo extends React.Component {
 
   // If the video goes from not playing to playing, starts an interval that records the time every second. If the video goes from playing to not playing, cancels the interval
   componentDidUpdate(prevProps, prevState, snapshot){
+    if(prevProps.videoId != this.props.videoId){
+      clearInterval(this.saveTime);
+      this.resetOriginals().then(() => {
+        this.reloadInfo().then(() => {
+          this.thumbnailClicked();
+        });
+      });
+    }
     if(prevState.shouldSave === false && this.state.shouldSave === true){
       this.saveTime = setInterval(
         () => this.recordTime(this.playerRef),
@@ -166,11 +176,6 @@ class RainbowVideo extends React.Component {
         clearInterval(this.saveTime);
       }
     }
-    if(prevProps.videoId != this.props.videoId){
-      clearInterval(this.saveTime);
-      this.reloadInfo();
-      this.thumbnailClicked();
-    }
   }
   
   // Cancels the save interval if the component is about to unmount
@@ -180,7 +185,7 @@ class RainbowVideo extends React.Component {
     }
   }
   
-  reloadInfo(){
+  async reloadInfo(){
     // let storageFinished = this.props.videoId + '.finished';
     let storageTime = this.props.videoId + '.playingTime';
     AsyncStorage.getItem(storageTime).then(storedTime => {
@@ -201,8 +206,22 @@ class RainbowVideo extends React.Component {
 
   // Loads information from local storage once the component mounts and sets the state appropriately. Also queries the youtube API for the thumbnail URL
   async componentDidMount(){
-    this.reloadInfo();
+    await this.reloadInfo();
     this.thumbnailClicked();
+  }
+  
+  async resetOriginals(){
+    this.setState({
+      playing: true,
+      shouldSave : false,
+      finished: false,
+      inProgress : false,
+      isBuffering : false,
+      unplayed : true,
+      thumbnail : null,
+      progressFraction: 0,
+      once: 0
+    });
   }
 
   render() {
