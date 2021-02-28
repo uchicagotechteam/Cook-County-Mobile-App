@@ -44,7 +44,7 @@ class RainbowVideo extends React.Component {
       once : Int - For some reason onStateChange was firing with the state "unstarted" multiple times when the video was first loaded, so I introduced a debugging variable to only count the first time unstarted plays. Really should be a bool. 
       */
     this.state = {
-      playing: false,
+      playing: true,
       shouldSave : false,
       finished: false,
       inProgress : false,
@@ -147,7 +147,7 @@ class RainbowVideo extends React.Component {
     let yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 10);
     if(this.props.date > yesterday){
-      return (<Text style={styles.highlightText}>New:&nbsp;</Text>)
+      return (<Text style={styles.new_highlight}>New:&nbsp;</Text>)
     } else {
       return null
     }
@@ -165,6 +165,11 @@ class RainbowVideo extends React.Component {
       if(this.saveTime != null){
         clearInterval(this.saveTime);
       }
+    }
+    if(prevProps.videoId != this.props.videoId){
+      getYoutubeMeta(this.props.videoId).then(meta => {
+          this.setState({thumbnail : meta.thumbnail_url, playing: true});
+      });
     }
   }
   
@@ -197,18 +202,11 @@ class RainbowVideo extends React.Component {
 
   render() {
     return (
-      <View style={{width: 340 }} key={this.props.videoId}>
+      <View style={{width: 340, height: 260 }}>
         <View style={{height: 60}}>
           <AdjustableText
             fontSize={30}
-            text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map(s =>
-                    s.mark ? <Text style={styles.search_highlight}>{s.seg}</Text> : <Text>{s.seg}</Text>)
-                  : this.props.title}
-                  &nbsp;-&nbsp;
-                  {this.props.display !== undefined ? this.props.display["dateString"].map(s =>
-                    s.mark ? <Text style={styles.search_highlight}>{s.seg}</Text> : <Text>{s.seg}</Text>)
-                  : this.props.title}
-                  </Text>
+            text=<Text>{this.isRecent()} {this.props.title}</Text>
             style={styles.videoTitleText}
             maxHeight={60}
           />
@@ -240,7 +238,7 @@ class RainbowVideo extends React.Component {
                 </View>
               </View>
             ) : <YoutubePlayer
-              height={240}
+              height={200}
               width={288}
               play={this.state.playing}
               videoId={this.props.videoId}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from 'axios';
 import RainbowChannel from "../components/RainbowChannel.js";
+import RoundedButton from '../components/RoundedButton.js'
 import { styles, api_key } from '../scripts/constants.js'
 import { View } from 'react-native';
 
@@ -15,6 +16,11 @@ function ChannelCollection(props) {
 
   // logic to maintain state of request to youtube API
   let [responseData, setResponseData] = useState('');
+  
+  // logic to maintain state of which video is currently playing in the theatre
+  let [activeId, setActiveId] = useState('');
+  
+  let [channelNum, setChannelNum] = useState(0);
 
   const getVideoArrayByIndex = useCallback((channel, index) =>{
     let arrayMatches = videoArrays.filter(videoObject => videoObject.index == index)
@@ -103,21 +109,56 @@ function ChannelCollection(props) {
       fetchData(props.channels[0].playlistId, 0, []);
     }
   }, [])
+  
+  const broadcastActiveVideo = useCallback((videoProps)=> {
+    props.broadcastActiveVideo(videoProps);
+    setActiveId(videoProps.videoId);
+  }, []);
 
   return (
-    props.channels.map((channel, index) =>
-      <View key={channel.playlistId}>
+    <View>
+      <View style={{ flexDirection : "row", justifyContent: 'space-evenly', }}>
+        <RoundedButton
+          onPress={() => setChannelNum(Math.max(channelNum - 1, 0))}
+          buttonStyle={styles.buttonStyle}
+          textStyle={styles.baseText}
+          text={"Last Channel"}
+        />
+        <RoundedButton
+          onPress={() => setChannelNum(Math.min(channelNum + 1, videoArrays.length - 1))}
+          buttonStyle={styles.buttonStyle}
+          textStyle={styles.baseText}
+          text={"Next channel"}
+        />
+      </View>
+      <View style={{height: 20}} />
+      { videoArrays.length > 0 ?
         <RainbowChannel
-          videoArray={getVideoArrayByIndex(channel, index)}
-          channelTitle={channel.channelTitle}
-          channelImage={channel.channelImage}
+          videoArray={getVideoArrayByIndex(props.channels[channelNum], channelNum)}
+          channelTitle={props.channels[channelNum].channelTitle}
+          channelImage={props.channels[channelNum].channelImage}
           currentSearch={props.searchText}
           dateInfo={props.dateInfo}
           isAdult={props.isAdult}
+          broadcastActiveVideo={broadcastActiveVideo}
+          activeId={activeId}
         />
-        <View style={styles.lineStyle} />
-      </View>
-    )
+        : null}
+      { /* props.channels.map((channel, index) =>
+        <View key={channel.playlistId}>
+          <RainbowChannel
+            videoArray={getVideoArrayByIndex(channel, index)}
+            channelTitle={channel.channelTitle}
+            channelImage={channel.channelImage}
+            currentSearch={props.searchText}
+            dateInfo={props.dateInfo}
+            isAdult={props.isAdult}
+            broadcastActiveVideo={broadcastActiveVideo}
+            activeId={activeId}
+          />
+          <View style={styles.lineStyle} />
+        </View> */ }
+    </View>
   );
 }
 

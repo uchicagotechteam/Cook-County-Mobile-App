@@ -211,7 +211,7 @@ class SearchArea extends React.Component {
             }
           }}
         /> : null }
-        <Animated.View style={[{top:0, width:"100%", zIndex: 1, ...styles.searchColor, elevation: 3}, {
+        <Animated.View style={[{top:-100, width:"100%", zIndex: 1, ...styles.searchColor, elevation: 3,position:"absolute"}, {
                 opacity: this.state.animationValue
               }]} >
           <View style={{paddingBottom : 5}}>

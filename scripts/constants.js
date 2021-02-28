@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 // since env variables are bundled into the app's build and thus can be exposed to clients after the app is shipped
 // more info here: https://docs.expo.io/guides/environment-variables/
 // const API_KEY = process.env.EXPO_CCMA_YT_API_KEY;
-export const api_key = "hello world"; // dummy value to build
+export const api_key = "AIzaSyC-x97X1_c0_zTo2LbfgqNXRemFoDRJ404"; // dummy value to build
 
 // export const theme = {
 //   dark: false,
@@ -25,7 +25,7 @@ export const api_key = "hello world"; // dummy value to build
 //     fontSize: 20,
 //   },
 //   // Text which has been highlighted by a search
-//   highlightText: {
+//   new_highlight: {
 //     color: '#0BF90B',
 //     fontWeight: 'bold',
 //   },
@@ -162,8 +162,8 @@ export const styles = StyleSheet.create({
     fontSize: 20,
   },
   // Text which has been highlighted by a search
-  highlightText: {
-    color: '#0BF90B',
+  new_highlight: {
+    color: '#16981D',
     fontWeight: 'bold',
   },
   // Title text for screens
@@ -177,7 +177,7 @@ export const styles = StyleSheet.create({
   channelTitleText: {
     fontWeight: 'bold',
     textAlign: 'center',
-    width: 300
+    width: 240
   },
   // Title text for videos
   videoTitleText: {
@@ -192,8 +192,8 @@ export const styles = StyleSheet.create({
   },
   // Child page
   regLogo: {
-    width: 410,
-    height: 300,
+    width: 340,
+    height: 270,
   },
   // Temporary flat logo for child page
   miniLogo: {

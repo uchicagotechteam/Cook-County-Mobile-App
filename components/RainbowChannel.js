@@ -1,5 +1,5 @@
 import React from 'react';
-import RainbowVideo from "../components/RainbowVideo.js";
+import RainbowThumbnail from "../components/RainbowThumbnail.js";
 import AdjustableText from "../components/AdjustableText.js";
 import ToggleSort from "../components/ToggleSort.js";
 import { Dimensions } from 'react-native';
@@ -14,6 +14,7 @@ import { styles } from '../scripts/constants.js'
 //   isAdult : Bool         - if the channel should display extra content for the adult page
 //   videoArray : Array     - array of objects specifying a video. Follows the format [{videoId : String, title : String, date : Date, dateString : String, duration : String, description : String}, ...]
 //   dateInfo : Object      - Object containing the info about the search date filter {restriction : String, afterDate: Date, beforeDate : Date}
+//   activeId : String      - youtube identifier of the video actively playing in the theatre
 class RainbowChannel extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +27,7 @@ class RainbowChannel extends React.Component {
       forward : true
     };
     this.setOrder = this.setOrder.bind(this);
+    this.broadcastActiveVideo = this.broadcastActiveVideo.bind(this);
   }
 
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
@@ -204,13 +206,15 @@ class RainbowChannel extends React.Component {
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
     return options.map(videoInfo =>
-      <RainbowVideo videoId={videoInfo.videoId}
+      <RainbowThumbnail videoId={videoInfo.videoId}
         title={videoInfo.title}
         date={videoInfo.date}
         duration={videoInfo.duration}
         display={displays[videoInfo.videoId]}
         isAdult={this.props.isAdult}
         description={videoInfo.description}
+        broadcastActiveVideo={this.broadcastActiveVideo}
+        activeId={this.props.activeId}
         key={videoInfo.videoId}
       />
     )
@@ -221,26 +225,31 @@ class RainbowChannel extends React.Component {
     console.log("IsForward: " + forward)
     this.setState({ forward : forward });
   }
+  
+  broadcastActiveVideo(videoProps){
+    this.props.broadcastActiveVideo(videoProps);
+  }
 
   render() {
 
     return (
       <ScrollView horizontal={true} style={{ flex: 1 }}>
          {/* Horizontal padding */}
-        <View style={{ width: 20, height:295}} />
-        <View style={{width: 300, alignItems : "center"}}>
+        <View style={{ width: 20, height:255}} />
+        <View style={{width: 240, alignItems : "center"}}>
           <AdjustableText
-            fontSize={35}
+            fontSize={30}
             text={this.props.channelTitle  + " \u279E"}
             style={styles.channelTitleText}
             maxHeight={60}
           />
           <Image
             source={this.getChannelImage()}
-            style={{width: 300, height : 200}}
+            style={{width: 240, height : 160}}
           />
           <ToggleSort style={{alignItems : "center"}} onPress={this.setOrder} />
         </View>
+        <View style={{ width: 20}} />
         { this.getFilteredVideoArray() }
         {/* Horizontal padding */}
          <View style={{ width: 20}} />
