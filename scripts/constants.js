@@ -199,7 +199,7 @@ export const styles = StyleSheet.create({
   miniLogo: {
     width: 80,
     height: 60,
-    resizeMode: 'center'
+    resizeMode: 'contain'
   },
   // Centers children in the component
   centerColumn:{
@@ -271,5 +271,10 @@ export const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor:'grey',
         margin:10,
-   }
+   }, 
+   image: {
+    flex: 1,
+    aspectRatio: 1.5, 
+    resizeMode: 'contain',
+}
 });
