@@ -13,9 +13,14 @@ function ChildScreen({ navigation }) {
     playlistId : "PLydZ2Hrp_gPTfidzAvRI524ZM0S2ZefF7",
   },
   {
-    channelTitle : "Music Channel",
+    channelTitle : "CDEFG Music!",
     channelImage : "music",
     playlistId : "PLydZ2Hrp_gPRpfRjuzArwtmlD5TDGIUql",
+  },
+  {
+    channelTitle : "Without Further Ado",
+    channelImage : "interview",
+    playlistId : "PLSQl0a2vh4HAxgGKXD5Oc_eELflPEddPx",
   },
   ];
 

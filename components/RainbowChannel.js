@@ -33,7 +33,10 @@ class RainbowChannel extends React.Component {
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
   getChannelImage(){
     if(this.props.channelImage == "music"){
-      return require('../images/music_channel.jpg');
+      return require('../images/cdefg.png');
+    }
+    else if(this.props.channelImage == "interview"){
+      return require('../images/interview_channel.png');
     }
     else{ // if(this.props.channelThumbnail == "golden"){
       return require('../images/golden_channel.jpeg');
@@ -237,15 +240,17 @@ class RainbowChannel extends React.Component {
          {/* Horizontal padding */}
         <View style={{ width: 20, height:255}} />
         <View style={{width: 240, alignItems : "center"}}>
-          <AdjustableText
-            fontSize={30}
-            text={this.props.channelTitle  + " \u279E"}
-            style={styles.channelTitleText}
-            maxHeight={60}
-          />
+          <View style={{height: 50}}>
+            <AdjustableText
+              fontSize={30}
+              text=<Text>{this.props.channelTitle  + " \u279E"}</Text>
+              style={styles.channelTitleText}
+              maxHeight={50}
+            />
+          </View>
           <Image
             source={this.getChannelImage()}
-            style={{width: 240, height : 160}}
+            style={{width: 240, height : 160, resizeMode: 'contain'}}
           />
           <ToggleSort style={{alignItems : "center"}} onPress={this.setOrder} />
         </View>

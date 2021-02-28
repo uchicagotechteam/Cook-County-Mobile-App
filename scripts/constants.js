@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 // since env variables are bundled into the app's build and thus can be exposed to clients after the app is shipped
 // more info here: https://docs.expo.io/guides/environment-variables/
 // const API_KEY = process.env.EXPO_CCMA_YT_API_KEY;
-export const api_key = ""; // dummy value to build
+export const api_key = "hello world"; // dummy value to build
 
 // export const theme = {
 //   dark: false,
