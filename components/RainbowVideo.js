@@ -169,6 +169,7 @@ class RainbowVideo extends React.Component {
     if(prevProps.videoId != this.props.videoId){
       clearInterval(this.saveTime);
       this.reloadInfo();
+      this.thumbnailClicked();
     }
   }
   
@@ -201,6 +202,7 @@ class RainbowVideo extends React.Component {
   // Loads information from local storage once the component mounts and sets the state appropriately. Also queries the youtube API for the thumbnail URL
   async componentDidMount(){
     this.reloadInfo();
+    this.thumbnailClicked();
   }
 
   render() {
