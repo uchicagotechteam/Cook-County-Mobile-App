@@ -64,7 +64,7 @@ class RainbowVideo extends React.Component {
   async onStateChange(state) {
     // variables storing the local storage keys for time (in {videoID}.playingTime) and whether the video has been finished (in {videoID}.finished)
     let storageTime = this.props.videoId + '.playingTime';
-    let storageFinished = this.props.videoId + '.finished';
+    // let storageFinished = this.props.videoId + '.finished';
 
     // Sets state.shouldSave to be true whenever the video is playing
     if (state === "playing"){
@@ -90,10 +90,10 @@ class RainbowVideo extends React.Component {
     if (state === "ended") {
       this.setState({playing : false, finished : true, progressFraction : 1.0});
       try {
-        await AsyncStorage.setItem(
-          storageFinished,
-          "true"
-        );
+        // await AsyncStorage.setItem(
+        //   storageFinished,
+        //   "true"
+        // );
         await AsyncStorage.setItem(
           storageTime,
           "atEnd"
@@ -167,9 +167,8 @@ class RainbowVideo extends React.Component {
       }
     }
     if(prevProps.videoId != this.props.videoId){
-      getYoutubeMeta(this.props.videoId).then(meta => {
-          this.setState({thumbnail : meta.thumbnail_url, playing: true});
-      });
+      clearInterval(this.saveTime);
+      this.reloadInfo();
     }
   }
   
@@ -179,10 +178,9 @@ class RainbowVideo extends React.Component {
       clearInterval(this.saveTime);
     }
   }
-
-  // Loads information from local storage once the component mounts and sets the state appropriately. Also queries the youtube API for the thumbnail URL
-  async componentDidMount(){
-    let storageFinished = this.props.videoId + '.finished';
+  
+  reloadInfo(){
+    // let storageFinished = this.props.videoId + '.finished';
     let storageTime = this.props.videoId + '.playingTime';
     AsyncStorage.getItem(storageTime).then(storedTime => {
       if(storedTime == null || (storedTime != "atEnd" && parseInt(storedTime) == 0)){
@@ -198,6 +196,11 @@ class RainbowVideo extends React.Component {
     getYoutubeMeta(this.props.videoId).then(meta => {
         this.setState({thumbnail : meta.thumbnail_url});
     });
+  }
+
+  // Loads information from local storage once the component mounts and sets the state appropriately. Also queries the youtube API for the thumbnail URL
+  async componentDidMount(){
+    this.reloadInfo();
   }
 
   render() {
