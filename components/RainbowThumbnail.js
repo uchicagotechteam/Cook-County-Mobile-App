@@ -44,7 +44,9 @@ class RainbowThumbnail extends React.Component {
 
   // Function that plays when thumbnail's icon is clicked. Start/restarts the video
   async thumbnailClicked() {
-    this.props.broadcastActiveVideo(this.props);
+    if(this.props.videoId != this.props.activeId){
+      this.props.broadcastActiveVideo(this.props);
+    }
   }
 
   // Returns the thumbnail icon. Either a check if the video is finished, a green array if the user's made some progress into the video, or a white arrow if the video has no stored time.
@@ -101,6 +103,23 @@ class RainbowThumbnail extends React.Component {
     getYoutubeMeta(this.props.videoId).then(meta => {
         this.setState({thumbnail : meta.thumbnail_url});
     });
+  }
+  
+  componentDidUpdate(prevProps, prevState, snapshot){
+    if(prevProps.activeId == this.props.videoId && this.props.activeId != this.props.videoId){
+      let storageTime = this.props.videoId + '.playingTime';
+      AsyncStorage.getItem(storageTime).then(storedTime => {
+        if(storedTime == null || (storedTime != "atEnd" && parseInt(storedTime) == 0)){
+          this.setState({inProgress : false});
+        } else if(storedTime != "atEnd"){
+          let curTime = parseInt(storedTime);
+          var progressFraction =  curTime / this.parseDuration();
+          this.setState({inProgress : true, progressFraction : progressFraction});
+        } else if(storedTime == "atEnd"){
+          this.setState({finished : true, progressFraction : 1.0})
+        }
+      });
+    }
   }
 
   render() {
