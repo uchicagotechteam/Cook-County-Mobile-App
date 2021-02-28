@@ -8,7 +8,7 @@ function ChildScreen({ navigation }) {
 
   // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
   const channels = [{
-    channelTitle : "Golden Hours",
+    channelTitle : "Golden Apples",
     channelImage : "golden",
     playlistId : "PLydZ2Hrp_gPTfidzAvRI524ZM0S2ZefF7",
   },
@@ -30,7 +30,7 @@ function ChildScreen({ navigation }) {
       </View> */ }
       <View style={{ height: 20, }} />
 
-      <Text style={styles.titleText}> Child View </Text>
+      <Text style={styles.titleText}> Student Page </Text>
 
       <View style={{ height: 20, }} />
       
