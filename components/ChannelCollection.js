@@ -68,7 +68,7 @@ function ChannelCollection(props) {
             dateString : date.toLocaleDateString("en-US"),
             description : description
           }
-        }).sort((a, b) => b.date - a.date);
+        })
 
         // Joins all the ids in the channel to make a query for the video durations.
         // IMPORTANT: The API is limited to 50 videoIds per query (according to stack overflow, haven't tried it myself), so so if channels can have more than 50 videos, we would need to do this in batches of 50.
@@ -98,6 +98,9 @@ function ChannelCollection(props) {
             localVideoArrays[index].videoArray.push(...videoArray);
             newVideoArrays = localVideoArrays;
           }
+          if(nextPageToken == null){
+            newVideoArrays[index].videoArray.sort();
+          }
           if(index + 1 < props.channels.length){
             if(nextPageToken == null){
               fetchData(props.channels[index+1].playlistId, index+1, newVideoArrays, null);
@@ -107,8 +110,6 @@ function ChannelCollection(props) {
           } else {
             // Once all the fetches have been accumulated, set the array of video arrays in state.
             // Note: I tried to do run the fetchdata requests in parallel for a bit, but it got pretty ugly and changed things so the next request would only start once the previous one finished. I might return and try parallel requests again later though
-            console.log("About to set video array");
-            console.log(newVideoArrays);
             setVideoArrays(newVideoArrays);
             // console.log("New video array " + JSON.stringify(newVideoArrays));
           }
@@ -136,18 +137,18 @@ function ChannelCollection(props) {
   return (
     <View>
       <View style={{ flexDirection : "row", justifyContent: 'space-evenly', }}>
-        <RoundedButton
+        { channelNum > 0 ? <RoundedButton
           onPress={() => setChannelNum(Math.max(channelNum - 1, 0))}
           buttonStyle={styles.buttonStyle}
           textStyle={styles.baseText}
           text={"Last Channel"}
-        />
-        <RoundedButton
+        /> : null }
+        { channelNum < videoArrays.length - 1 ? <RoundedButton
           onPress={() => setChannelNum(Math.min(channelNum + 1, videoArrays.length - 1))}
           buttonStyle={styles.buttonStyle}
           textStyle={styles.baseText}
           text={"Next channel"}
-        />
+        /> : null }
       </View>
       <View style={{height: 20}} />
       { videoArrays.length > 0 ?

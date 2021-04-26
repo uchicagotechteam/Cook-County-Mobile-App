@@ -35,7 +35,7 @@ function ChildScreen({ navigation }) {
   {
     channelTitle : "Botanical Garden",
     channelImage : "garden",
-    playlistId : "PLREI92DGCWRMPgXMYcEDBd1MYgLdZdmkp",
+    playlistId : "PL-WIU6_H4uiQGUipeRB7STrAA9SQhQ0io",
   },
   ];
 
