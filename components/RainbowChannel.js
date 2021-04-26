@@ -15,6 +15,7 @@ import { styles } from '../scripts/constants.js'
 //   videoArray : Array     - array of objects specifying a video. Follows the format [{videoId : String, title : String, date : Date, dateString : String, duration : String, description : String}, ...]
 //   dateInfo : Object      - Object containing the info about the search date filter {restriction : String, afterDate: Date, beforeDate : Date}
 //   activeId : String      - youtube identifier of the video actively playing in the theatre
+//   broadcastActiveVideo : Func - tells the component's parent when the video becomes the active thumbnail
 class RainbowChannel extends React.Component {
   constructor(props) {
     super(props);
@@ -38,8 +39,17 @@ class RainbowChannel extends React.Component {
     else if(this.props.channelImage == "interview"){
       return require('../images/interview_channel.png');
     }
-    else{ // if(this.props.channelThumbnail == "golden"){
+    else if(this.props.channelImage == "golden"){
       return require('../images/golden_channel.jpeg');
+    }
+    else if(this.props.channelImage == "forest"){
+      return require('../images/tree.png');
+    }
+    else if(this.props.channelImage == "garden"){
+      return require('../images/flower.png');
+    }
+    else { // if(this.props.channelImage == "zoo"){
+      return require('../images/elephant.png');
     }
   }
 
@@ -229,6 +239,7 @@ class RainbowChannel extends React.Component {
     this.setState({ forward : forward });
   }
   
+  // Tells the component's parent when the active video has changed
   broadcastActiveVideo(videoProps){
     this.props.broadcastActiveVideo(videoProps);
   }

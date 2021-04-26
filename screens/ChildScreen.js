@@ -10,7 +10,7 @@ function ChildScreen({ navigation }) {
   const channels = [{
     channelTitle : "Golden Apples",
     channelImage : "golden",
-    playlistId : "PLydZ2Hrp_gPTfidzAvRI524ZM0S2ZefF7",
+    playlistId : "PL4fGSI1pDJn6O1LS0XSdF3RyO0Rq_LDeI",
   },
   {
     channelTitle : "CDEFG Music!",
@@ -21,6 +21,21 @@ function ChildScreen({ navigation }) {
     channelTitle : "Without Further Ado",
     channelImage : "interview",
     playlistId : "PLSQl0a2vh4HAxgGKXD5Oc_eELflPEddPx",
+  },
+  {
+    channelTitle : "Forest Reserve",
+    channelImage : "forest",
+    playlistId : "PLvahqwMqN4M0GRkZY8WkLZMb6Z-W7qbLA",
+  },
+  {
+    channelTitle : "Brookfield Zoo",
+    channelImage : "zoo",
+    playlistId : "PLH8c8f3_r5t5jObPDlNNMQo0aMv52stCz",
+  },
+  {
+    channelTitle : "Botanical Garden",
+    channelImage : "garden",
+    playlistId : "PLREI92DGCWRMPgXMYcEDBd1MYgLdZdmkp",
   },
   ];
 

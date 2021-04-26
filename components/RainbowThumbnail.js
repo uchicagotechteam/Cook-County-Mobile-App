@@ -12,20 +12,21 @@ import { styles } from '../scripts/constants.js'
 import moment from "moment";
 
 // Props include
-//   videoId : String      - youtube identifier to fetch the video
-//   activeId : String      - youtube identifier of the video actively playing in the theatre
-//   duration : String     - ISO 8601 string corresponding to the duration of the video
-//   isAdult : Bool        - whether the video should display extra content for the adult page
-//   title : String        - title of the video
-//   display : Object      - object describing what parts of the title should be highlighted
-//   description : String  - the youtube video's description. Could be used to encode data instead of a database 
-//   date : Date           - video's date
+//   videoId : String            - youtube identifier to fetch the video
+//   activeId : String           - youtube identifier of the video actively playing in the theatre
+//   duration : String           - ISO 8601 string corresponding to the duration of the video
+//   isAdult : Bool              - whether the video should display extra content for the adult page
+//   title : String              - title of the video
+//   display : Object            - object describing what parts of the title should be highlighted
+//   description : String        - the youtube video's description. Could be used to encode data instead of a database 
+//   broadcastActiveVideo : Func - tells the component's parent when the video becomes the active thumbnail
+//   date : Date                 - video's date
 class RainbowThumbnail extends React.Component {
   constructor(props) {
     super(props);
 
     /* State stores the following variables
-      fiinished : bool - corresponds to whether the video is at its end
+      finished : bool - corresponds to whether the video is at its end
       inProgress : bool - this stores whether the user is part way through the video (used for showing the green play button instead of the white one, but that's a bit unnecessary now that we have a progress bar)
       thumbnail : String? - Either null (the initial value) or a string giving the url where the video's thumbnail can be retrieved
       progressFraction : Number - Fraction of the video that has been watched 
@@ -78,6 +79,7 @@ class RainbowThumbnail extends React.Component {
     }
   }
   
+  // Gives a special green background to the thumbnail corresponding to the actively playing video
   getActiveBackground(){
     if(this.props.activeId == this.props.videoId){
       return {width: 340, backgroundColor : "#b9ffb7", borderRadius:20};
@@ -105,6 +107,9 @@ class RainbowThumbnail extends React.Component {
     });
   }
   
+  // If the video goes from active to inactive (the user has clicked on another thumbnail)
+  // then update the progress bar with the new duration which has been watched and set the
+  // thumbnail to reflect if the video is finished
   componentDidUpdate(prevProps, prevState, snapshot){
     if(prevProps.activeId == this.props.videoId && this.props.activeId != this.props.videoId){
       let storageTime = this.props.videoId + '.playingTime';

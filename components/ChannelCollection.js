@@ -37,15 +37,21 @@ function ChannelCollection(props) {
   // beware of infinite loops
   useEffect(() => {
     // logic to fetch data from youtube api
-    const fetchData = function(playlistId, index, localVideoArrays) {
+    const fetchData = function(playlistId, index, localVideoArrays, pageToken) {
       console.log(playlistId);
       console.log(api_key);
+      var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
+      console.log(token_text);
       axios({
         "method": "GET",
-        "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key
+        "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text
       })
       .then((response) => {
         setResponseData(response.data)
+        var nextPageToken = null;
+        if(response.data.nextPageToken != undefined && response.data.nextPageToken != null){
+          nextPageToken = response.data.nextPageToken;
+        }
 
         // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
         let videoArray = response.data.items.map(video => {
@@ -84,14 +90,25 @@ function ChannelCollection(props) {
               videoArray[i]["duration"] = durations[i];
             }
           }
-
+          var newVideoArrays = [];
           // Adds the video array to newVideoArrays, which accumulates objects with the index of the channel and the video array
-          const newVideoArrays = [...localVideoArrays, {index, videoArray}];
+          if(pageToken == null){
+            newVideoArrays = [...localVideoArrays, {index, videoArray}];
+          } else {
+            localVideoArrays[index].videoArray.push(...videoArray);
+            newVideoArrays = localVideoArrays;
+          }
           if(index + 1 < props.channels.length){
-            fetchData(props.channels[index+1].playlistId, index+1, newVideoArrays);
+            if(nextPageToken == null){
+              fetchData(props.channels[index+1].playlistId, index+1, newVideoArrays, null);
+            } else {
+              fetchData(props.channels[index].playlistId, index, newVideoArrays, nextPageToken);
+            }
           } else {
             // Once all the fetches have been accumulated, set the array of video arrays in state.
             // Note: I tried to do run the fetchdata requests in parallel for a bit, but it got pretty ugly and changed things so the next request would only start once the previous one finished. I might return and try parallel requests again later though
+            console.log("About to set video array");
+            console.log(newVideoArrays);
             setVideoArrays(newVideoArrays);
             // console.log("New video array " + JSON.stringify(newVideoArrays));
           }
@@ -106,10 +123,11 @@ function ChannelCollection(props) {
     }
     // If there are any channels, begin fetching from the channel at index 0
     if(props.channels.length > 0){
-      fetchData(props.channels[0].playlistId, 0, []);
+      fetchData(props.channels[0].playlistId, 0, [], null);
     }
   }, [])
   
+  // Tells the component's parent when the active video has changed
   const broadcastActiveVideo = useCallback((videoProps)=> {
     props.broadcastActiveVideo(videoProps);
     setActiveId(videoProps.videoId);

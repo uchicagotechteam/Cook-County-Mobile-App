@@ -5,6 +5,8 @@ import { styles } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
 
 function HomeScreen({ navigation }) {
+  // const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
+  
   return (
     <View style={styles.centerColumn}>
       { /* <ImageBackground style={styles.bgLogo} source={require('../images/simple_rainbow.png')}> */ }
