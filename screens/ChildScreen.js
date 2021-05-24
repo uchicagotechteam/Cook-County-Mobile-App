@@ -61,7 +61,6 @@ function ChildScreen({ navigation }) {
 
         // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
         let playlistArray = response.data.items.map(playlist => {
-          description = playlist.snippet.description;
           return {
             playlistId: playlist.id,
             channelTitle: playlist.snippet.title,

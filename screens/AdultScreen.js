@@ -22,6 +22,8 @@ function AdultScreen({ navigation }) {
   const updateSearch = useCallback((search) => {
     setSearchText(search);
   }, []);
+  
+  console.log("Opening the adult screen")
 
   return (
     <View>
