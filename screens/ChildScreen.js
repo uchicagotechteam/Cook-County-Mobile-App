@@ -2,13 +2,14 @@ import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, TouchableHighlight} from 'react-native';
 import RainbowTheater from "../components/RainbowTheater.js";
-import { styles } from '../scripts/constants.js'
+import { styles, api_key } from '../scripts/constants.js'
+import axios from 'axios';
 
 function ChildScreen({ navigation }) {
   // logic to maintain state of request to youtube API
   let [playlistResponseData, setPlaylistResponseData] = useState('');
   let [channelResponseData, setChannelResponseData] = useState('');
-  let [channels, setChannels] = useState('');
+  let [channels, setChannels] = useState([]);
   let [bannerDescription, setBannerDescription] = useState('');
 
   // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
@@ -68,6 +69,7 @@ function ChildScreen({ navigation }) {
           }
         });
         setChannels(playlistArray);
+        console.log(channels);
       })
       .catch((error) => {
         console.log(error)
@@ -85,6 +87,7 @@ function ChildScreen({ navigation }) {
         if(response.data.items.length > 0){
           let description = response.data.items[0].snippet.description; 
           setBannerDescription(description);
+          console.log(bannerDescription);
         } else {
           console.log("No channels matched that id");
         }
