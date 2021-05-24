@@ -190,6 +190,10 @@ export const styles = StyleSheet.create({
     width: 320,
     height: 150,
   },
+  sponsorLogo: {
+    width: 150,
+    height: 150,
+  },
   // Child page
   regLogo: {
     width: 340,

@@ -33,6 +33,7 @@ class RainbowChannel extends React.Component {
 
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
   getChannelImage(){
+    console.log("I'm not working!!!");
     if(this.props.channelImage == "music"){
       return require('../images/cdefg.png');
     }

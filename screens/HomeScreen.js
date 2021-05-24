@@ -3,13 +3,27 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { TouchableOpacity, View, Text, Image, ImageBackground, StyleSheet } from 'react-native';
 import { styles } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
+import SponsorBanner from '../components/SponsorBanner.js'
 
 function HomeScreen({ navigation }) {
   // const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
   
+  // const shuffleArray = useCallback((array)=> {
+  //   for (var i = array.length - 1; i > 0; i--) {
+  //       var j = Math.floor(Math.random() * (i + 1));
+  //       var temp = array[i];
+  //       array[i] = array[j];
+  //       array[j] = temp;
+  //   }
+  //   console.log("Shuffling!")
+  //   return array;
+  // }, []);
+  
   return (
     <View style={styles.centerColumn}>
       { /* <ImageBackground style={styles.bgLogo} source={require('../images/simple_rainbow.png')}> */ }
+      <SponsorBanner image_ids={["19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE"
+      ]} />
       <Image
         style={styles.mainLogo}
         source={require('../images/PR_logo_name.png')}
