@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
-import { View, Image } from 'react-native';
+import { View, Image, ScrollView } from 'react-native';
 import ChannelCollection from "../components/ChannelCollection.js";
 import RainbowVideo from "../components/RainbowVideo.js";
 import SearchArea from '../components/SearchArea';
@@ -47,31 +47,31 @@ function RainbowTheater(props) {
         searchText={searchText}
         active={searchActive}
       />
-      <View style={{alignItems:"center"}}>
-        {activeProps == null ?
-          <View style={{height: 260, width:340}}>
-            <Image
-              style={styles.regLogo}
-              source={require('../images/rainbow.jpg')}
-            />
-          </View>
-          : <RainbowVideo videoId={activeProps.videoId}
-          title={activeProps.title}
-          date={activeProps.date}
-          duration={activeProps.duration}
-          display={activeProps.display}
-          isAdult={activeProps.isAdult}
-          description={activeProps.description}
-        />}
-        <View style={{height: 30}} />
-        <ChannelCollection
-          channels={props.channels}
-          searchText={searchText}
-          dateInfo={dateInfo}
-          isAdult={props.isAdult}
-          broadcastActiveVideo={broadcastActiveVideo}
-        />
-      </View>
+      <ScrollView>
+          { /*activeProps == null ?
+            <View style={{height: 260, width:340}}>
+              <Image
+                style={styles.regLogo}
+                source={require('../images/rainbow.jpg')}
+              />
+            </View>
+            : <RainbowVideo videoId={activeProps.videoId}
+            title={activeProps.title}
+            date={activeProps.date}
+            duration={activeProps.duration}
+            display={activeProps.display}
+            isAdult={activeProps.isAdult}
+            description={activeProps.description}
+          /> */  }
+          <View style={{height: 30}} />
+          <ChannelCollection
+            channels={props.channels}
+            searchText={searchText}
+            dateInfo={dateInfo}
+            isAdult={props.isAdult}
+            broadcastActiveVideo={broadcastActiveVideo}
+          />
+      </ScrollView>
     </View>
   );
 }

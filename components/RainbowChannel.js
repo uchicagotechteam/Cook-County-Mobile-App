@@ -34,10 +34,9 @@ class RainbowChannel extends React.Component {
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
   getChannelImage(){
     let re = /(http(?:s?):\/\/(?:www\.))?(drive.google.com?(.*))/
-    let google_drive_link = item.snippet.description.match(re)
-    console.log(google_drive_link);
-    let image_id = google_drive_link.split("/")[-2];
-    console.log(image_id);
+    let google_drive_link = this.props.channelImage.match(re)[0];
+    let image_id = google_drive_link.split("/").slice(-2)[0];
+    console.log("Channel image id: " + image_id);
     return {uri: "https://drive.google.com/thumbnail?id=" + image_id }
     // if(this.props.channelImage == "music"){
     //   return require('../images/cdefg.png');

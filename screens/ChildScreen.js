@@ -52,7 +52,7 @@ function ChildScreen({ navigation }) {
   useEffect(() => {
     // logic to fetch data from youtube api
     const fetchChannels = function(channelId) {
-      console.log("Playlists - " + channelId);
+      console.log("Playlists from https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key);
       axios({
         "method": "GET",
         "url": "https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key
@@ -68,11 +68,12 @@ function ChildScreen({ navigation }) {
             channelImage : playlist.snippet.description
           }
         });
+        console.log(playlistArray);
         setChannels(playlistArray);
-        console.log(channels);
       })
       .catch((error) => {
-        console.log(error)
+        console.log("Axios error");
+        console.log(error);
       })
     }
     
@@ -86,20 +87,39 @@ function ChildScreen({ navigation }) {
         setChannelResponseData(response.data);
         if(response.data.items.length > 0){
           let description = response.data.items[0].snippet.description; 
+          console.log(description)
           setBannerDescription(description);
-          console.log(bannerDescription);
         } else {
           console.log("No channels matched that id");
         }
       })
       .catch((error) => {
-        console.log(error)
+        console.log("Axios error");
+        console.log(error);
       })
     }
     
     fetchChannels(ccbChannel);
     fetchBanner(ccbChannel);
   }, [])
+  
+  // useEffect(() => {
+  //   if (channels.length > 0) {
+  //     console.log("Channels has been set");
+  //     console.log(channels);
+  //   }
+  // }, [channels]);
+   
+  const getRainbowTheatre = useCallback(() =>{
+    console.log("Getting the child screen with channel length: " + channels.length);
+    return (
+      <RainbowTheater
+        channels={channels}
+        isAdult={false}
+        navigation={navigation}
+      />
+    )
+  }, [channels]);
 
   return (
     <View>
@@ -116,11 +136,7 @@ function ChildScreen({ navigation }) {
 
       <View style={{ height: 20, }} />
       
-      <RainbowTheater
-        channels={channels}
-        isAdult={false}
-        navigation={navigation}
-      />
+      { getRainbowTheatre() }
 
       { /* <Image
         style={styles.regLogo}

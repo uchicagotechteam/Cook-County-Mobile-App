@@ -126,7 +126,7 @@ function ChannelCollection(props) {
     if(props.channels.length > 0){
       fetchData(props.channels[0].playlistId, 0, [], null);
     }
-  }, [])
+  }, [props.channels])
   
   // Tells the component's parent when the active video has changed
   const broadcastActiveVideo = useCallback((videoProps)=> {
@@ -135,50 +135,52 @@ function ChannelCollection(props) {
   }, []);
 
   return (
-    <View>
-      <View style={{ flexDirection : "row", justifyContent: 'space-evenly', }}>
-        { channelNum > 0 ? <RoundedButton
-          onPress={() => setChannelNum(Math.max(channelNum - 1, 0))}
-          buttonStyle={styles.buttonStyle}
-          textStyle={styles.baseText}
-          text={"Last Channel"}
-        /> : null }
-        { channelNum < videoArrays.length - 1 ? <RoundedButton
-          onPress={() => setChannelNum(Math.min(channelNum + 1, videoArrays.length - 1))}
-          buttonStyle={styles.buttonStyle}
-          textStyle={styles.baseText}
-          text={"Next channel"}
-        /> : null }
-      </View>
-      <View style={{height: 20}} />
-      { videoArrays.length > 0 ?
+    props.channels.map((channel, index) =>
+      <View key={channel.playlistId}>
         <RainbowChannel
-          videoArray={getVideoArrayByIndex(props.channels[channelNum], channelNum)}
-          channelTitle={props.channels[channelNum].channelTitle}
-          channelImage={props.channels[channelNum].channelImage}
+          videoArray={getVideoArrayByIndex(channel, index)}
+          channelTitle={channel.channelTitle}
+          channelImage={channel.channelImage}
           currentSearch={props.searchText}
           dateInfo={props.dateInfo}
           isAdult={props.isAdult}
           broadcastActiveVideo={broadcastActiveVideo}
           activeId={activeId}
         />
-        : null}
-      { /* props.channels.map((channel, index) =>
-        <View key={channel.playlistId}>
-          <RainbowChannel
-            videoArray={getVideoArrayByIndex(channel, index)}
-            channelTitle={channel.channelTitle}
-            channelImage={channel.channelImage}
-            currentSearch={props.searchText}
-            dateInfo={props.dateInfo}
-            isAdult={props.isAdult}
-            broadcastActiveVideo={broadcastActiveVideo}
-            activeId={activeId}
-          />
-          <View style={styles.lineStyle} />
-        </View> */ }
-    </View>
-  );
+        <View style={styles.lineStyle} />
+      </View>
+  ));
 }
+
+/*
+Old theatre return
+
+<View style={{ flexDirection : "row", justifyContent: 'space-evenly', }}>
+  { channelNum > 0 ? <RoundedButton
+    onPress={() => setChannelNum(Math.max(channelNum - 1, 0))}
+    buttonStyle={styles.buttonStyle}
+    textStyle={styles.baseText}
+    text={"Last Channel"}
+  /> : null }
+  { channelNum < videoArrays.length - 1 ? <RoundedButton
+    onPress={() => setChannelNum(Math.min(channelNum + 1, videoArrays.length - 1))}
+    buttonStyle={styles.buttonStyle}
+    textStyle={styles.baseText}
+    text={"Next channel"}
+  /> : null }
+</View>
+<View style={{height: 20}} />
+{ videoArrays.length > 0 ?
+  <RainbowChannel
+    videoArray={getVideoArrayByIndex(props.channels[channelNum], channelNum)}
+    channelTitle={props.channels[channelNum].channelTitle}
+    channelImage={props.channels[channelNum].channelImage}
+    currentSearch={props.searchText}
+    dateInfo={props.dateInfo}
+    isAdult={props.isAdult}
+    broadcastActiveVideo={broadcastActiveVideo}
+    activeId={activeId}
+  />
+  : null} */
 
 export default ChannelCollection;
