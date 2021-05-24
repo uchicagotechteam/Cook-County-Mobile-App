@@ -61,12 +61,14 @@ function ChannelCollection(props) {
           if(props.isAdult){
             description = video.snippet.description;
           }
+          let re = /(http(?:s?):\/\/(?:www\.))?(drive.google.com?(.*))/
+          let google_drive_link = item.snippet.description.match(re)
           return {
             videoId: video.contentDetails.videoId,
             title: video.snippet.title,
             date : date,
             dateString : date.toLocaleDateString("en-US"),
-            description : description
+            description : google_drive_link
           }
         })
 
