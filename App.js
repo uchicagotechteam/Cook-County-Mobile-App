@@ -5,6 +5,7 @@ import HomeScreen from "./screens/HomeScreen.js";
 import ChildScreen from "./screens/ChildScreen.js";
 import AdultScreen from "./screens/AdultScreen.js";
 import { theme, styles } from './scripts/constants.js'
+import withSplashScreen from './components/withSplashScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,4 +23,5 @@ function App() {
   );
 }
 
-export default App;
+// Wrap the App component using a function that adds the initial logo screen
+export default withSplashScreen(App);
