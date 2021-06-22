@@ -7,6 +7,9 @@ import { StyleSheet } from 'react-native';
 // const API_KEY = process.env.EXPO_CCMA_YT_API_KEY;
 export const api_key = "hello world"; // dummy value to build
 
+// The spacing between two icons in the sponsor bar
+export const SPONSOR_LOGO_SPACING = 10;
+
 // export const theme = {
 //   dark: false,
 //   colors: {
@@ -193,7 +196,7 @@ export const styles = StyleSheet.create({
   sponsorLogo: {
     width: 150,
     height: 150,
-    margin: 5,
+    margin: SPONSOR_LOGO_SPACING / 2,
     borderRadius: 15,
   },
   // Child page

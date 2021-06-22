@@ -1,17 +1,22 @@
 import * as React from 'react';
 import { Image, View, ScrollView, Text } from 'react-native';
-import { styles } from '../scripts/constants.js'
+import { styles, SPONSOR_LOGO_SPACING }  from '../scripts/constants.js'
 
 import LoopCarousel from './LoopCarousel';
 
 
 // Render an individual logo
 function renderLogo(item, index, width) {
-  var image_id = item
+  var image_id = item;
+
+  // Compute the dimensions of each icon using the width and the spacing between them
+  var dim = width - SPONSOR_LOGO_SPACING;
+
+  // Return an image with the appropriate dimensions and source URL
   return (
     <View key={image_id + index}>
       <Image
-        style={[styles.sponsorLogo, {width: `${width-10}px`, height: `${width-10}px`}]}
+        style={[styles.sponsorLogo, {width: `${dim}px`, height: `${dim}px`}]}
         source={{uri: "https://drive.google.com/thumbnail?id=" + image_id }}
       />
     </View>
