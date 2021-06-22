@@ -193,6 +193,8 @@ export const styles = StyleSheet.create({
   sponsorLogo: {
     width: 150,
     height: 150,
+    margin: 5,
+    borderRadius: 15,
   },
   // Child page
   regLogo: {
