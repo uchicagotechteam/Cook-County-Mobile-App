@@ -50,6 +50,9 @@ export const LoopCarousel = (props) => {
 	// Define a state variable to track the width of the contents
 	const [width, setWidth] = React.useState(0);
 
+	// Define a state variable to track the current item at the left side of the screen
+	const [interval, setInterval] = React.useState(items.length);
+
 	// The list to use as the actual data for the ScrollView element - make a copy of the
 	// elements on either side, so the user can scroll infinitely in either direction
 	// For a more intensive list we might want to use a smaller/smarter selection,
@@ -65,6 +68,23 @@ export const LoopCarousel = (props) => {
 	// Init function to run any time the dimensions of the content change
 	const init = (width) => {
 		setWidth(width);
+	}
+
+	// Get the index in extended_items that the LoopCarousel currently has on the left edge
+	// of the screen
+	const getAbsoluteInterval = (offset) => {
+		for (let i = 1; i <= extended_items.length; i++) {
+			if (offset < itemWidth * i) {
+				return i;
+			}
+		}
+		return extended_items.length;
+	}
+
+	// Get the index in items that the LoopCarousel currently has on the left edge of the screen
+	const getInterval = (offset) => {
+		var interval = getAbsoluteInterval(offset);
+		return items.length + ((interval - 1) % items.length);
 	}
 
 	// On the scroll event, check if the offset is going past the boundaries, and adjust it if so
@@ -89,6 +109,9 @@ export const LoopCarousel = (props) => {
 		if (adjustment != 0) {
 			scroll_view_ref.current.scrollTo({x: contentOffset.x + adjustment, animated: false});
 		}
+
+		// Set the interval value
+		setInterval(getInterval(contentOffset.x));
 	}
 
 	// Return a ScrollView element, whose entries consist of the items array with renderItem
