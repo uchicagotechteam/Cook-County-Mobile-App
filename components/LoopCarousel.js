@@ -45,7 +45,7 @@ export const LoopCarousel = (props) => {
 
 	// Compute the width of a single item in the carousel
 	// TODO: This should probably update dynamically with the dimensions of the screen
-	const itemWidth = Dimensions.get('window').width / itemsPerInterval;
+	const itemWidth = Math.round(Dimensions.get('window').width / itemsPerInterval);
 
 	// Define a state variable to track the width of the contents
 	const [width, setWidth] = React.useState(0);
