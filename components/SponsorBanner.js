@@ -4,6 +4,20 @@ import { styles, SPONSOR_LOGO_SPACING, SPONSOR_AUTOSCROLL_DELAY }  from '../scri
 
 import LoopCarousel from './LoopCarousel';
 
+// Import functions to retrieve props
+import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
+
+
+// Function to shuffle the array of logos, if required
+function shuffleLogos(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
 
 // Render an individual logo
 function renderLogo(item, index, width) {
@@ -29,11 +43,15 @@ function renderLogo(item, index, width) {
 //   image_ids : [String]        - IDs to get the image links from Google Drive
 function SponsorBanner(props) {
 
+  // Retrieve props
+  const image_ids = getPropRequired(props, "image_ids", "SponsorBanner");
+  const shuffle   = getPropDefault(props, "shuffle", false);
+
   return (
     <View style={{width: "100%"}}>
       <LoopCarousel
         itemsPerInterval={5}
-        items={props.image_ids}
+        items={shuffle ? shuffleLogos(image_ids) : image_ids}
         renderItem={renderLogo}
         autoscroll={true}
         autoscrollDelay={SPONSOR_AUTOSCROLL_DELAY}
