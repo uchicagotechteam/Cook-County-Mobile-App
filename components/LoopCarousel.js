@@ -44,6 +44,8 @@ export default class LoopCarousel extends React.Component {
 		// Retrieve the optional props from the props object
 		this.itemsPerInterval = getPropDefault(props, "itemsPerInterval", 1);
 		this.renderItem       = getPropDefault(props, "renderItem",       defaultRenderItem);
+		this.autoscroll       = getPropDefault(props, "autoscroll",       false);
+		this.autoscrollDelay  = getPropDefault(props, "autoscrollDelay",  10000);
 
 		// Compute the width of a single item in the carousel
 		// TODO: This should probably update dynamically with the dimensions of the screen
@@ -71,7 +73,9 @@ export default class LoopCarousel extends React.Component {
 			// When the user grabs the carousel, cancel any existing snap check so it does not
 			// fire while the user is moving the carousel
 			onPanResponderGrant: () => {
+				this.setState({ auto_scrolling: false });
 				this.clear_snap_check();
+				this.stop_autoscroll_timer();
 			},
 
 			// When the user lets go of the carousel, set a JS interval which will continually
@@ -83,6 +87,9 @@ export default class LoopCarousel extends React.Component {
 					if (this.state.prev_x == this.state.curr_x) {
 						this.snap_to_interval();
 						this.clear_snap_check();
+						if (this.autoscroll) {
+							this.start_autoscroll_timer();
+						}
 					}
 				}, 100);
 			},
@@ -90,12 +97,32 @@ export default class LoopCarousel extends React.Component {
 
 		// Store the variables we expect might change in the state
 		this.state = {
+
+			// Content width
 			width: 0,
+
+			// Index of item currently at the left edge of the screen
 			interval: this.items.length,
-			snap_check: null,
+
+			// Previous and current offsets of the ScrollView
 			prev_x: null,
 			curr_x: null,
+
+			// ID of the JS interval checking to see if motion has stopped
+			// to snap to nearest interval
+			snap_check: null,
+
+			// ID of JS interval controlling autoscroll
+			autoscroll_timer: null,
+
+			// Boolean tracking whether carousel's most recent motion was due to autoscroll
+			auto_scrolling: false,
 		};
+
+		// Start the autoscroll, if applicable
+		if (this.autoscroll) {
+			this.start_autoscroll_timer();
+		}
 	}
 
 	// Init function to run any time the dimensions of the content change
@@ -111,6 +138,43 @@ export default class LoopCarousel extends React.Component {
 		if (this.state.snap_check !== null) {
 			clearInterval(this.state.snap_check);
 			this.setState({ snap_check: null });
+		}
+	}
+
+	// Set a js interval for the autoscroll
+	start_autoscroll_timer() {
+		this.state.autoscroll_timer = setInterval(() => {
+
+			// Mark this motion as autoscroll
+			this.setState({ auto_scrolling: true });
+
+			// Autoscroll to the next item not on screen
+			var target_interval = this.state.interval + this.itemsPerInterval;
+
+			// Check if we need to back up one array length to have enough items ahead
+			// for the autoscroll
+			if (target_interval * this.itemWidth >= this.coord_upper_bound) {
+				this.scrollTo({
+					x: (this.state.interval - this.items.length) * this.itemWidth,
+					animated: false
+				});
+				target_interval -= this.items.length;
+			}
+
+			// Do the animated scroll on the next tick
+			setImmediate(() => {
+				this.scrollTo({ x: target_interval * this.itemWidth , animated: true });
+			});
+
+		// Perform the autoscroll based on the passed prop
+		}, this.autoscrollDelay);
+	}
+
+	// Clear the js interval for the autoscroll
+	stop_autoscroll_timer() {
+		if (this.state.autoscroll_timer !== null) {
+			clearInterval(this.state.autoscroll_timer);
+			this.setState({ autoscroll_timer: null });
 		}
 	}
 
@@ -141,21 +205,24 @@ export default class LoopCarousel extends React.Component {
 		// WARNING: contentSize not available on Android
 		const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
 
-		// Initialize a variable to track how far the offset has to move to be in the proper range
-		var adjustment = 0;
+		if (!this.state.auto_scrolling) {
 
-		// If above the upper bound, compute the adjustment needed to loop back around
-		// to the lower bound, and vice versa
-		while (contentOffset.x + adjustment > this.coord_upper_bound) {
-			adjustment -= this.coord_width;
-		}
-		while (contentOffset.x + adjustment < this.coord_lower_bound) {
-			adjustment += this.coord_width;
-		}
+			// Initialize a variable to track how far the offset has to move to be in the proper range
+			var adjustment = 0;
 
-		// If an adjustment is needed to bring the window back into the proper range, apply it
-		if (adjustment != 0) {
-			this.scrollTo({ x: contentOffset.x + adjustment, animated: false });
+			// If above the upper bound, compute the adjustment needed to loop back around
+			// to the lower bound, and vice versa
+			while (contentOffset.x + adjustment > this.coord_upper_bound) {
+				adjustment -= this.coord_width;
+			}
+			while (contentOffset.x + adjustment < this.coord_lower_bound) {
+				adjustment += this.coord_width;
+			}
+
+			// If an adjustment is needed to bring the window back into the proper range, apply it
+			if (adjustment != 0) {
+				this.scrollTo({ x: contentOffset.x + adjustment, animated: false });
+			}
 		}
 
 		// Set the interval value

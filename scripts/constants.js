@@ -10,6 +10,10 @@ export const api_key = "hello world"; // dummy value to build
 // The spacing between two icons in the sponsor bar
 export const SPONSOR_LOGO_SPACING = 10;
 
+// The time the sponsor bar waits in between each autoscroll, in milliseconds
+// (1000 ms = 1 second)
+export const SPONSOR_AUTOSCROLL_DELAY = 10000;
+
 // export const theme = {
 //   dark: false,
 //   colors: {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Image, View, ScrollView, Text } from 'react-native';
-import { styles, SPONSOR_LOGO_SPACING }  from '../scripts/constants.js'
+import { styles, SPONSOR_LOGO_SPACING, SPONSOR_AUTOSCROLL_DELAY }  from '../scripts/constants.js'
 
 import LoopCarousel from './LoopCarousel';
 
@@ -35,6 +35,8 @@ function SponsorBanner(props) {
         itemsPerInterval={5}
         items={props.image_ids}
         renderItem={renderLogo}
+        autoscroll={true}
+        autoscrollDelay={SPONSOR_AUTOSCROLL_DELAY}
       />
     </View>
   );
