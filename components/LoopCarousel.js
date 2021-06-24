@@ -25,10 +25,12 @@ function getPropDefault(props, field, default_value) {
 // Default rendering function for an individual item in the carousel
 function defaultRenderItem(item, index, width) {
 	return (
-	    <View key={item + " " + index} style={[{width: width}]}>
-	      <Text>{item.toString()}</Text>
-	    </View>
-	  );
+		<View key={`${item} - ${index}`} style={
+			{border: "5px solid black", width: `${width}px`, padding: "10px", textAlign: "center"}
+		}>
+			<Text>{item.toString()}</Text>
+		</View>
+	);
 }
 
 
