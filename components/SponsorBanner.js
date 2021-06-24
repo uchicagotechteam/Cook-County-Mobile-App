@@ -32,6 +32,7 @@ function renderLogo(item, index, width) {
       <Image
         style={[styles.sponsorLogo, {width: `${dim}px`, height: `${dim}px`}]}
         source={{uri: "https://drive.google.com/thumbnail?id=" + image_id }}
+        resizeMode={"stretch"}
       />
     </View>
   );
