@@ -14,7 +14,7 @@ function renderLogo(item, index, width) {
 
   // Return an image with the appropriate dimensions and source URL
   return (
-    <View key={image_id + index}>
+    <View key={`${image_id} - ${index}`}>
       <Image
         style={[styles.sponsorLogo, {width: `${dim}px`, height: `${dim}px`}]}
         source={{uri: "https://drive.google.com/thumbnail?id=" + image_id }}
