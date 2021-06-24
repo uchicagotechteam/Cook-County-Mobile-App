@@ -31,8 +31,8 @@ function defaultRenderItem(item, index, width) {
 	  );
 }
 
-// The class definition
 
+// The class definition
 export default class LoopCarousel extends React.Component {
 	constructor(props) {
 		super();
@@ -68,17 +68,23 @@ export default class LoopCarousel extends React.Component {
 		this.panResponder = PanResponder.create({
 			onMoveShouldSetPanResponder: () => true,
 
-			// When the user first grabs the carousel, cancel any existing timeout
+			// When the user grabs the carousel, cancel any existing snap check so it does not
+			// fire while the user is moving the carousel
 			onPanResponderGrant: () => {
-				if (this.state.curr_timeout !== null) {
-					clearTimeout(this.state.curr_timeout);
-					this.setState({ curr_timeout: null });
-				}
+				this.clear_snap_check();
 			},
 
-			// When the user lets go of the carousel, set a timeout to snap to an interval
+			// When the user lets go of the carousel, set a JS interval which will continually
+			// check if the carousel has stopped moving, then snap it to a carousel interval
+			// and delete itself
+			// The use of the word interval for these two different concepts is a coincidence
 			onPanResponderRelease: () => {
-				this.state.curr_timeout = setTimeout(() => this.snap_to_interval(), 1000);
+				this.state.snap_check = setInterval(() => {
+					if (this.state.prev_x == this.state.curr_x) {
+						this.snap_to_interval();
+						this.clear_snap_check();
+					}
+				}, 100);
 			},
 		});
 
@@ -86,7 +92,9 @@ export default class LoopCarousel extends React.Component {
 		this.state = {
 			width: 0,
 			interval: this.items.length,
-			curr_timeout: null,
+			snap_check: null,
+			prev_x: null,
+			curr_x: null,
 		};
 	}
 
@@ -96,6 +104,14 @@ export default class LoopCarousel extends React.Component {
 
 		// Start at the first element of the center copy
 		this.scrollTo({ x: this.items.length * this.itemWidth, animated: false });
+	}
+
+	// Clear the interval which will snap to an interval once the carousel stops moving
+	clear_snap_check() {
+		if (this.state.snap_check !== null) {
+			clearInterval(this.state.snap_check);
+			this.setState({ snap_check: null });
+		}
 	}
 
 	// Get the index in extended_items that the LoopCarousel currently has on the left edge
@@ -144,6 +160,10 @@ export default class LoopCarousel extends React.Component {
 
 		// Set the interval value
 		this.setInterval(this.getInterval(contentOffset.x));
+
+		// Record the current and previous x coordinates
+		// Used to check when the carousel has stopped moving
+		this.setState({ prev_x: this.state.curr_x, curr_x: contentOffset.x });
 	}
 
 	scrollTo(...args) {
@@ -156,6 +176,9 @@ export default class LoopCarousel extends React.Component {
 
 	// Return a ScrollView element, whose entries consist of the items array with renderItem
 	// mapped over each item
+	// We don't want to throttle the scroll event here - this helps make sure that it will fire
+	// when the carousel finally stops moving, such that prev_x and curr_x will equal one another
+	// and the repeating check will register that the carousel has stopped
 	render() {
 		const itemWidth = this.itemWidth
 		return (
@@ -165,7 +188,7 @@ export default class LoopCarousel extends React.Component {
 					contentContainerStyle={{ width: `${itemWidth * this.extended_items.length}px` }}
 					showsHorizontalScrollIndicator={false}
 					onContentSizeChange={(w, h) => this.init(w)}
-					scrollEventThrottle={64}
+					scrollEventThrottle={16}
 					decelerationRate="fast"
 					onScroll={({nativeEvent}) => this.onScroll(nativeEvent)}
 				>
