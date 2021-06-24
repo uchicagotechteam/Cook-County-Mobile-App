@@ -252,6 +252,7 @@ export default class LoopCarousel extends React.Component {
 	// We don't want to throttle the scroll event here - this helps make sure that it will fire
 	// when the carousel finally stops moving, such that prev_x and curr_x will equal one another
 	// and the repeating check will register that the carousel has stopped
+	// (A throttle of 16 is the fastest possible)
 	render() {
 		const itemWidth = this.itemWidth
 		return (
