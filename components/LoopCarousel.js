@@ -170,8 +170,14 @@ export default class LoopCarousel extends React.Component {
 		this.scroll_view_ref.current.scrollTo(...args);
 	}
 
+	// Snap the carousel to the nearest interval
 	snap_to_interval() {
-		this.scrollTo({ x: this.state.interval * this.itemWidth, animated: true });
+		var pos_in_interval = this.state.curr_x - (this.state.interval * this.itemWidth);
+		var target_interval = pos_in_interval < (this.itemWidth / 2)
+			? this.state.interval
+			: this.state.interval + 1
+
+		this.scrollTo({ x: target_interval * this.itemWidth, animated: true });
 	}
 
 	// Return a ScrollView element, whose entries consist of the items array with renderItem
