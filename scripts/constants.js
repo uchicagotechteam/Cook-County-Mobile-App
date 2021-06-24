@@ -14,6 +14,16 @@ export const SPONSOR_LOGO_SPACING = 10;
 // (1000 ms = 1 second)
 export const SPONSOR_AUTOSCROLL_DELAY = 10000;
 
+export const RAINBOW_COLORS = {
+  maroon: '#78054B',
+  red:    '#E30008',
+  orange: '#FF8500',
+  yellow: '#FCBF0F',
+  green:  '#00C4C2',
+  blue:   '#008CD2',
+  purple: '#9E30B5',
+};
+
 // export const theme = {
 //   dark: false,
 //   colors: {
@@ -409,7 +419,7 @@ export const styles = StyleSheet.create({
     paddingBottom:5,
     marginLeft:10,
     marginRight:10,
-    backgroundColor:'#E30008',
+    backgroundColor: RAINBOW_COLORS.red,
     borderRadius:20,
     borderWidth: 1,
     borderColor: '#000',
@@ -420,7 +430,7 @@ export const styles = StyleSheet.create({
     color: "#000000"
   },
   searchColor: {
-    backgroundColor: "#008CD2" //#ADD8E6  
+    backgroundColor: RAINBOW_COLORS.blue, //#ADD8E6
   },
   backColor: {
     backgroundColor: "#FFFFFF" //6699CC (blue gray)
