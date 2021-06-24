@@ -1,5 +1,5 @@
 import React, { Component, useRef, useEffect } from 'react';
-import { StyleSheet, View, Image, Animated }   from 'react-native';
+import { StyleSheet, View, Image, Animated, Dimensions } from 'react-native';
 import { styles }           from '../scripts/constants.js'
 
 
@@ -50,6 +50,14 @@ const FadeInOutView = (props) => {
 // Function to generate the logo screen
 // Embedding the splash screen styling as a style element here is a bit 
 function LoadingMessage() {
+
+	// Get the screen dimensions
+	const width  = Dimensions.get('window').width;
+	const height = Dimensions.get('window').height;
+
+	// Use screen dimensions to determine whether to use horizontal or vertical logo
+	var logo = width < height ? "PR_logo_vertical.png" : "PR_logo_horizontal.png";
+
 	return (
 		// https://stackoverflow.com/questions/47203728/center-a-text-in-the-screen-with-react-native
 		<FadeInOutView style={{
@@ -58,8 +66,9 @@ function LoadingMessage() {
 			justifyContent: 'center', alignItems: 'center',
 		}}>
 			<Image
-				style={styles.mainLogo}
-				source={require('../images/PR_logo_name.png')}
+				source={require('../images/' + logo)}
+				style={styles.splashLogo}
+				resizeMode={"contain"}
 			/>
 		</FadeInOutView>
 	)

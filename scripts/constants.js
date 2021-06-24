@@ -323,6 +323,11 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     width: 324
   },
+  // Logo shown when app first starts
+  splashLogo: {
+    width:  "60%",
+    height: "60%",
+  },
   // Intro page
   mainLogo: {
     width: 320,
