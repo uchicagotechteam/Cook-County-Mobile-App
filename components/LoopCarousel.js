@@ -3,23 +3,8 @@ import { View, ScrollView, Text, Dimensions,
 		 Animated, PanResponder, Component
 	} from 'react-native'
 
-// Retrieve a prop value, allowing undefined values
-function getProp(props, field) {
-	return props[field];
-}
-
-// Retrieve a prop value, throwing an error if the prop is not provided
-function getPropRequired(props, field) {
-	if (props[field] === undefined) {
-		throw "LoopCarousel component requires a \"" + field + "\" prop, but none was found.";
-	}
-	return props[field];
-}
-
-// Retrieve a prop value, using a default value if the prop is not provided
-function getPropDefault(props, field, default_value) {
-	return props[field] === undefined ? default_value : props[field];
-}
+// Import functions to retrieve props
+import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
 
 
 // Default rendering function for an individual item in the carousel
@@ -40,7 +25,7 @@ export default class LoopCarousel extends React.Component {
 		super();
 
 		// Retrieve the basic props from the props object
-		this.items = getPropRequired(props, "items");
+		this.items = getPropRequired(props, "items", "LoopCarousel");
 		this.style = getProp(props, "style");
 
 		// Retrieve the optional props from the props object
