@@ -5,15 +5,16 @@ import { Text, View, StyleSheet, Image } from 'react-native';
 //line 20 {props.channel.channelTitle}
 // Props include
 //   channel : Object    - object that describe a channel. {channelTitle : String, channelImage : String, playlistID : String}
+
+
 export default function LogoTitle(props) {
-  //let src = 'require('+{props.channel.channelImage}+')';
   return (
     <View style={styles.container}>
     <View style={styles.row}>
     <View style={styles.column1}>
       <Image 
         style={styles.logo} 
-        source = {require('../images/rainbow.jpg')} //FIX THIS : NEEDS TO UPDATE FROM PROPS source={{uri: "https://drive.google.com/thumbnail?id=" + {props.channel.channelImage} }} {props.channel.channelImage}
+        source={{uri: "https://drive.google.com/thumbnail?id=" + props.channel.image_id }} 
       />
       </View>
       <View style={styles.column2}>
