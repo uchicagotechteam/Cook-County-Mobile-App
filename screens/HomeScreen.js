@@ -53,6 +53,7 @@ function HomeScreen({ navigation }) {
       {/* The banner showing the logo for each sponsor */}
       <SponsorBanner
         image_ids={[ "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE" ]}
+        navigation={navigation}
         shuffle={true}
       />
 
@@ -70,6 +71,7 @@ function HomeScreen({ navigation }) {
 
         {/* The list of channels themselves */}
         <ChannelCollection
+          navigation={navigation}
           channels={channels}
           searchText={searchText}
           dateInfo={dateInfo}

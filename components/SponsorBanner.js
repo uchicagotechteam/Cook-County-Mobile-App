@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, View, ScrollView, Text } from 'react-native';
+import { Image, View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { styles, SPONSOR_LOGO_SPACING, SPONSOR_AUTOSCROLL_DELAY }  from '../scripts/constants.js'
 
 import LoopCarousel from './LoopCarousel';
@@ -19,8 +19,9 @@ function shuffleLogos(array) {
   return array;
 }
 
-// Render an individual logo
-function renderLogo(item, index, width) {
+// Given the navigation item, create a function that will render an individual logo
+function renderLogo(navigation) {
+return (item, index, width) => {
   var image_id = item;
 
   // Compute the dimensions of each icon using the width and the spacing between them
@@ -29,13 +30,16 @@ function renderLogo(item, index, width) {
   // Return an image with the appropriate dimensions and source URL
   return (
     <View key={`${image_id} - ${index}`}>
-      <Image
-        style={[styles.sponsorLogo, {width: `${dim}px`, height: `${dim}px`}]}
-        source={{uri: "https://drive.google.com/thumbnail?id=" + image_id }}
-        resizeMode={"stretch"}
-      />
+      <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org') }>
+        <Image
+          style={[styles.sponsorLogo, {width: `${dim}px`, height: `${dim}px`}]}
+          source={{uri: "https://drive.google.com/thumbnail?id=" + image_id }}
+          resizeMode={"stretch"}
+        />
+      </TouchableOpacity>
     </View>
   );
+}
 }
 
 
@@ -46,6 +50,7 @@ function SponsorBanner(props) {
 
   // Retrieve props
   const image_ids = getPropRequired(props, "image_ids", "SponsorBanner");
+  const navigation = getPropRequired(props, "navigation", "SponsorBanner");
   const shuffle   = getPropDefault(props, "shuffle", false);
 
   return (
@@ -53,7 +58,7 @@ function SponsorBanner(props) {
       <LoopCarousel
         itemsPerInterval={5}
         items={shuffle ? shuffleLogos(image_ids) : image_ids}
-        renderItem={renderLogo}
+        renderItem={renderLogo(navigation)}
         autoscroll={true}
         autoscrollDelay={SPONSOR_AUTOSCROLL_DELAY}
       />
