@@ -35,7 +35,7 @@ class RainbowVideo extends React.Component {
     /* State stores the following variables
       playing : bool - controls whether the youtube player is playing
       shouldSave : bool - controls whether the video should save. Subtly different from state.playing 
-      fiinished : bool - corresponds to whether the video is at its end
+      finished : bool - corresponds to whether the video is at its end
       inProgress : bool - this stores whether the user is part way through the video (used for showing the green play button instead of the white one, but that's a bit unnecessary now that we have a progress bar)
       isBuffering : bool - stores whether the video should show the loading thumbnail
       unplayed : bool - stores if the video was just loaded and has yet to be played. This lets us know to show the placeholder thumbnail rather than load the youtube player.
