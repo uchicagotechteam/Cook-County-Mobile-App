@@ -52,9 +52,10 @@ function SponsorBanner(props) {
   const image_ids  = getPropRequired(props, "image_ids", "SponsorBanner");
   const navigation = getPropRequired(props, "navigation", "SponsorBanner");
   const shuffle    = getPropDefault(props, "shuffle", false);
+  const style      = getPropDefault(props, "style",   {});
 
   return (
-    <View style={ styles.sponsorBannerContainer }>
+    <View style={ [styles.sponsorBannerContainer, style] }>
       <LoopCarousel
         itemsPerInterval={5}
         items={shuffle ? shuffleLogos(image_ids) : image_ids}
