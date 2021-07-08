@@ -153,7 +153,7 @@ export const theme = {
     text: '#000000',
   },
 };
-/* NAVY & WHITE 
+
 export const styles = StyleSheet.create({
   // Standard text for screens
   baseText: {
@@ -171,7 +171,6 @@ export const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#FFFFFF',
     lineHeight: 45,
   },
   // Title text for channels
@@ -242,10 +241,10 @@ export const styles = StyleSheet.create({
     paddingBottom:15,
     marginLeft:10,
     marginRight:30,
-    backgroundColor:'#ADD8E6',
+    backgroundColor:'#00BCD4',
     borderRadius:20,
     borderWidth: 1,
-    borderColor: '#ADD8E6', //#000
+    borderColor: '#000',
     width: 200,
   },
   mainButtonText: {
@@ -270,151 +269,11 @@ export const styles = StyleSheet.create({
     color: "#000000"
   },
   searchColor: {
-    backgroundColor: "#ADD8E6"
-  },
-  backColor: {
-    backgroundColor: "#02075D"
+    backgroundColor: "#5DEFFF"
   },
   lineStyle:{
         borderWidth: 0.5,
         borderColor:'grey',
         margin:10,
    }
-}); */
-
-export const styles = StyleSheet.create({
-  // Standard text for screens
-  baseText: {
-    fontFamily: 'sans-serif',
-    textAlign: 'center',
-    fontSize: 20,
-  },
-  // Text which has been highlighted by a search
-  new_highlight: {
-    color: '#16981D',
-    fontWeight: 'bold',
-  },
-  // Title text for screens
-  titleText: {
-    fontSize: 35,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#FFFFFF',
-    lineHeight: 45,
-  },
-  // Title text for channels
-  channelTitleText: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    width: 240
-  },
-  // Title text for videos
-  videoTitleText: {
-    fontFamily: 'sans-serif',
-    textAlign: 'center',
-    width: 324
-  },
-  // Intro page
-  mainLogo: {
-    width: 320,
-    height: 150,
-  },
-  sponsorLogo: {
-    width: 150,
-    height: 150,
-  },
-  // Child page
-  regLogo: {
-    width: 340,
-    height: 270,
-  },
-  regLogo2: {
-    width: 340,
-    height: 270,
-    marginRight: 10,
-    marginLeft: 10
-  },
-  // Temporary flat logo for child page
-  miniLogo: {
-    width: 80,
-    height: 60,
-    resizeMode: 'center'
-  },
-  // Centers children in the component
-  centerColumn:{
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  // Adult page
-  wideLogo: {
-    width: 250,
-    height: 155,
-  },
-  // Background logo
-  bgLogo: {
-    width: 300,
-    height: 200,
-    alignItems: 'center',
-  },
-  // Highlighted text from a search
-  search_highlight: {
-      backgroundColor: "#FF5733",
-      fontWeight: "bold",
-  },
-  // Text saying that the search of a channel is empty 
-  emptySearch : {
-    fontFamily: 'sans-serif',
-    textAlign: 'center',
-    justifyContent : 'center',
-    width: 250,
-    fontSize: 20,
-  },
-  mainButtonStyle: {
-    marginTop:10,
-    paddingTop:15,
-    paddingBottom:15,
-    marginLeft:10,
-    marginRight:30,
-    backgroundColor:'#444454', //with blue gray background ADD8E6, blue gray color #6699CC
-    borderRadius:20,
-    borderWidth: 1,
-    borderColor: '#444454', //#000
-    width: 200,
-  },
-  mainButtonText: {
-    fontFamily: 'sans-serif',
-    textAlign: 'center',
-    color: '#FFFFFF',
-    fontSize: 25,
-  },
-  buttonStyle: {
-    paddingTop:5,
-    paddingBottom:5,
-    marginLeft:10,
-    marginRight:10,
-    backgroundColor:'#E30008',
-    borderRadius:20,
-    borderWidth: 1,
-    borderColor: '#000',
-    paddingLeft:10,
-    paddingRight:10,
-  },
-  icon : {
-    color: "#000000"
-  },
-  searchColor: {
-    backgroundColor: "#008CD2" //#ADD8E6  
-  },
-  backColor: {
-    backgroundColor: "#FFFFFF" //6699CC (blue gray)
-  },
-  lineStyle:{
-        borderWidth: 0.5,
-        borderColor:'grey',
-        margin:10,
-  },
-  contentContainer: {
-    paddingHorizontal: 20
-  }
 });

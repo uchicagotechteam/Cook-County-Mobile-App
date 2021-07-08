@@ -36,6 +36,7 @@ function RainbowTheater(props) {
   }, [props.navigation]);
   
   const broadcastActiveVideo = useCallback((videoProps)=> {
+    props.addRecentVideo(videoProps)
     setActiveProps(videoProps)
   }, []);
   
