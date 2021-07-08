@@ -32,7 +32,7 @@ function renderLogo(navigation) {
       <View key={`${image_id} - ${index}`}>
         <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org') }>
           <Image
-            style={[styles.sponsorLogo, {width: `${dim}px`, height: `${dim}px`}]}
+            style={[styles.sponsorLogo, {width: dim, height: dim}]}
             source={{uri: "https://drive.google.com/thumbnail?id=" + image_id }}
             resizeMode={"stretch"}
           />

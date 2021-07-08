@@ -11,7 +11,7 @@ import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js
 function defaultRenderItem(item, index, width) {
 	return (
 		<View key={`${item} - ${index}`} style={
-			{border: "5px solid black", width: `${width}px`, padding: "10px", textAlign: "center"}
+			{border: "5px solid black", width: width, padding: 10, textAlign: "center"}
 		}>
 			<Text>{item.toString()}</Text>
 		</View>
@@ -246,7 +246,7 @@ export default class LoopCarousel extends React.Component {
 			<Animated.View {...this.panResponder.panHandlers} >
 				<ScrollView ref={this.scroll_view_ref}
 					horizontal={true}
-					contentContainerStyle={{ width: `${itemWidth * this.extended_items.length}px` }}
+					contentContainerStyle={{ width: itemWidth * this.extended_items.length }}
 					showsHorizontalScrollIndicator={false}
 					onContentSizeChange={(w, h) => this.init(w)}
 					scrollEventThrottle={16}
