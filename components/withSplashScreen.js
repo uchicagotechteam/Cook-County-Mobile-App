@@ -55,8 +55,13 @@ function LoadingMessage() {
 	const width  = Dimensions.get('window').width;
 	const height = Dimensions.get('window').height;
 
+	// Retrieve the image
 	// Use screen dimensions to determine whether to use horizontal or vertical logo
-	var logo = width < height ? "PR_logo_vertical.png" : "PR_logo_horizontal.png";
+	// Image name in 'require' must be given statically
+	// See https://reactnative.dev/docs/images#static-image-resources
+	const logo = width < height
+		? require("../images/PR_logo_vertical.png")
+		: require("../images/PR_logo_horizontal.png");
 
 	return (
 		// https://stackoverflow.com/questions/47203728/center-a-text-in-the-screen-with-react-native
@@ -66,7 +71,7 @@ function LoadingMessage() {
 			justifyContent: 'center', alignItems: 'center',
 		}}>
 			<Image
-				source={require('../images/' + logo)}
+				source={logo}
 				style={styles.splashLogo}
 				resizeMode={"contain"}
 			/>
