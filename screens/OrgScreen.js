@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
+import axios from 'axios';
 import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, TouchableHighlight} from 'react-native';
-//import RainbowTheater from "../components/RainbowTheater.js";
-//import ChannelCollection from "../components/ChannelCollection.js";
-import { styles } from '../scripts/constants.js'
+import { styles, api_key } from '../scripts/constants.js'
 import LogoTitle from '../components/LogoTitle.js';
-//import RainbowChannel from "../components/RainbowChannel.js";
 import SearchArea from '../components/SearchArea';
-//import ChannelCollection from "../components/ChannelCollection.js";
+import ChannelCollection from "../components/ChannelCollection.js";
+//import RainbowChannel from "../components/RainbowChannel.js";
 import ToggleSearch from "../components/ToggleSearch.js";
 import RoundedButton from "../components/RoundedButton.js";
+
+
 
 
 function OrgScreen({ navigation }) {
@@ -17,12 +18,21 @@ function OrgScreen({ navigation }) {
   	const [searchActive, setSearchActive] = useState(false);
   	const [dateInfo, setDateInfo] = useState({dateRestriction : "Anytime", afterDate : null, beforeDate : null});
 
-	const channel = {
+	const channel = [{
     channelTitle : "Golden Apples",
-    channelImage : "../images/golden_channel.jpeg",
+    channelImage : "golden",
     playlistId : "PL4fGSI1pDJn6O1LS0XSdF3RyO0Rq_LDeI",
     image_id: "1IuCEcIGstbYhj22wZqcn2HBMO600bCHm",
-  };
+  }];
+
+  let [playlistResponseData, setPlaylistResponseData] = useState('');
+  let [channelResponseData, setChannelResponseData] = useState('');
+  let [channels, setChannels] = useState([]);
+  let [bannerDescription, setBannerDescription] = useState('');
+
+  // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
+  const ccbChannel = "UCLcTO4BeO0tlZFeMS8SKLSg";
+
 
   // Function to update the text search results
   const updateSearch = useCallback((search) => {
@@ -43,7 +53,72 @@ function OrgScreen({ navigation }) {
     });
   }, [navigation]);
 
+useEffect(() => {
+    // logic to fetch data from youtube api
+    const fetchChannels = function(channelId) {
+      console.log("Playlists from https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key);
+      axios({
+        "method": "GET",
+        "url": "https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key
+      })
+      .then((response) => {
+        setPlaylistResponseData(response.data)
 
+        // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
+        let playlistArray = response.data.items.map(playlist => {
+          return {
+            playlistId: playlist.id,
+            channelTitle: playlist.snippet.title,
+            channelImage : playlist.snippet.description
+          }
+        });
+        console.log(playlistArray);
+        setChannels(playlistArray);
+      })
+      .catch((error) => {
+        console.log("Axios error");
+        console.log(error);
+      })
+    }
+    
+    const fetchBanner = function(channelId) {
+      console.log("Banner - " + channelId);
+      axios({
+        "method": "GET",
+        "url": "https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails&maxResults=50&id=" + channelId + "&key=" + api_key
+      })
+      .then((response) => {
+        setChannelResponseData(response.data);
+        if(response.data.items.length > 0){
+          let description = response.data.items[0].snippet.description; 
+          console.log(description)
+          setBannerDescription(description);
+        } else {
+          console.log("No channels matched that id");
+        }
+      })
+      .catch((error) => {
+        console.log("Axios error");
+        console.log(error);
+      })
+    }
+    
+    fetchChannels(ccbChannel);
+    fetchBanner(ccbChannel);
+  }, [])
+  
+  
+   
+  const getRainbowTheatre = useCallback(() =>{
+    console.log("Getting the child screen with channel length: " + channels.length);
+    return (
+      <ChannelCollection
+        channels={channels}
+        isAdult={false}
+        navigation={navigation}
+      />
+    )
+  }, [channels]);
   return (
     <View>
     <SearchArea
@@ -85,6 +160,9 @@ function OrgScreen({ navigation }) {
         />
       <View style={{ height: 60, }} />
     </ScrollView>
+     { getRainbowTheatre() }
+      
+
     </View>
   );
 
