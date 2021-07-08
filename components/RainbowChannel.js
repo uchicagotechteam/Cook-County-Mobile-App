@@ -3,9 +3,14 @@ import RainbowThumbnail from "../components/RainbowThumbnail.js";
 import AdjustableText from "../components/AdjustableText.js";
 import ToggleSort from "../components/ToggleSort.js";
 import { Dimensions } from 'react-native';
-import { View, ScrollView, StyleSheet, Image, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Image, Text, Animated, TouchableOpacity } from 'react-native';
 import {search} from '../scripts/Search.js';
-import { styles } from '../scripts/constants.js'
+import { styles, RAINBOW_COLORS } from '../scripts/constants.js'
+
+// Import functions to retrieve props
+import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
+
+import { Icon } from 'react-native-elements';
 
 // Props include
 //   channelImage : String  - value that is mapped to a hardcoded image or a default image if no match is found
@@ -20,15 +25,22 @@ class RainbowChannel extends React.Component {
   constructor(props) {
     super(props);
 
+    this.navigation = getPropDefault(props, "navigation", "RainbowChannel");
+
     // Constant hardcoding the keys in each video's object which will be targetted by the search
     this.searchVals = ["title", "dateString"];
+
     // State includes
     //   forward : Bool - Stores whether the videos should be shown from newest to oldest (true) or oldest to newest
     this.state = {
-      forward : true
+      forward : true,
+      scroll_x : new Animated.Value(0),
     };
+
+    // Bind self to functions
     this.setOrder = this.setOrder.bind(this);
     this.broadcastActiveVideo = this.broadcastActiveVideo.bind(this);
+    this.renderVideo = this.renderVideo.bind(this);
   }
 
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
@@ -261,34 +273,170 @@ class RainbowChannel extends React.Component {
     this.props.broadcastActiveVideo(videoProps);
   }
 
-  render() {
+  testVideoArray() {
+    var options = [
+    { videoId: 1,
+      title: "Test video 1",
+      date: 1,
+      duration: "1:00",
+      description: "This is a test video"
+    },
+    { videoId: 2,
+      title: "Test video 2",
+      date: 1,
+      duration: "1:00",
+      description: "This is another test video"
+    },
+    { videoId: 3,
+      title: "Test video 3",
+      date: 1,
+      duration: "1:00",
+      description: "This is yet another test video"
+    }];
+
+    return options.map(this.renderVideo);
+  }
+
+  renderVideo(videoInfo, index) {
 
     return (
-      <ScrollView horizontal={true} style={{ flex: 1 }}>
-         {/* Horizontal padding */}
-        <View style={{ width: 20, height:255}} />
-        <View style={{width: 240, alignItems : "center"}}>
-          <View style={{height: 50}}>
-            <AdjustableText
-              fontSize={30}
-              text=<Text>{this.props.channelTitle  + " \u279E"}</Text>
-              style={styles.channelTitleText}
-              maxHeight={50}
-            />
-          </View>
+      <TouchableOpacity activeOpacity = { .5 } onPress={ () => this.navigation.navigate('Org') }
+        style={{ height: "100%", width: 150, margin: 10, borderRadus: 25, }}
+      >
+        <View style={{
+          height: "100%", width: "100%",
+          backgroundColor: RAINBOW_COLORS.red, borderRadus: 25,
+        }}>
+          <Text>{videoInfo.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  render() {
+
+    // Retrieve the screen width
+    const screen_width = Dimensions.get('window').width;
+
+    // Define heights
+    const top_bar_height = 30;
+    const card_height = 200;
+
+    return (
+      <View>
+
+      {/* Header - Channel Title */}
+      <Animated.View style={{
+        width: screen_width * 0.6, height: top_bar_height, paddingLeft: 20,
+      }}>
+        <AdjustableText
+          fontSize={20}
+          text=<Text>{this.props.channelTitle}</Text>
+          style={[styles.channelTitleText, {textAlign: "left"}]}
+          maxHeight={50}
+        />
+      </Animated.View>
+
+      {/* Header - View More */}
+      <View style={{
+        width: screen_width * 0.4, height: top_bar_height, paddingRight: 20,
+        position: "absolute", right: 0, top: 0,
+      }}>
+        <TouchableOpacity
+          style={{width: "100%"}} activeOpacity = { .5 }
+          onPress={ () => this.navigation.navigate('Org') }
+        >
+          <AdjustableText
+            fontSize={20} maxHeight={50}
+            text=<Text>View All {"\u00BB"}</Text>
+            style={[styles.channelTitleText, {textAlign: "right", width: "100%"}]}
+          />
+        </TouchableOpacity>
+      </View>
+
+      {/* Horizontal ScrollView holding the video icons */}
+      <ScrollView
+        horizontal={true}
+        style={{ flex: 1, backgroundColor: RAINBOW_COLORS.yellow }}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 20, paddingVertical: 10,
+          height: card_height,
+          alignItems: 'center',
+        }}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: this.state.scroll_x } } }],
+          { useNativeDriver: false }
+        )}
+        scrollEventThrottle={16}
+      >
+
+        {/* Beginning Card - Channel Logo */}
+        <View style={[styles.centerColumn, {
+            width: 150, height: 150, marginRight: 20, borderRadius: 25,
+            backgroundColor: RAINBOW_COLORS.maroon
+        }]}>
           <Image
             source={this.getChannelImage()}
-            style={{width: 240, height : 160, resizeMode: 'contain'}}
+            style={{width: "100%", height: "100%", resizeMode: 'contain'}}
           />
-          <ToggleSort style={{alignItems : "center"}} onPress={this.setOrder} />
         </View>
-        <View style={{ width: 20}} />
-        { this.getFilteredVideoArray() }
-        {/* Horizontal padding */}
-         <View style={{ width: 20}} />
+
+        {/* List of Videos */}
+        {/*{ this.getFilteredVideoArray() }*/}
+        { this.testVideoArray() }
+
+        {/* End Card - View All */}
+        <View style={{
+          width: 150, height: "100%", marginLeft: 10,
+          alignItems: 'center', justifyContent: 'center',
+          backgroundColor: 'rgba(255,255,255,0.5)',
+          borderWidth: 4, borderColor: "black", borderStyle: "solid",
+          borderRadius: 15,
+        }}>
+          <TouchableOpacity
+            activeOpacity = { .5 } onPress={ () => this.navigation.navigate('Org') }
+            style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}
+          >
+            <AdjustableText
+              fontSize={20} maxHeight={50}
+              text=<Text>View All</Text>
+              style={styles.channelTitleText}
+            />
+            <Icon type="ionicon" name='chevron-forward-circle-outline' size={40} />
+          </TouchableOpacity>
+        </View>
+
       </ScrollView>
+
+      </View>
       );
   }
 }
 
 export default RainbowChannel;
+
+
+
+// <View style={{
+//   width: "100%", height: top_bar_height,
+//   display: "flex",
+//   flex: 5, alignItems: 'center', justifyContent: 'flex-start',
+// }}>
+//   <View style={{flexGrow: 3}}>
+//     <AdjustableText
+//       fontSize={20}
+//       text=<Text>{this.props.channelTitle}</Text>
+//       style={styles.channelTitleText}
+//       maxHeight={50}
+//     />
+//   </View>
+//   <View style={{flexGrow: 2}}>
+//     <AdjustableText
+//       fontSize={20}
+//       text=<Text>See More</Text>
+//       style={styles.channelTitleText}
+//       maxHeight={50}
+//     />
+//   </View>
+// </View>
