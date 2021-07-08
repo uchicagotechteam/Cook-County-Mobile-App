@@ -11,7 +11,6 @@ import { styles } from '../scripts/constants.js'
 //   channelImage : String  - value that is mapped to a hardcoded image or a default image if no match is found
 //   channelTitle : String  - the channels title
 //   currentSearch : String - string typed into the search bar
-//   isAdult : Bool         - if the channel should display extra content for the adult page
 //   videoArray : Array     - array of objects specifying a video. Follows the format [{videoId : String, title : String, date : Date, dateString : String, duration : String, description : String}, ...]
 //   dateInfo : Object      - Object containing the info about the search date filter {restriction : String, afterDate: Date, beforeDate : Date}
 //   activeId : String      - youtube identifier of the video actively playing in the theatre
@@ -228,9 +227,9 @@ class RainbowChannel extends React.Component {
         title={videoInfo.title}
         date={videoInfo.date}
         duration={videoInfo.duration}
-        display={displays[videoInfo.videoId]}
-        isAdult={this.props.isAdult}
         description={videoInfo.description}
+        link={videoInfo.link}
+        display={displays[videoInfo.videoId]}
         broadcastActiveVideo={this.broadcastActiveVideo}
         activeId={this.props.activeId}
         key={videoInfo.videoId}

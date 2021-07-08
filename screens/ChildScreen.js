@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, TouchableHighlight} from 'react-native';
-import RainbowTheater from "../components/RainbowTheater.js";
+import ChannelCollection from "../components/ChannelCollection.js";
 import { styles, api_key } from '../scripts/constants.js'
 import axios from 'axios';
 
@@ -12,38 +12,14 @@ function ChildScreen({ navigation }) {
   let [channels, setChannels] = useState([]);
   let [bannerDescription, setBannerDescription] = useState('');
 
-  // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
+  // Channel id for the CCB user's channel 
   const ccbChannel = "UCLcTO4BeO0tlZFeMS8SKLSg";
+  // Array of objects containing the information needed to populate a channel
   // const channels = [{
   //   channelTitle : "Golden Apples",
   //   channelImage : "golden",
   //   playlistId : "PL4fGSI1pDJn6O1LS0XSdF3RyO0Rq_LDeI",
-  // },
-  // {
-  //   channelTitle : "CDEFG Music!",
-  //   channelImage : "music",
-  //   playlistId : "PLydZ2Hrp_gPRpfRjuzArwtmlD5TDGIUql",
-  // },
-  // {
-  //   channelTitle : "Without Further Ado",
-  //   channelImage : "interview",
-  //   playlistId : "PLSQl0a2vh4HAxgGKXD5Oc_eELflPEddPx",
-  // },
-  // {
-  //   channelTitle : "Forest Reserve",
-  //   channelImage : "forest",
-  //   playlistId : "PLvahqwMqN4M0GRkZY8WkLZMb6Z-W7qbLA",
-  // },
-  // {
-  //   channelTitle : "Brookfield Zoo",
-  //   channelImage : "zoo",
-  //   playlistId : "PLH8c8f3_r5t5jObPDlNNMQo0aMv52stCz",
-  // },
-  // {
-  //   channelTitle : "Botanical Garden",
-  //   channelImage : "garden",
-  //   playlistId : "PL-WIU6_H4uiQGUipeRB7STrAA9SQhQ0io",
-  // },
+  // }
   // ];
   
   // useEffect function runs when function initially loads
@@ -102,20 +78,13 @@ function ChildScreen({ navigation }) {
     fetchChannels(ccbChannel);
     fetchBanner(ccbChannel);
   }, [])
-  
-  // useEffect(() => {
-  //   if (channels.length > 0) {
-  //     console.log("Channels has been set");
-  //     console.log(channels);
-  //   }
-  // }, [channels]);
    
-  const getRainbowTheatre = useCallback(() =>{
+  const getHorizontalScroll = useCallback(() =>{
     console.log("Getting the child screen with channel length: " + channels.length);
     return (
-      <RainbowTheater
+      <ChannelCollection
         channels={channels}
-        isAdult={false}
+        searchText={""}
         navigation={navigation}
       />
     )
@@ -132,11 +101,11 @@ function ChildScreen({ navigation }) {
       </View> */ }
       <View style={{ height: 20, }} />
 
-      <Text style={styles.titleText}> Student Page </Text>
+      <Text style={styles.titleText}> New Home Page </Text>
 
       <View style={{ height: 20, }} />
       
-      { getRainbowTheatre() }
+      { getHorizontalScroll() }
 
       { /* <Image
         style={styles.regLogo}

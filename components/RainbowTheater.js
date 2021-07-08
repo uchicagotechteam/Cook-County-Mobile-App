@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import { View, Image, ScrollView } from 'react-native';
-import ChannelCollection from "../components/ChannelCollection.js";
+import RainbowChannel from "../components/RainbowChannel.js";
 import RainbowVideo from "../components/RainbowVideo.js";
 import SearchArea from '../components/SearchArea';
 import ToggleSearch from "../components/ToggleSearch.js";
@@ -48,7 +48,7 @@ function RainbowTheater(props) {
         active={searchActive}
       />
       <ScrollView>
-          { /*activeProps == null ?
+          { activeProps == null ?
             <View style={{height: 260, width:340}}>
               <Image
                 style={styles.regLogo}
@@ -60,16 +60,24 @@ function RainbowTheater(props) {
             date={activeProps.date}
             duration={activeProps.duration}
             display={activeProps.display}
-            isAdult={activeProps.isAdult}
             description={activeProps.description}
-          /> */  }
+            link={activeProps.link}
+          />  }
           <View style={{height: 30}} />
-          <ChannelCollection
-            channels={props.channels}
-            searchText={searchText}
-            dateInfo={dateInfo}
-            isAdult={props.isAdult}
+          <RainbowChannel
+            videoArray={props.videoArray}
+            channelTitle={props.channelTitle}
+            channelImage={props.channelImage}
+            currentSearch={""}
+            dateInfo={
+              {
+                restriction : "",
+                afterDate : null,
+                beforeDate : null
+              }
+            }
             broadcastActiveVideo={broadcastActiveVideo}
+            activeId={""}
           />
       </ScrollView>
     </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Image, TouchableHighlight, StyleSheet, Text, Alert, Linking } from 'react-native';
+import { Button, View, Image, TouchableHighlight, StyleSheet, Text, Alert, Linking, ScrollView } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import {getYoutubeMeta} from 'react-native-youtube-iframe';
 import { Dimensions } from 'react-native';
@@ -14,10 +14,10 @@ import moment from "moment";
 // Props include
 //   videoId : String      - youtube identifier to fetch the video
 //   duration : String     - ISO 8601 string corresponding to the duration of the video
-//   isAdult : Bool        - whether the video should display extra content for the adult page
 //   title : String        - title of the video
 //   display : Object      - object describing what parts of the title should be highlighted
 //   description : String  - the youtube video's description. Could be used to encode data instead of a database 
+//   link : String         - the youtube video's worksheet google drive folder link 
 //   date : Date           - video's date
 class RainbowVideo extends React.Component {
   constructor(props) {
@@ -272,17 +272,22 @@ class RainbowVideo extends React.Component {
             <View style={{height: 240 * 0.67, width: 288, position: "absolute"}}>
               { this.state.isBuffering ? <LoadingThumbnail /> : null}
             </View>
-            { this.props.isAdult ? <View style={{height: 40, position: "absolute", bottom:15}}>
+            { this.props.link != null ? <View style={{height: 40, position: "absolute", bottom:5}}>
               <AdjustableText
                 fontSize={20}
                 text={<Text style={{color: 'orange'}}
-                        onPress={() => Linking.openURL(this.props.description.split("\n")[0])}>
-                        Press here to see the video's documents
+                        onPress={() => Linking.openURL(this.props.link)}>
+                        See worksheets
                       </Text>}
                 style={styles.videoTitleText}
                 maxHeight={40}
               />
             </View> : null }
+            <ScrollView>       
+              <Text>
+               { this.props.description }
+             </Text>
+           </ScrollView>
         </View>
       </View>);
   }

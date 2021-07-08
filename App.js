@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "./screens/HomeScreen.js";
 import ChildScreen from "./screens/ChildScreen.js";
 import AdultScreen from "./screens/AdultScreen.js";
+import BaseScreen from "./screens/BaseScreen.js";
 import { theme, styles } from './scripts/constants.js'
 
 const Stack = createStackNavigator();
@@ -17,6 +18,7 @@ function App() {
         />
         <Stack.Screen name="Child Page" component={ChildScreen} options={{headerStyle: styles.searchColor}} />
         <Stack.Screen name="Adult Page" component={AdultScreen} options={{headerStyle: styles.searchColor}}/>
+        <Stack.Screen name="Base Screen" component={BaseScreen} options={{headerStyle: styles.searchColor}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

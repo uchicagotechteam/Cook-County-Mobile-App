@@ -9,16 +9,12 @@ import { View } from 'react-native';
 // Props include
 //   channels : Array    - array of objects that describe a channel. [{channelTitle : String, channelImage : String, playlistID : String}]
 //   searchText : String - string typed into the search bar
-//   isAdult : Bool      - if the channels should display extra content for the adult page
 function ChannelCollection(props) {
   // logic to maintain state of array which maps each channel to its array of videos
   const [videoArrays, setVideoArrays] = useState([]);
 
   // logic to maintain state of request to youtube API
   let [responseData, setResponseData] = useState('');
-  
-  // logic to maintain state of which video is currently playing in the theatre
-  let [activeId, setActiveId] = useState('');
   
   let [channelNum, setChannelNum] = useState(0);
 
@@ -56,19 +52,30 @@ function ChannelCollection(props) {
         // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
         let videoArray = response.data.items.map(video => {
           let date = new Date(video.contentDetails.videoPublishedAt);
-          // If the video will be in a channel for adults, store the description because that could help with the curriculum
-          var description = "";
-          if(props.isAdult){
-            description = video.snippet.description;
+          // Store the description because that could help with the curriculum
+          var full_description = video.snippet.description;
+          var description = ""
+          var link = null
+          
+          var lines = full_description.split("\n");
+          for (var i = 0; i < lines.length; i++){
+            var words = lines[i].split(" ");
+            if(words.length > 0 && words[0] == "LINK:"){
+              link = lines[i].substring(lines[i].indexOf(' ')+1)
+            } else {
+              description += lines[i] + "\n"
+            }
           }
-          let re = /(http(?:s?):\/\/(?:www\.))?(drive.google.com?(.*))/
-          let google_drive_link = item.snippet.description.match(re)
+          console.log("Link: " + link)
+          console.log("Description: " + description)
+          
           return {
             videoId: video.contentDetails.videoId,
             title: video.snippet.title,
             date : date,
             dateString : date.toLocaleDateString("en-US"),
-            description : google_drive_link
+            description : description,
+            link : link
           }
         })
 
@@ -129,60 +136,71 @@ function ChannelCollection(props) {
       fetchData(props.channels[0].playlistId, 0, [], null);
     }
   }, [props.channels])
-  
-  // Tells the component's parent when the active video has changed
-  const broadcastActiveVideo = useCallback((videoProps)=> {
-    props.broadcastActiveVideo(videoProps);
-    setActiveId(videoProps.videoId);
-  }, []);
 
   return (
     props.channels.map((channel, index) =>
       <View key={channel.playlistId}>
+        <RoundedButton
+          onPress={() => props.navigation.navigate('Base Screen', {
+            videoArray : getVideoArrayByIndex(channel, index),
+            channelTitle: channel.channelTitle,
+            channelImage: channel.channelImage,
+          })}
+          buttonStyle={styles.mainButtonStyle}
+          textStyle={styles.mainButtonText}
+          text={channel.channelTitle}
+        />
         <RainbowChannel
           videoArray={getVideoArrayByIndex(channel, index)}
           channelTitle={channel.channelTitle}
           channelImage={channel.channelImage}
           currentSearch={props.searchText}
-          dateInfo={props.dateInfo}
-          isAdult={props.isAdult}
-          broadcastActiveVideo={broadcastActiveVideo}
-          activeId={activeId}
+          dateInfo={
+            {
+              restriction : "",
+              afterDate : null,
+              beforeDate : null
+            }
+          }
+          activeId={""}
         />
         <View style={styles.lineStyle} />
       </View>
-  ));
+    ));
 }
 
 /*
-Old theatre return
+Old horizontal return
 
-<View style={{ flexDirection : "row", justifyContent: 'space-evenly', }}>
-  { channelNum > 0 ? <RoundedButton
-    onPress={() => setChannelNum(Math.max(channelNum - 1, 0))}
-    buttonStyle={styles.buttonStyle}
-    textStyle={styles.baseText}
-    text={"Last Channel"}
-  /> : null }
-  { channelNum < videoArrays.length - 1 ? <RoundedButton
-    onPress={() => setChannelNum(Math.min(channelNum + 1, videoArrays.length - 1))}
-    buttonStyle={styles.buttonStyle}
-    textStyle={styles.baseText}
-    text={"Next channel"}
-  /> : null }
-</View>
-<View style={{height: 20}} />
-{ videoArrays.length > 0 ?
-  <RainbowChannel
-    videoArray={getVideoArrayByIndex(props.channels[channelNum], channelNum)}
-    channelTitle={props.channels[channelNum].channelTitle}
-    channelImage={props.channels[channelNum].channelImage}
-    currentSearch={props.searchText}
-    dateInfo={props.dateInfo}
-    isAdult={props.isAdult}
-    broadcastActiveVideo={broadcastActiveVideo}
-    activeId={activeId}
-  />
-  : null} */
+<View>
+  <View style={{ flexDirection : "row", justifyContent: 'space-evenly', }}>
+    { channelNum > 0 ? <RoundedButton
+      onPress={() => setChannelNum(Math.max(channelNum - 1, 0))}
+      buttonStyle={styles.buttonStyle}
+      textStyle={styles.baseText}
+      text={"Last Channel"}
+    /> : null }
+    { channelNum < videoArrays.length - 1 ? <RoundedButton
+      onPress={() => setChannelNum(Math.min(channelNum + 1, videoArrays.length - 1))}
+      buttonStyle={styles.buttonStyle}
+      textStyle={styles.baseText}
+      text={"Next channel"}
+    /> : null }
+  </View>
+  <View style={{height: 20}} />
+  { videoArrays.length > 0 ?
+    <RainbowChannel
+      videoArray={getVideoArrayByIndex(props.channels[channelNum], channelNum)}
+      channelTitle={props.channels[channelNum].channelTitle}
+      channelImage={props.channels[channelNum].channelImage}
+      currentSearch={props.searchText}
+      dateInfo={props.dateInfo}
+      isAdult={props.isAdult}
+      broadcastActiveVideo={broadcastActiveVideo}
+      activeId={activeId}
+    />
+    : null}
+  </View>
+*/
 
 export default ChannelCollection;
