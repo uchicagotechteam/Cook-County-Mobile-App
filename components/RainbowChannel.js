@@ -52,6 +52,8 @@ class RainbowChannel extends React.Component {
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
   getChannelImage(){
 
+    return {uri: "https://drive.google.com/thumbnail?id=" + "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE" };
+
     if (this.props.channelImage == null) {
       return {uri: ""};
     }
@@ -281,19 +283,19 @@ class RainbowChannel extends React.Component {
 
   testVideoArray() {
     var options = [
-    { videoId: 1,
+    { videoId: "181Nj060xMQ",
       title: "Test video 1",
       date: 1,
       duration: "1:00",
       description: "This is a test video"
     },
-    { videoId: 2,
+    { videoId: "oQLJqMquGEw",
       title: "Test video 2",
       date: 1,
       duration: "1:00",
       description: "This is another test video"
     },
-    { videoId: 3,
+    { videoId: "vgYQglmYU-8",
       title: "Test video 3",
       date: 1,
       duration: "1:00",
