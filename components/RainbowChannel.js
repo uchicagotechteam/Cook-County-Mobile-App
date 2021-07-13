@@ -38,12 +38,14 @@ class RainbowChannel extends React.Component {
     this.state = {
       forward : true,
       scroll_x : new Animated.Value(0),
+      full_width: 0,
     };
 
     // Bind self to functions
     this.setOrder = this.setOrder.bind(this);
     this.broadcastActiveVideo = this.broadcastActiveVideo.bind(this);
     this.renderVideo = this.renderVideo.bind(this);
+    this.handleContentSizeChange = this.handleContentSizeChange.bind(this);
   }
 
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
@@ -316,6 +318,10 @@ class RainbowChannel extends React.Component {
     );
   }
 
+  handleContentSizeChange(new_size) {
+    this.setState({ full_width: new_size });
+  }
+
   render() {
 
     // Retrieve the screen width
@@ -370,6 +376,7 @@ class RainbowChannel extends React.Component {
           { useNativeDriver: false }
         )}
         scrollEventThrottle={16}
+        onContentSizeChange={this.handleContentSizeChange}
       >
 
         {/* Beginning Card - Channel Logo */}
