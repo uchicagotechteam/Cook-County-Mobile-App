@@ -70,7 +70,7 @@ function OrgScreen({ navigation }) {
 
 
       <View style={{ height: 10, }} />
-      <View style={{backgroundColor: '#00C4C2', flex:1}} > //add blue background to video area
+      <View style={{backgroundColor: '#00C4C2', flex:1}}>
       <ScrollView horizontal={true} style={{height: styles.regLogo2.height+40, }} contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }} >
 	      
 	      <Image 
