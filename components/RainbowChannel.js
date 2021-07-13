@@ -30,6 +30,9 @@ class RainbowChannel extends React.Component {
     // Constant hardcoding the keys in each video's object which will be targetted by the search
     this.searchVals = ["title", "dateString"];
 
+    this.card_height = 200;
+    this.card_width  = 150;
+
     // State includes
     //   forward : Bool - Stores whether the videos should be shown from newest to oldest (true) or oldest to newest
     this.state = {
@@ -320,7 +323,6 @@ class RainbowChannel extends React.Component {
 
     // Define heights
     const top_bar_height = 30;
-    const card_height = 200;
 
     return (
       <View>
@@ -361,7 +363,6 @@ class RainbowChannel extends React.Component {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 20, paddingVertical: 10,
-          height: card_height,
           alignItems: 'center',
         }}
         onScroll={Animated.event(
@@ -373,7 +374,7 @@ class RainbowChannel extends React.Component {
 
         {/* Beginning Card - Channel Logo */}
         <View style={[styles.centerColumn, {
-            width: 150, height: 150, marginRight: 20, borderRadius: 25,
+            width: this.card_width, height: this.card_width, marginRight: 20, borderRadius: 25,
             backgroundColor: RAINBOW_COLORS.maroon
         }]}>
           <Image
@@ -388,7 +389,8 @@ class RainbowChannel extends React.Component {
 
         {/* End Card - View All */}
         <View style={{
-          width: 150, height: "100%", marginLeft: 10,
+          width: this.card_width, //height: this.card_height,
+          marginLeft: 10,
           alignItems: 'center', justifyContent: 'center',
           backgroundColor: 'rgba(255,255,255,0.5)',
           borderWidth: 4, borderColor: "black", borderStyle: "solid",
