@@ -140,7 +140,7 @@ function ChannelCollection(props) {
 
   return (
     props.channels.map((channel, index) =>
-      <View key={channel.playlistId}>
+      <View key={`${channel.playlistId} ${index}`}>
         <RainbowChannel
           videoArray={getVideoArrayByIndex(channel, index)}
           channelTitle={channel.channelTitle}
