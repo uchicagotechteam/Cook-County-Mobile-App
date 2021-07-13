@@ -1,5 +1,6 @@
 import React from 'react';
 import RainbowThumbnail from "../components/RainbowThumbnail.js";
+import RainbowVideoIcon from "../components/RainbowVideoIcon.js";
 import AdjustableText from "../components/AdjustableText.js";
 import ToggleSort from "../components/ToggleSort.js";
 import { Dimensions } from 'react-native';
@@ -303,6 +304,26 @@ class RainbowChannel extends React.Component {
   }
 
   renderVideo(videoInfo, index) {
+
+    return (
+      <TouchableOpacity key={`${videoInfo.videoId} ${index}`} activeOpacity={.5} onPress={ () => this.navigation.navigate('Org') } >
+        <RainbowVideoIcon
+          videoId={videoInfo.videoId}
+          title={videoInfo.title}
+          date={videoInfo.date}
+          duration={videoInfo.duration}
+          // display={displays[videoInfo.videoId]}
+          isAdult={this.props.isAdult}
+          description={videoInfo.description}
+          broadcastActiveVideo={this.broadcastActiveVideo}
+          activeId={this.props.activeId}
+          key={`${videoInfo.videoId} ${index}`}
+          width={this.card_width}
+          height={this.card_height}
+          style={{ margin: 10 }}
+        />
+      </TouchableOpacity>
+    );
 
     return (
       <TouchableOpacity activeOpacity = { .5 } onPress={ () => this.navigation.navigate('Org') }
