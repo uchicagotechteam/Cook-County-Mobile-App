@@ -13,7 +13,7 @@ export default function LogoTitle(props) {
     <View style={styles.column1}>
       <Image 
         style={styles.logo} 
-        source = {require('../images/rainbow.jpg')} //FIX THIS : NEEDS TO UPDATE FROM PROPS source={{uri: "https://drive.google.com/thumbnail?id=" + {props.channel.channelImage} }} {props.channel.channelImage}
+        source = {require('../assets/images/rainbow.jpg')} //FIX THIS : NEEDS TO UPDATE FROM PROPS source={{uri: "https://drive.google.com/thumbnail?id=" + {props.channel.channelImage} }} {props.channel.channelImage}
       />
       </View>
       <View style={styles.column2}>

@@ -1,2 +1,9 @@
 node_modules/
 .idea/*
+.expo/*
+
+
+android/gradle
+
+android/app/build
+android/app/release

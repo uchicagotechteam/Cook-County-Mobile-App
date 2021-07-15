@@ -53,12 +53,12 @@ class RainbowVideoIcon extends React.Component {
   // Returns the thumbnail icon. Either a check if the video is finished, a green array if the user's made some progress into the video, or a white arrow if the video has no stored time.
   getPauseImage(){
     if(this.state.finished){
-      return require('../images/check.png');
+      return require('../assets/images/check.png');
     } else {
       if (this.state.inProgress){
-        return require('../images/green-play.png');
+        return require('../assets/images/green-play.png');
       } else {
-        return require('../images/white-play.png');
+        return require('../assets/images/white-play.png');
       }
     }
   }

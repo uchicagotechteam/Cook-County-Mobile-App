@@ -29,7 +29,7 @@ function OrgScreen({ navigation }) {
 
 	const channel = {
     channelTitle : "Golden Apples",
-    channelImage : "../images/golden_channel.jpeg",
+    channelImage : "../assets/images/golden_channel.jpeg",
     playlistId : "PL4fGSI1pDJn6O1LS0XSdF3RyO0Rq_LDeI",
   };
 
@@ -75,11 +75,11 @@ function OrgScreen({ navigation }) {
 	      
 	      <Image 
 	        style={styles.regLogo2} 
-	        source={require('../images/rainbow.jpg')} //{props.channel.channelImage}
+	        source={require('../assets/images/rainbow.jpg')} //{props.channel.channelImage}
 	      />
 	      <Image 
 	        style={styles.regLogo2} 
-	        source={require('../images/rainbow.jpg')} //{props.channel.channelImage}
+	        source={require('../assets/images/rainbow.jpg')} //{props.channel.channelImage}
 	      />
 	      
       </ScrollView>

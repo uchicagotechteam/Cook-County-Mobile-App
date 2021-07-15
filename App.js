@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from "./screens/HomeScreen.js";
-import OrgScreen from "./screens/OrgScreen.js";
-import { theme, styles } from './scripts/constants.js'
-import withSplashScreen from './components/withSplashScreen';
+import HomeScreen from "./src/screens/HomeScreen.js";
+import OrgScreen  from "./src/screens/OrgScreen.js";
+
+import { theme, styles } from './src/scripts/constants.js'
+import withSplashScreen from './src/components/withSplashScreen';
 
 const Stack = createStackNavigator();
 

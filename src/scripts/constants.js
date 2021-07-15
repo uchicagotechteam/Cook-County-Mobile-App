@@ -447,7 +447,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     paddingTop:    SPONSOR_LOGO_SPACING / 2,
     paddingBottom: SPONSOR_LOGO_SPACING / 2,
-    marginTop: "20px", marginBottom: "20px",
+    marginTop: 20, marginBottom: 20,
     backgroundColor: RAINBOW_COLORS.green,
   },
 });

@@ -60,8 +60,8 @@ function LoadingMessage() {
 	// Image name in 'require' must be given statically
 	// See https://reactnative.dev/docs/images#static-image-resources
 	const logo = width < height
-		? require("../images/PR_logo_vertical.png")
-		: require("../images/PR_logo_horizontal.png");
+		? require("../assets/images/PR_logo_vertical.png")
+		: require("../assets/images/PR_logo_horizontal.png");
 
 	return (
 		// https://stackoverflow.com/questions/47203728/center-a-text-in-the-screen-with-react-native
