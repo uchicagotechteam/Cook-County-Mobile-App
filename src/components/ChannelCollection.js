@@ -32,6 +32,8 @@ function ChannelCollection(props) {
     }
   }, [videoArrays]);
 
+  const navigation = props.navigation;
+
   // useEffect function runs when function initially loads
   // and runs again whenever there is a change to data in second argument array (fetchData)
   // beware of infinite loops
@@ -138,7 +140,7 @@ function ChannelCollection(props) {
 
   return (
     props.channels.map((channel, index) =>
-      <View key={channel.playlistId}>
+      <View key={`${channel.playlistId} ${index}`}>
         <RainbowChannel
           videoArray={getVideoArrayByIndex(channel, index)}
           channelTitle={channel.channelTitle}
@@ -148,6 +150,7 @@ function ChannelCollection(props) {
           isAdult={props.isAdult}
           broadcastActiveVideo={broadcastActiveVideo}
           activeId={activeId}
+          navigation={navigation}
         />
         <View style={styles.lineStyle} />
       </View>

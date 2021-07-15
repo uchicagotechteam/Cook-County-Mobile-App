@@ -2,16 +2,23 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 
 //mini org logo and org name
-export default function LogoTitle() {
+//line 20 {props.channel.channelTitle}
+// Props include
+//   channel : Object    - object that describe a channel. {channelTitle : String, channelImage : String, playlistID : String}
+export default function LogoTitle(props) {
+  //let src = 'require('+{props.channel.channelImage}+')';
   return (
     <View style={styles.container}>
     <View style={styles.row}>
     <View style={styles.column1}>
-      <Image style={styles.logo} source={require('../images/PR_logo.png')} />
+      <Image 
+        style={styles.logo} 
+        source = {require('../assets/images/rainbow.jpg')} //FIX THIS : NEEDS TO UPDATE FROM PROPS source={{uri: "https://drive.google.com/thumbnail?id=" + {props.channel.channelImage} }} {props.channel.channelImage}
+      />
       </View>
       <View style={styles.column2}>
       <Text style={styles.paragraph}>
-        Organization Name
+           {props.channel.channelTitle}                              
       </Text>
        </View>
     </View>
