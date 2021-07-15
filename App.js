@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from "./screens/HomeScreen.js";
-import ChildScreen from "./screens/ChildScreen.js";
-import AdultScreen from "./screens/AdultScreen.js";
-import BaseScreen from "./screens/BaseScreen.js";
-import { theme, styles } from './scripts/constants.js'
+
+import BaseScreen from "./src/screens/BaseScreen.js";
+import HomeScreen from "./src/screens/HomeScreen.js";
+import OrgScreen  from "./src/screens/OrgScreen.js";
+
+import { theme, styles } from './src/scripts/constants.js'
+import withSplashScreen from './src/components/withSplashScreen';
+
 
 const Stack = createStackNavigator();
 
@@ -16,12 +19,12 @@ function App() {
         <Stack.Screen name="Home" component={HomeScreen}
           options={{ title:'Project Rainbow', headerStyle: styles.searchColor}}
         />
-        <Stack.Screen name="Child Page" component={ChildScreen} options={{headerStyle: styles.searchColor}} />
-        <Stack.Screen name="Adult Page" component={AdultScreen} options={{headerStyle: styles.searchColor}}/>
-        <Stack.Screen name="Base Screen" component={BaseScreen} options={{headerStyle: styles.searchColor}}/>
+        <Stack.Screen name="Org"         component={OrgScreen}  options={{headerStyle: styles.searchColor}} />
+        <Stack.Screen name="Base Screen" component={BaseScreen} options={{headerStyle: styles.searchColor}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-export default App;
+// Wrap the App component using a function that adds the initial logo screen
+export default withSplashScreen(App);
