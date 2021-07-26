@@ -226,7 +226,7 @@ class RainbowVideo extends React.Component {
 
   render() {
     return (
-      <View style={{width: 340, height: 260 }}>
+      <View style={{width: 340, height: 260}}>
         <View style={{height: 60}}>
           <AdjustableText
             fontSize={30}
@@ -272,9 +272,9 @@ class RainbowVideo extends React.Component {
             <View style={{height: 240 * 0.67, width: 288, position: "absolute"}}>
               { this.state.isBuffering ? <LoadingThumbnail /> : null}
             </View>
-            { this.props.link != null ? <View style={{height: 40, position: "absolute", bottom:5}}>
+            { this.props.link != null ? <View style={{height: 40, position: "absolute", bottom:150}}>
               <AdjustableText
-                fontSize={20}
+                fontSize={24}
                 text={<Text style={{color: 'orange'}}
                         onPress={() => Linking.openURL(this.props.link)}>
                         See worksheets
@@ -283,8 +283,9 @@ class RainbowVideo extends React.Component {
                 maxHeight={40}
               />
             </View> : null }
-            <ScrollView>       
-              <Text>
+            <View style={{height: 20}} />
+            <ScrollView style={{height: 160, width: '90%'}}>       
+              <Text style={{fontSize: 20}}>
                { this.props.description }
              </Text>
            </ScrollView>

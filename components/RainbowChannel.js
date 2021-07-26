@@ -251,9 +251,9 @@ class RainbowChannel extends React.Component {
   render() {
 
     return (
-      <ScrollView horizontal={true} style={{ flex: 1 }}>
+      <ScrollView horizontal={true} style={{ flex: 1, backgroundColor: '#00C4C2' }}>
          {/* Horizontal padding */}
-        <View style={{ width: 20, height:255}} />
+        <View style={{ width: 20, height:255, }} />
         <View style={{width: 240, alignItems : "center"}}>
           <View style={{height: 50}}>
             <AdjustableText

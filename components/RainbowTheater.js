@@ -32,6 +32,7 @@ function RainbowTheater(props) {
       headerRight: () => (
         <ToggleSearch onPress={active => {setSearchActive(active);}} />
       ),
+      title:"",
     });
   }, [props.navigation]);
   
@@ -49,8 +50,9 @@ function RainbowTheater(props) {
         active={searchActive}
       />
       <ScrollView>
+        <View style={{alignItems: 'center'}}>
           { activeProps == null ?
-            <View style={{height: 260, width:340}}>
+            <View style={{height: 260, width: 340}}>
               <Image
                 style={styles.regLogo}
                 source={require('../images/rainbow.jpg')}
@@ -64,7 +66,7 @@ function RainbowTheater(props) {
             description={activeProps.description}
             link={activeProps.link}
           />  }
-          <View style={{height: 30}} />
+          <View style={{height: 190}} />
           <RainbowChannel
             videoArray={props.videoArray}
             channelTitle={props.channelTitle}
@@ -80,6 +82,7 @@ function RainbowTheater(props) {
             broadcastActiveVideo={broadcastActiveVideo}
             activeId={""}
           />
+        </View>
       </ScrollView>
     </View>
   );
