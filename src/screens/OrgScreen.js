@@ -114,7 +114,6 @@ useEffect(() => {
     return (
       <ChannelCollection
         channels={channels}
-        isAdult={false}
         navigation={navigation}
       />
     )

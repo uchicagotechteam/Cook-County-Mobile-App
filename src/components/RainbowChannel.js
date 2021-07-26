@@ -314,7 +314,6 @@ class RainbowChannel extends React.Component {
           date={videoInfo.date}
           duration={videoInfo.duration}
           // display={displays[videoInfo.videoId]}
-          isAdult={this.props.isAdult}
           description={videoInfo.description}
           broadcastActiveVideo={this.broadcastActiveVideo}
           activeId={this.props.activeId}

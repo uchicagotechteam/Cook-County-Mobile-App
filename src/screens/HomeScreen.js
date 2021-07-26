@@ -268,7 +268,6 @@ function HomeScreen({ navigation }) {
           channels={channels}
           searchText={searchText}
           dateInfo={dateInfo}
-          isAdult={true}
         />
       </ScrollView>
     </View>
