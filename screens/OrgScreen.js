@@ -11,19 +11,21 @@ import ToggleSearch from "../components/ToggleSearch.js";
 import RoundedButton from "../components/RoundedButton.js";
 
 
-
+//props needed: image id (from google drive), organization name, link to worksheet google drive, playlist id
 
 function OrgScreen({ navigation }) {
+	const channel = {
+    channelTitle : "Partner TEST NAME",
+    channelImage : "golden",
+    playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+    image_id: "1IuCEcIGstbYhj22wZqcn2HBMO600bCHm",
+  }; 
+
+
 	const [searchText, setSearchText] = useState("");
   	const [searchActive, setSearchActive] = useState(false);
   	const [dateInfo, setDateInfo] = useState({dateRestriction : "Anytime", afterDate : null, beforeDate : null});
 
-	const channel = [{
-    channelTitle : "Golden Apples",
-    channelImage : "golden",
-    playlistId : "PL4fGSI1pDJn6O1LS0XSdF3RyO0Rq_LDeI",
-    image_id: "1IuCEcIGstbYhj22wZqcn2HBMO600bCHm",
-  }];
 
   let [playlistResponseData, setPlaylistResponseData] = useState('');
   let [channelResponseData, setChannelResponseData] = useState('');
@@ -31,7 +33,7 @@ function OrgScreen({ navigation }) {
   let [bannerDescription, setBannerDescription] = useState('');
 
   // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
-  const ccbChannel = "UCLcTO4BeO0tlZFeMS8SKLSg";
+  const ccbChannel = "UC9SjusI9nKPmLefg3Sz6w9A";
 
 
   // Function to update the text search results
@@ -56,6 +58,7 @@ function OrgScreen({ navigation }) {
 useEffect(() => {
     // logic to fetch data from youtube api
     const fetchChannels = function(channelId) {
+    	console.log(channel.playlistId)
       console.log("Playlists from https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key);
       axios({
         "method": "GET",
@@ -65,51 +68,36 @@ useEffect(() => {
         setPlaylistResponseData(response.data)
 
         // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
-        let playlistArray = response.data.items.map(playlist => {
+        let playlistArray = response.data.items.filter(playlist => {
+  if (playlist.id.localeCompare(channel.playlistId) == 0) {
+    return true; 
+  }
+  return false;
+}).map(playlist => { 
+        console.log(playlist.id)
+        console.log(channel.playlistId)
           return {
             playlistId: playlist.id,
             channelTitle: playlist.snippet.title,
             channelImage : playlist.snippet.description
-          }
+          } 
         });
+        console.log("ARRAY")
         console.log(playlistArray);
         setChannels(playlistArray);
       })
       .catch((error) => {
-        console.log("Axios error");
+        console.log("Axios error org page");
         console.log(error);
       })
     }
-    
-    const fetchBanner = function(channelId) {
-      console.log("Banner - " + channelId);
-      axios({
-        "method": "GET",
-        "url": "https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails&maxResults=50&id=" + channelId + "&key=" + api_key
-      })
-      .then((response) => {
-        setChannelResponseData(response.data);
-        if(response.data.items.length > 0){
-          let description = response.data.items[0].snippet.description; 
-          console.log(description)
-          setBannerDescription(description);
-        } else {
-          console.log("No channels matched that id");
-        }
-      })
-      .catch((error) => {
-        console.log("Axios error");
-        console.log(error);
-      })
-    }
-    
+     
     fetchChannels(ccbChannel);
-    fetchBanner(ccbChannel);
   }, [])
   
   
    
-  const getRainbowTheatre = useCallback(() =>{
+  const getChannel = useCallback(() =>{
     console.log("Getting the child screen with channel length: " + channels.length);
     return (
       <ChannelCollection
@@ -119,6 +107,9 @@ useEffect(() => {
       />
     )
   }, [channels]);
+
+
+  
   return (
     <View>
     <SearchArea
@@ -131,36 +122,20 @@ useEffect(() => {
     <LogoTitle channel={channel}/>
 
     <ScrollView>
-      <View style={{ height: 5, }} />
-      <View style={{ height: 20, }} />
-      
 
-      <View style={{ height: 10, }} />
-      
-      <View style={{backgroundColor: '#00C4C2', flex:1}} >
-      <ScrollView horizontal={true} style={{height: styles.regLogo2.height+40, }} contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }} >
-	      
-	      <Image 
-	        style={styles.regLogo2} 
-	        source={require('../images/rainbow.jpg')} 
-	      />
-	      <Image 
-	        style={styles.regLogo2} 
-	        source={require('../images/rainbow.jpg')} 
-	      />
-	      
-      </ScrollView>
-      </View>
-      <View style={{ height: 50, }} />
+      <View style={{ height: 10 }} />
       <RoundedButton
           onPress={() => alert('Button clicked (change later)')}
           buttonStyle={styles.buttonStyle}
           textStyle={styles.baseText}
           text= "See all channel worksheets"                       
         />
-      <View style={{ height: 60, }} />
+
+      { getChannel() }
+
+      
+
     </ScrollView>
-     { getRainbowTheatre() }
       
 
     </View>
