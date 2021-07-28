@@ -9,7 +9,7 @@ function BaseScreen({ route, navigation }) {
   let [channels, setChannels] = useState([]);
   let [recentVideos, setRecentVideos] = useState([]);
   
-  const { videoArray, channelTitle, channelImage } = route.params;
+  const { videoArray, channelTitle, channelImage, startingVideo } = route.params;
   
   const addRecentVideo = useCallback((videoProps) => {
     let localRecent = recentVideos;
@@ -25,6 +25,7 @@ function BaseScreen({ route, navigation }) {
         channelTitle={channelTitle}
         channelImage={channelImage}
         navigation={navigation}
+        startingVideo={startingVideo}
         addRecentVideo={addRecentVideo}
       />
     )

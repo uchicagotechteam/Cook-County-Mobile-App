@@ -32,7 +32,7 @@ function RainbowTheater(props) {
       headerRight: () => (
         <ToggleSearch onPress={active => {setSearchActive(active);}} />
       ),
-      title:"",
+      title: props.channelTitle,
     });
   }, [props.navigation]);
 
@@ -40,6 +40,10 @@ function RainbowTheater(props) {
     props.addRecentVideo(videoProps)
     setActiveProps(videoProps)
   }, []);
+  
+  useEffect(() => {
+    setActiveProps(props.startingVideo)
+  }, [])
 
   return (
     <View>
@@ -80,7 +84,7 @@ function RainbowTheater(props) {
               }
             }
             broadcastActiveVideo={broadcastActiveVideo}
-            activeId={""}
+            activeId={ activeProps == null ? "" : activeProps.videoId }
           />
         </View>
       </ScrollView>
