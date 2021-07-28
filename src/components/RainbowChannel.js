@@ -307,7 +307,15 @@ class RainbowChannel extends React.Component {
   renderVideo(videoInfo, index) {
 
     return (
-      <TouchableOpacity key={`${videoInfo.videoId} ${index}`} activeOpacity={.5} onPress={ () => this.navigation.navigate('Org') } >
+      <TouchableOpacity
+        key={`${videoInfo.videoId} ${index}`}
+        activeOpacity={.5}
+        onPress={ () => this.navigation.navigate('Base Screen', {
+          videoArray : [],
+          channelTitle: null,
+          channelImage: null,
+        }) }
+      >
         <RainbowVideoIcon
           videoId={videoInfo.videoId}
           title={videoInfo.title}
