@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { TouchableOpacity, View, Text, Image, ImageBackground, StyleSheet,
           ScrollView, Animated, Dimensions
       } from 'react-native';
-import { styles, theme, RAINBOW_COLORS } from '../scripts/constants.js'
+import { styles, theme, PALETTE } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
 
 // The components used in the Homescreen
@@ -237,7 +237,8 @@ function HomeScreen({ navigation }) {
       <ScrollView
         style={{
           width: "100%", paddingTop: HEADER_COL_HEIGHT, height: 300,
-          backgroundColor: RAINBOW_COLORS.yellow,
+          borderTop: PALETTE.red.normal,
+          // backgroundColor: RAINBOW_COLORS.yellow,
           zIndex: -1,
         }}
         // contentContainerStyle={{ paddingTop: HEADER_EXP_HEIGHT }}
@@ -251,7 +252,6 @@ function HomeScreen({ navigation }) {
         <View style={{ height: HEADER_EXP_HEIGHT, backgroundColor: theme.colors.background }} />
 
         {/* The search bar for the channels */}
-        {/*<View style={{backgroundColor: RAINBOW_COLORS.yellow}}>*/}
         <SearchBar
           containerStyle={{ margin: 15, borderRadius: 25 }}
           placeholder="Search title or date"
@@ -260,7 +260,11 @@ function HomeScreen({ navigation }) {
           platform={"android"}
           round={true}
         />
-        {/*</View>*/}
+        <View style={{
+          borderWidth: 2,
+          borderColor: PALETTE.blue.normal,
+          margin: 20, marginTop: 0,
+        }} />
 
         {/* The list of channels themselves */}
         <ChannelCollection

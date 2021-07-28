@@ -7,7 +7,7 @@ import ProgressBar from 'react-native-progress/Bar';
 
 import AdjustableText from "../components/AdjustableText.js";
 import LoadingThumbnail from "../components/LoadingThumbnail.js";
-import { styles } from '../scripts/constants.js'
+import { styles, PALETTE } from '../scripts/constants.js'
 import moment from "moment";
 
 // Props include
@@ -136,12 +136,28 @@ class RainbowVideoIcon extends React.Component {
     // const 
     return (
       <View style={[
-        {width: this.width},
+        { width: this.width
+          +20,
+          backgroundColor: PALETTE.purple.light,
+          padding: 10,
+          borderRadius: 10,
+        },
         this.props.style
       ]}>
         <Image
           source={{uri: this.state.thumbnail }}
-          style={{width: this.width, height: this.width * 4 / 5, borderRadius: 20}}
+          style={{
+            width: this.width, height: this.width * 4 / 5,
+            borderRadius: 20,
+            // boxShadow: "10px 10px 5px grey",
+            shadowOffset: {
+              width: 10,
+              height: -10
+            },
+            shadowOpacity: 5,
+            shadowRadius:  10,
+            elevation: 5,
+          }}
           resizeMode={"cover"}
         />
         <View style={{margin: 10, marginBottom: 0}}>

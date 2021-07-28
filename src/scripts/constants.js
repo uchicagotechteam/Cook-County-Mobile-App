@@ -14,14 +14,78 @@ export const SPONSOR_LOGO_SPACING = 10;
 // (1000 ms = 1 second)
 export const SPONSOR_AUTOSCROLL_DELAY = 10000;
 
-export const RAINBOW_COLORS = {
-  maroon: '#78054B',
-  red:    '#E30008',
-  orange: '#FF8500',
-  yellow: '#FCBF0F',
-  green:  '#00C4C2',
-  blue:   '#008CD2',
-  purple: '#9E30B5',
+
+// An accessible color palette for the project
+// Light values are designed to be paired with black text, and dark values are designed
+// to be paired with white text
+// Normal values are the colors used in the Project Rainbow logo(s)
+// Black text on all of the light colors is WCAG AAA compliant
+// White text on all of the dark colors is  WCAG AAA compliant
+// Small text in all of the dark colors on a white background is WGAC AA compliant
+export const PALETTE = {
+
+  // Logo colors
+  maroon: {
+    normal: '#78054B',
+    light:  '#F75EBD',
+    dark:   '#6E0545',
+  },
+  red:    {
+    normal: '#E30008',
+    light:  '#FF6B70',
+    dark:   '#B30006',
+  },
+  orange: {
+    normal: '#FF8500',
+    light:  '#FF8500',
+    dark:   '#B35C00',
+  },
+  yellow: {
+    normal: '#FCBF0F',
+    light:  '#FCBF0F',
+    dark:   '#926E02',
+  },
+  green:  {
+    normal: '#00C4C2',
+    light:  '#00C4C2',
+    dark:   '#007A78',
+  },
+  blue:   {
+    normal: '#008CD2',
+    light:  '#00A3F5',
+    dark:   '#007AB8',
+  },
+  purple: {
+    normal: '#9E30B5',
+    light:  '#CA76DB',
+    dark:   '#862999',
+  },
+
+  // Basic colors (black & white)
+  // These are defined this way so they can be used anywhere the logo colors above are
+  white:  {
+    normal: '#FFFFFF',
+    light:  '#FFFFFF',
+    dark:   '#FFFFFF',
+  },
+  black:  {
+    normal: '#000000',
+    light:  '#000000',
+    dark:   '#000000',
+  },
+
+  // Text and background colors (black & white)
+  // These are defined here to keep them conceptually separate from the standard black & white,
+  // even if we want them to be the same underlying values
+  text: {
+    light: '#FFFFFF',
+    dark:  '#000000',
+    link:  '#C38C10',
+  },
+  back: {
+    light: '#FFFFFF',
+    dark:  '#000000',
+  },
 };
 
 // export const theme = {
@@ -165,9 +229,9 @@ export const RAINBOW_COLORS = {
 export const theme = {
   dark: false,
   colors: {
-    primary: 'rgb(255, 0, 0)',
-    background: '#D6FDFD',
-    text: '#000000',
+    primary:    PALETTE.red.normal,
+    background: PALETTE.back.light,
+    text:       PALETTE.text.dark,
   },
 };
 /* NAVY & WHITE 
@@ -430,15 +494,15 @@ export const styles = StyleSheet.create({
     color: "#000000"
   },
   searchColor: {
-    backgroundColor: RAINBOW_COLORS.blue, //#ADD8E6
+    backgroundColor: PALETTE.blue.normal, //#ADD8E6
   },
   backColor: {
-    backgroundColor: "#FFFFFF" //6699CC (blue gray)
+    backgroundColor: PALETTE.back.light //6699CC (blue gray)
   },
   lineStyle:{
-        borderWidth: 0.5,
-        borderColor:'grey',
-        margin:10,
+    borderWidth: 2,
+    borderColor: PALETTE.green.normal,
+    margin:20,
   },
   contentContainer: {
     paddingHorizontal: 20
@@ -448,6 +512,6 @@ export const styles = StyleSheet.create({
     paddingTop:    SPONSOR_LOGO_SPACING / 2,
     paddingBottom: SPONSOR_LOGO_SPACING / 2,
     marginTop: 20, marginBottom: 20,
-    backgroundColor: RAINBOW_COLORS.green,
+    backgroundColor: PALETTE.green.light,
   },
 });

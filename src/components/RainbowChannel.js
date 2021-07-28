@@ -6,7 +6,7 @@ import ToggleSort from "../components/ToggleSort.js";
 import { Dimensions } from 'react-native';
 import { View, ScrollView, StyleSheet, Image, Text, Animated, TouchableOpacity } from 'react-native';
 import {search} from '../scripts/Search.js';
-import { styles, RAINBOW_COLORS } from '../scripts/constants.js'
+import { styles, PALETTE } from '../scripts/constants.js'
 
 // Import functions to retrieve props
 import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
@@ -332,7 +332,7 @@ class RainbowChannel extends React.Component {
       >
         <View style={{
           height: "100%", width: "100%",
-          backgroundColor: RAINBOW_COLORS.red, borderRadus: 25,
+          backgroundColor: PALETTE.red.normal, borderRadus: 25,
         }}>
           <Text>{videoInfo.title}</Text>
         </View>
@@ -387,7 +387,7 @@ class RainbowChannel extends React.Component {
       {/* Horizontal ScrollView holding the video icons */}
       <ScrollView
         horizontal={true}
-        style={{ flex: 1, backgroundColor: RAINBOW_COLORS.yellow }}
+        style={{ flex: 1 }}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 20, paddingVertical: 10,
@@ -404,14 +404,12 @@ class RainbowChannel extends React.Component {
         {/* Beginning Card - Channel Logo */}
         <View style={[styles.centerColumn, {
             width: this.card_width, height: this.card_width, marginRight: 20, borderRadius: 25,
-            backgroundColor: RAINBOW_COLORS.maroon
         }]}>
           <Image
             source={this.getChannelImage()}
             style={{width: "100%", height: "100%", resizeMode: 'contain'}}
           />
         </View>
-
         {/* List of Videos */}
         {/*{ this.getFilteredVideoArray() }*/}
         { this.testVideoArray() }
