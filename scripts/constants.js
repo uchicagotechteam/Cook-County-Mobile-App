@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 // since env variables are bundled into the app's build and thus can be exposed to clients after the app is shipped
 // more info here: https://docs.expo.io/guides/environment-variables/
 // const API_KEY = process.env.EXPO_CCMA_YT_API_KEY;
-export const api_key = "AIzaSyDjPXW02VUyBCE_NdYof8__iGIo8IoFJGQ"; // dummy value to build
+export const api_key = "AIzaSyAvJKBDG3iziQ-oyIG5gch4P6qPfDj69tg";  // dummy value to build
 
 // export const theme = {
 //   dark: false,
@@ -331,6 +331,7 @@ export const styles = StyleSheet.create({
   regLogo2: {
     width: 340,
     height: 270,
+    borderRadius:20,
     marginRight: 10,
     marginLeft: 10
   },
@@ -393,10 +394,10 @@ export const styles = StyleSheet.create({
     paddingBottom:5,
     marginLeft:10,
     marginRight:10,
-    backgroundColor:'#E30008',
+    backgroundColor:'#00A3F5',
     borderRadius:20,
-    borderWidth: 1,
-    borderColor: '#000',
+    borderWidth: 0,
+    borderColor: '#000000',
     paddingLeft:10,
     paddingRight:10,
   },
@@ -404,7 +405,7 @@ export const styles = StyleSheet.create({
     color: "#000000"
   },
   searchColor: {
-    backgroundColor: "#008CD2" //#ADD8E6  
+    backgroundColor: "#FFFFFF" //#ADD8E6  
   },
   backColor: {
     backgroundColor: "#FFFFFF" //6699CC (blue gray)

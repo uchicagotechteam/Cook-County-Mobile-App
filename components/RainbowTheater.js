@@ -50,7 +50,7 @@ function RainbowTheater(props) {
       <ScrollView>
           { /*activeProps == null ?
             <View style={{height: 260, width:340}}>
-              <Image
+              <Image"../components/RainbowTheater.js";
                 style={styles.regLogo}
                 source={require('../images/rainbow.jpg')}
               />

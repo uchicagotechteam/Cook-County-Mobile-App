@@ -121,19 +121,21 @@ useEffect(() => {
 
     <LogoTitle channel={channel}/>
 
-    <ScrollView>
-
-      <View style={{ height: 10 }} />
-      <RoundedButton
+    <RoundedButton
           onPress={() => alert('Button clicked (change later)')}
           buttonStyle={styles.buttonStyle}
           textStyle={styles.baseText}
-          text= "See all channel worksheets"                       
+          text= "See All Channel Worksheets"                       
         />
+
+    <ScrollView>
+
+      <View style={{ height: 10 }} />
+      
 
       { getChannel() }
 
-      
+
 
     </ScrollView>
       

@@ -16,6 +16,7 @@ import { styles } from '../scripts/constants.js'
 //   dateInfo : Object      - Object containing the info about the search date filter {restriction : String, afterDate: Date, beforeDate : Date}
 //   activeId : String      - youtube identifier of the video actively playing in the theatre
 //   broadcastActiveVideo : Func - tells the component's parent when the video becomes the active thumbnail
+// 267 <Image source={this.getChannelImage()} style={{width: 240, height : 160, resizeMode: 'contain'}}/>
 class RainbowChannel extends React.Component {
   constructor(props) {
     super(props);
@@ -59,13 +60,15 @@ class RainbowChannel extends React.Component {
   }
 
   // Function that looks at the videoArray and currentSearch in props and returns two objects – options which stores the videos that passed the search and displays which contains details on how to highlight the search results
+  
   applySearch(dateVideoArray){
+    /*
     // Split search string into individual lowercase terms
     let terms = this.props.currentSearch.split(' ')
       .filter(s => s.length > 0)
       .map(s => s.toLowerCase());
     let num_terms = terms.length;
-
+    */
     if(dateVideoArray == undefined){
       return {options: [], displays : new Object()}
     }
@@ -175,10 +178,11 @@ class RainbowChannel extends React.Component {
       // Return the options and displays as one object
       return {options, displays};
   }
-
+  
   // Returns the JSX needed to display each video which fits the search criteria
   getFilteredVideoArray(){
     // Returns message if the channel is empty
+    var videoArray = this.props.videoArray
     if(this.props.videoArray == []){
       return (<Text style={styles.emptySearch}>No videos in this channel. Check back later</Text>)
     }
@@ -191,6 +195,7 @@ class RainbowChannel extends React.Component {
     }
     
     // Filters the videos by date. Either after, before or between dates (inclusive)
+    /*
     let restriction = this.props.dateInfo.dateRestriction;
     let afterDate = this.props.dateInfo.afterDate;
     let beforeDate = this.props.dateInfo.beforeDate;
@@ -214,7 +219,7 @@ class RainbowChannel extends React.Component {
         {
           return videoInfo.date < beforeDate && videoInfo.date > afterDate;
         });
-    }
+    } 
     
     // Applies the text search onto the remaining videos
     let searchResults = this.applySearch(dateVideoArray);
@@ -223,12 +228,12 @@ class RainbowChannel extends React.Component {
     if(options.length <= 0){
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
-    return options.map(videoInfo =>
+    */
+    return videoArray.map(videoInfo =>
       <RainbowThumbnail videoId={videoInfo.videoId}
         title={videoInfo.title}
         date={videoInfo.date}
         duration={videoInfo.duration}
-        display={displays[videoInfo.videoId]}
         isAdult={this.props.isAdult}
         description={videoInfo.description}
         broadcastActiveVideo={this.broadcastActiveVideo}
@@ -252,29 +257,13 @@ class RainbowChannel extends React.Component {
   render() {
 
     return (
-      <ScrollView horizontal={true} style={{ flex: 1 }}>
+      <View style={{ flex: 1, alignItems: 'center' }}>
          {/* Horizontal padding */}
-        <View style={{ width: 20, height:255}} />
-        <View style={{width: 240, alignItems : "center"}}>
-          <View style={{height: 50}}>
-            <AdjustableText
-              fontSize={30}
-              text=<Text>{this.props.channelTitle  + " \u279E"}</Text>
-              style={styles.channelTitleText}
-              maxHeight={50}
-            />
-          </View>
-          <Image
-            source={this.getChannelImage()}
-            style={{width: 240, height : 160, resizeMode: 'contain'}}
-          />
-          <ToggleSort style={{alignItems : "center"}} onPress={this.setOrder} />
-        </View>
-        <View style={{ width: 20}} />
+        <View style={{ height:20}} />
+        
         { this.getFilteredVideoArray() }
-        {/* Horizontal padding */}
-         <View style={{ width: 20}} />
-      </ScrollView>
+         
+      </View>
       );
   }
 }

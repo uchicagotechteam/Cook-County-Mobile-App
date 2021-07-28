@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
+import AdjustableText from "../components/AdjustableText.js";
 
 //mini org logo and org name
 //line 20 {props.channel.channelTitle}
@@ -18,10 +19,14 @@ export default function LogoTitle(props) {
       />
       </View>
       <View style={styles.column2}>
-      <Text style={styles.paragraph}>
-           {props.channel.channelTitle}                              
-      </Text>
-       </View>
+          <AdjustableText
+            fontSize={30}
+            text=<Text> {props.channel.channelTitle}
+                  </Text>
+            style = {styles.column2}
+            maxHeight={60}
+          />
+      </View>
     </View>
     </View>
   );

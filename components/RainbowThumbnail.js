@@ -130,27 +130,21 @@ class RainbowThumbnail extends React.Component {
   render() {
     return (
       <View style={this.getActiveBackground()}>
-        <View style={{height: 60}}>
+        <View style={{height: 60, justifyContent:'center'}}>
           <AdjustableText
             fontSize={30}
-            text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map((s, index) =>
-                    s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
-                  : this.props.title}
-                  &nbsp;-&nbsp;
-                  {this.props.display !== undefined ? this.props.display["dateString"].map((s, index) =>
-                    s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
-                  : this.props.title}
+            text=<Text>{this.isRecent()} {this.props.title}
                   </Text>
             style={styles.videoTitleText}
             maxHeight={60}
           />
         </View>
-        <View style={{flexGrow: 1, alignItems: 'center'}} >
+        <View style={{flexGrow: 1, alignItems: 'center', justifyContent:'center'}} >
             <View style={{height: 240,
                 top: 0,
                 width: 288,
                 alignItems: 'center'}}>
-              {this.state.thumbnail === null ? (<View style={{height: "67%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "67%", width: '100%'}} source={{uri : this.state.thumbnail}}/>)
+              {this.state.thumbnail === null ? (<View style={{height: "67%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "67%", width: '100%', borderRadius: 20}} source={{uri : this.state.thumbnail}}/>)
               }
               <TouchableHighlight style={{height: "45%",
                           bottom: "58%",

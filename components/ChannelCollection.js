@@ -36,10 +36,10 @@ function ChannelCollection(props) {
   // and runs again whenever there is a change to data in second argument array (fetchData)
   // beware of infinite loops
   useEffect(() => {
-    // logic to fetch data from youtube api
     const fetchData = function(playlistId, index, localVideoArrays, pageToken) {
       console.log(playlistId);
       console.log(api_key);
+      console.log("IN COLLECTION USE EFFECT")
       var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
       console.log(token_text);
       axios({
@@ -48,6 +48,8 @@ function ChannelCollection(props) {
       })
       .then((response) => {
         setResponseData(response.data)
+        console.log("*****ITEMS*****")
+        console.log(response.data.items)
         var nextPageToken = null;
         if(response.data.nextPageToken != undefined && response.data.nextPageToken != null){
           nextPageToken = response.data.nextPageToken;
@@ -62,7 +64,7 @@ function ChannelCollection(props) {
             description = video.snippet.description;
           }
           let re = /(http(?:s?):\/\/(?:www\.))?(drive.google.com?(.*))/
-          let google_drive_link = item.snippet.description.match(re)
+          let google_drive_link = video.snippet.description.match(re)
           return {
             videoId: video.contentDetails.videoId,
             title: video.snippet.title,
@@ -130,11 +132,8 @@ function ChannelCollection(props) {
     }
   }, [props.channels])
   
-  // Tells the component's parent when the active video has changed
-  const broadcastActiveVideo = useCallback((videoProps)=> {
-    props.broadcastActiveVideo(videoProps);
-    setActiveId(videoProps.videoId);
-  }, []);
+
+ 
 
   return (
     props.channels.map((channel, index) =>
@@ -146,43 +145,14 @@ function ChannelCollection(props) {
           currentSearch={props.searchText}
           dateInfo={props.dateInfo}
           isAdult={props.isAdult}
-          broadcastActiveVideo={broadcastActiveVideo}
           activeId={activeId}
         />
-        <View style={styles.lineStyle} />
+        <View style={{height: 160}} />
       </View>
   ));
 }
 
-/*
-Old theatre return
 
-<View style={{ flexDirection : "row", justifyContent: 'space-evenly', }}>
-  { channelNum > 0 ? <RoundedButton
-    onPress={() => setChannelNum(Math.max(channelNum - 1, 0))}
-    buttonStyle={styles.buttonStyle}
-    textStyle={styles.baseText}
-    text={"Last Channel"}
-  /> : null }
-  { channelNum < videoArrays.length - 1 ? <RoundedButton
-    onPress={() => setChannelNum(Math.min(channelNum + 1, videoArrays.length - 1))}
-    buttonStyle={styles.buttonStyle}
-    textStyle={styles.baseText}
-    text={"Next channel"}
-  /> : null }
-</View>
-<View style={{height: 20}} />
-{ videoArrays.length > 0 ?
-  <RainbowChannel
-    videoArray={getVideoArrayByIndex(props.channels[channelNum], channelNum)}
-    channelTitle={props.channels[channelNum].channelTitle}
-    channelImage={props.channels[channelNum].channelImage}
-    currentSearch={props.searchText}
-    dateInfo={props.dateInfo}
-    isAdult={props.isAdult}
-    broadcastActiveVideo={broadcastActiveVideo}
-    activeId={activeId}
-  />
-  : null} */
+
 
 export default ChannelCollection;

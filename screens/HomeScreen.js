@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { TouchableOpacity, View, Text, Image, ImageBackground, StyleSheet } from 'react-native';
 import { styles } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
-import SponsorBanner from '../components/SponsorBanner.js'
+
 
 function HomeScreen({ navigation }) {
   // const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
@@ -21,9 +21,7 @@ function HomeScreen({ navigation }) {
   
   return (
     <View style={styles.centerColumn}>
-      { /* <ImageBackground style={styles.bgLogo} source={require('../images/simple_rainbow.png')}> */ }
-      <SponsorBanner image_ids={["19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE"
-      ]} />
+      
       <Image
         style={styles.mainLogo}
         source={require('../images/PR_logo_name.png')}
