@@ -142,7 +142,7 @@ function ChannelCollection(props) {
   return (
     props.channels.map((channel, index) =>
       <View key={`${channel.playlistId} ${index}`}>
-        <RoundedButton
+        {/*<RoundedButton
           onPress={() => props.navigation.navigate('Base Screen', {
             videoArray : getVideoArrayByIndex(channel, index),
             channelTitle: channel.channelTitle,
@@ -151,7 +151,8 @@ function ChannelCollection(props) {
           buttonStyle={styles.mainButtonStyle}
           textStyle={styles.mainButtonText}
           text={channel.channelTitle}
-        />
+        />*/}
+        <View style={styles.lineStyle} />
         <RainbowChannel
           videoArray={getVideoArrayByIndex(channel, index)}
           channelTitle={channel.channelTitle}
@@ -169,7 +170,6 @@ function ChannelCollection(props) {
           // activeId={activeId}
           navigation={navigation}
         />
-        <View style={styles.lineStyle} />
       </View>
     ));
 }

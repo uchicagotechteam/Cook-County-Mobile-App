@@ -107,7 +107,8 @@ class RainbowVideoIcon extends React.Component {
 
     getYoutubeMeta(this.props.videoId).then(meta => {
         console.log("Got meta!", meta);
-        this.setState({thumbnail : meta.thumbnail_url});
+        thumbnail = meta.thumbnail_url.replace("/hqdefault.jpg", "/maxresdefault.jpg");
+        this.setState({thumbnail});
     });
   }
   
