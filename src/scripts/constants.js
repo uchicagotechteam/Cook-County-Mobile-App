@@ -483,7 +483,7 @@ export const styles = StyleSheet.create({
     paddingBottom:5,
     marginLeft:10,
     marginRight:10,
-    backgroundColor: RAINBOW_COLORS.red,
+    backgroundColor: PALETTE.red.normal,
     borderRadius:20,
     borderWidth: 1,
     borderColor: '#000',
