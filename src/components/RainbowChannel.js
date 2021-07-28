@@ -409,15 +409,6 @@ class RainbowChannel extends React.Component {
         onContentSizeChange={this.handleContentSizeChange}
       >
 
-        {/* Beginning Card - Channel Logo */}
-        <View style={[styles.centerColumn, {
-            width: this.card_width, height: this.card_width, marginRight: 20, borderRadius: 25,
-        }]}>
-          <Image
-            source={this.getChannelImage()}
-            style={{width: "100%", height: "100%", resizeMode: 'contain'}}
-          />
-        </View>
         {/* List of Videos */}
         {/*{ this.getFilteredVideoArray() }*/}
         { this.testVideoArray() }
