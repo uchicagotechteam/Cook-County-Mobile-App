@@ -254,19 +254,7 @@ class RainbowChannel extends React.Component {
     if(options.length <= 0){
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
-    return options.map(videoInfo =>
-      <RainbowThumbnail videoId={videoInfo.videoId}
-        title={videoInfo.title}
-        date={videoInfo.date}
-        duration={videoInfo.duration}
-        description={videoInfo.description}
-        link={videoInfo.link}
-        display={displays[videoInfo.videoId]}
-        broadcastActiveVideo={this.broadcastActiveVideo}
-        activeId={this.props.activeId}
-        key={videoInfo.videoId}
-      />
-    )
+    return options.map(this.renderVideo)
   }
 
   // Changes the forward state when the sort icon is toggled
@@ -409,8 +397,8 @@ class RainbowChannel extends React.Component {
       >
 
         {/* List of Videos */}
-        {/*{ this.getFilteredVideoArray() }*/}
-        { this.testVideoArray() }
+        { this.getFilteredVideoArray() }
+        {/* this.testVideoArray() */}
 
         {/* End Card - View All */}
         <View style={{

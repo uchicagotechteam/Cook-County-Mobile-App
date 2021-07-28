@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
+import axios from 'axios';
 import { TouchableOpacity, View, Text, Image, ImageBackground, StyleSheet,
           ScrollView, Animated, Dimensions
       } from 'react-native';
-import { styles, theme, PALETTE } from '../scripts/constants.js'
+import { styles, theme, PALETTE, api_key } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
 
 // The components used in the Homescreen
@@ -12,7 +13,6 @@ import { SearchBar } from 'react-native-elements';
 import ChannelCollection from "../components/ChannelCollection.js";
 
 function HomeScreen({ navigation }) {
-  // const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
 
   // Logic to maintain state of search text
   const [searchText, setSearchText] = useState("");
@@ -21,31 +21,71 @@ function HomeScreen({ navigation }) {
     afterDate : null,
     beforeDate : null
   });
+  
+  // Logic to handle the youtube API request for playlists
+  let [playlistResponseData, setPlaylistResponseData] = useState('');
+  
+  // Logic to maintain the channels returned by the API
+  let [channels, setChannels] = useState([]);
 
   // Function to update the search results
   const updateSearch = useCallback((search) => {
     setSearchText(search);
   }, []);
+  
+  // Channel id for the CCB user's channel 
+  const ccbChannel = "UCLcTO4BeO0tlZFeMS8SKLSg";
+  
+  useEffect(() => {
+    // logic to fetch data from youtube api
+    const fetchChannels = function(channelId) {
+      console.log("Playlists from https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key);
+      axios({
+        "method": "GET",
+        "url": "https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key
+      })
+      .then((response) => {
+        setPlaylistResponseData(response.data)
+
+        // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
+        let playlistArray = response.data.items.map(playlist => {
+          return {
+            playlistId: playlist.id,
+            channelTitle: playlist.snippet.title,
+            channelImage : playlist.snippet.description
+          }
+        });
+        console.log(playlistArray);
+        setChannels(playlistArray);
+      })
+      .catch((error) => {
+        console.log("Axios error");
+        console.log(error);
+      })
+    }
+    
+    fetchChannels(ccbChannel);
+  }, [])
 
   // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
-  const channels = [
-    { channelTitle : "WTTW Chicago",
-      channelImage : "music",
-      playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
-    },
-    { channelTitle : "Test Channel 2",
-      channelImage : "music",
-      playlistId : "PLsPUh22kYmNCzNFNDwxIug8q1Zz0Mj60H",
-    },
-    { channelTitle : "Test Channel 3",
-      channelImage : "music",
-      playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
-    },
-    { channelTitle : "Test Channel 4",
-      channelImage : "music",
-      playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
-    },
-  ];
+  // const channels = [
+  //   { channelTitle : "WTTW Chicago",
+  //     channelImage : "music",
+  //     playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
+  //   },
+  //   { channelTitle : "Test Channel 2",
+  //     channelImage : "music",
+  //     playlistId : "PLsPUh22kYmNCzNFNDwxIug8q1Zz0Mj60H",
+  //   },
+  //   { channelTitle : "Test Channel 3",
+  //     channelImage : "music",
+  //     playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
+  //   },
+  //   { channelTitle : "Test Channel 4",
+  //     channelImage : "music",
+  //     playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
+  //   },
+  // ];
 
   // return (
   //   <View>

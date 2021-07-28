@@ -27,4 +27,4 @@ function App() {
 }
 
 // Wrap the App component using a function that adds the initial logo screen
-export default withSplashScreen(App);
+export default App; // export default withSplashScreen(App);
