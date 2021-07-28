@@ -7,7 +7,9 @@ import { AsyncStorage } from 'react-native';
 import { useState } from "react";
 import ProgressBar from 'react-native-progress/Bar';
 import AdjustableText from "../components/AdjustableText.js";
+import ShowMoreText from "../components/ShowMoreText.js";
 import LoadingThumbnail from "../components/LoadingThumbnail.js";
+import RoundedButton from "../components/RoundedButton.js";
 import { styles } from '../scripts/constants.js'
 import moment from "moment";
 
@@ -272,23 +274,16 @@ class RainbowVideo extends React.Component {
             <View style={{height: 240 * 0.67, width: 288, position: "absolute"}}>
               { this.state.isBuffering ? <LoadingThumbnail /> : null}
             </View>
-            { this.props.link != null ? <View style={{height: 40, position: "absolute", bottom:150}}>
-              <AdjustableText
-                fontSize={24}
-                text={<Text style={{color: 'orange'}}
-                        onPress={() => Linking.openURL(this.props.link)}>
-                        See worksheets
-                      </Text>}
-                style={styles.videoTitleText}
-                maxHeight={40}
-              />
+            { this.props.link != null ? <View style={{height: 40, position: "absolute", bottom:160}}>
+              <RoundedButton
+                  onPress={() => Linking.openURL(this.props.link)}
+                  buttonStyle={styles.buttonStyle}
+                  textStyle={styles.baseText}
+                  text= "See video worksheet"                       
+                />
             </View> : null }
             <View style={{height: 20}} />
-            <ScrollView style={{height: 160, width: '90%'}}>       
-              <Text style={{fontSize: 20}}>
-               { this.props.description }
-             </Text>
-           </ScrollView>
+            <ShowMoreText text={this.props.description} />
         </View>
       </View>);
   }
