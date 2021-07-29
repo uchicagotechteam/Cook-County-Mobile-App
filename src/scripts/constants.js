@@ -166,7 +166,7 @@ export const theme = {
   dark: false,
   colors: {
     primary: 'rgb(255, 0, 0)',
-    background: '#D6FDFD',
+    background: '#FFFFFF',
     text: '#000000',
   },
 };
@@ -353,6 +353,7 @@ export const styles = StyleSheet.create({
   regLogo: {
     width: 340,
     height: 270,
+    alignItems: 'center'
   },
   regLogo2: {
     width: 340,
