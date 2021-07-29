@@ -107,7 +107,8 @@ class RainbowVideoIcon extends React.Component {
 
     getYoutubeMeta(this.props.videoId).then(meta => {
         console.log("Got meta!", meta);
-        thumbnail = meta.thumbnail_url.replace("/hqdefault.jpg", "/maxresdefault.jpg");
+        thumbnail = meta.thumbnail_url.replace("/hqdefault.jpg", "/mqdefault.jpg");
+        // thumbnail = meta.thumbnail_url.replace("/vi/", "/vi_webp/").replace("/hqdefault.jpg", "/maxresdefault.jpg");
         this.setState({thumbnail});
     });
   }
@@ -138,10 +139,10 @@ class RainbowVideoIcon extends React.Component {
     return (
       <View style={[
         { width: this.width
-          +20,
-          backgroundColor: PALETTE.purple.light,
-          padding: 10,
-          borderRadius: 10,
+          // +20,
+          // backgroundColor: PALETTE.purple.light,
+          // padding: 10,
+          // borderRadius: 10,
         },
         this.props.style
       ]}>
