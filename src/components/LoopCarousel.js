@@ -110,6 +110,14 @@ export default class LoopCarousel extends React.Component {
 		if (this.autoscroll) {
 			this.start_autoscroll_timer();
 		}
+
+		// Bind the scrollTo method to this object
+		this.scrollTo = this.scrollTo.bind(this);
+	}
+
+	// On unmount, clear the interval to autoscroll to next logos
+	componentWillUnmount() {
+		clearInterval(this.state.autoscroll_timer);
 	}
 
 	// Init function to run any time the dimensions of the content change
@@ -130,7 +138,16 @@ export default class LoopCarousel extends React.Component {
 
 	// Set a js interval for the autoscroll
 	start_autoscroll_timer() {
-		this.state.autoscroll_timer = setInterval(() => {
+
+		// Assign as local variable so we can reference it in the interval function itself
+		// even if the parent object no longer exists
+		var autoscroll_timer = setInterval(() => {
+
+			// Make sure the object still exists before trying to scroll it
+			if (this == undefined) {
+				clearInterval(autoscroll_timer);
+				return;
+			}
 
 			// Mark this motion as autoscroll
 			this.setState({ auto_scrolling: true });
@@ -150,11 +167,14 @@ export default class LoopCarousel extends React.Component {
 
 			// Do the animated scroll on the next tick
 			setImmediate(() => {
-				this.scrollTo({ x: target_interval * this.itemWidth , animated: true });
+				if (this.scrollTo != undefined)
+					this.scrollTo({ x: target_interval * this.itemWidth , animated: true });
 			});
 
 		// Perform the autoscroll based on the passed prop
 		}, this.autoscrollDelay);
+
+		this.state.autoscroll_timer = autoscroll_timer;
 	}
 
 	// Clear the js interval for the autoscroll
@@ -221,7 +241,8 @@ export default class LoopCarousel extends React.Component {
 	}
 
 	scrollTo(...args) {
-		this.scroll_view_ref.current.scrollTo(...args);
+		if (this != null && this.scroll_view_ref != null)
+			this.scroll_view_ref.current.scrollTo(...args);
 	}
 
 	// Snap the carousel to the nearest interval
