@@ -366,6 +366,38 @@ export const styles = StyleSheet.create({
 }); */
 
 export const styles = StyleSheet.create({
+
+  header_text: {
+    // fontFamily: 'Montserrat, sans-serif',
+    // fontFamily: 'Montserrat_700Regular, sans-serif',
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: PALETTE.text.dark,
+  },
+
+  subheader_text: {
+    // fontFamily: 'Montserrat, sans-serif',
+    fontWeight: "500",
+    fontSize: 14,
+    color: PALETTE.text.dark,
+  },
+
+  body_text: {
+    // fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 'normal',
+    fontSize: 14,
+    color: PALETTE.text.dark,
+  },
+
+  link_text: {
+    // fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 'normal',
+    fontSize: 14,
+    // textDecoration: 'underline',
+    color: PALETTE.text.link,
+  },
+
+
   // Standard text for screens
   baseText: {
     fontFamily: 'sans-serif',

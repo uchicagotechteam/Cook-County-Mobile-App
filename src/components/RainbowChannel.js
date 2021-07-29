@@ -291,9 +291,9 @@ class RainbowChannel extends React.Component {
   testVideoArray() {
     var options = [
     { videoId: "VlSWhGpCeHU",
-      title: "Test video 1",
+      title: "Spring Break Dwelling",
       date: 1,
-      duration: "1:00",
+      duration: "6:20",
       description: "This is a test video"
     },
     { videoId: "oQLJqMquGEw",
@@ -366,38 +366,31 @@ class RainbowChannel extends React.Component {
     const screen_width = Dimensions.get('window').width;
 
     // Define heights
-    const top_bar_height = 30;
+    const top_bar_height = 20;
 
     return (
       <View>
 
       {/* Header - Channel Title */}
       <Animated.View style={{
-        width: screen_width * 0.6, height: top_bar_height, paddingLeft: 20,
+        width: screen_width * 0.75, height: top_bar_height, paddingLeft: 20,
       }}>
-        <AdjustableText
-          fontSize={20}
-          text=<Text>{this.props.channelTitle}</Text>
-          style={[styles.channelTitleText, {textAlign: "left"}]}
-          maxHeight={50}
-        />
+        <Text style={styles.header_text}>{this.props.channelTitle}</Text>
       </Animated.View>
 
       {/* Header - View More */}
       { this.show_view_all &&
         <View style={{
-          width: screen_width * 0.4, height: top_bar_height, paddingRight: 20,
+          width: screen_width * 0.25, height: top_bar_height, paddingRight: 20,
           position: "absolute", right: 0, top: 0,
         }}>
           <TouchableOpacity
             style={{width: "100%"}} activeOpacity = { .5 }
             onPress={ () => this.navigation.navigate('Org') }
           >
-            <AdjustableText
-              fontSize={20} maxHeight={50}
-              text=<Text>View All {"\u00BB"}</Text>
-              style={[styles.channelTitleText, {textAlign: "right", width: "100%"}]}
-            />
+            <Text style={[styles.subheader_text, {textAlign: "right", width: "100%"}]} >
+              View All {"\u00BB"}
+            </Text>
           </TouchableOpacity>
         </View>
       }
@@ -439,12 +432,8 @@ class RainbowChannel extends React.Component {
               activeOpacity = { .5 } onPress={ () => this.navigation.navigate('Org') }
               style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}
             >
-              <AdjustableText
-                fontSize={20} maxHeight={50}
-                text=<Text>View All</Text>
-                style={styles.channelTitleText}
-              />
-              <Icon type="ionicon" name='chevron-forward-circle-outline' size={40} />
+              <Text style={styles.header_text}>View All</Text>
+              <Icon type="ionicon" name='chevron-forward-circle-outline' size={35} />
             </TouchableOpacity>
           </View>
         }

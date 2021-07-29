@@ -161,9 +161,9 @@ class RainbowVideoIcon extends React.Component {
           }}
           resizeMode={"cover"}
         />
-        <View style={{margin: 10, marginBottom: 0}}>
-          <Text style={{fontWeight: 'bold'}}>{this.props.title}</Text>
-          <Text>{this.props.duration}</Text>
+        <View style={{marginHorizontal: 4, marginTop: 10, marginBottom: 0}}>
+          <Text style={[styles.subheader_text]}>{this.props.title}</Text>
+          <Text style={styles.body_text}>{this.props.duration}</Text>
         </View>
       </View>
     );
