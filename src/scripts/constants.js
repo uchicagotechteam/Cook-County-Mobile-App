@@ -443,7 +443,8 @@ export const styles = StyleSheet.create({
     width: 150,
     height: 150,
     margin: SPONSOR_LOGO_SPACING / 2,
-    borderRadius: 15,
+    borderRadius: 5,
+    backgroundColor: PALETTE.back.light,
   },
   // Child page
   regLogo: {
