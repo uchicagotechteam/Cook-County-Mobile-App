@@ -7,7 +7,8 @@ import { styles, theme, PALETTE } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
 
 // The components used in the Homescreen
-import SponsorBanner from '../components/SponsorBanner.js'
+import SponsorBanner  from '../components/SponsorBanner.js'
+import FeaturedBanner from '../components/FeaturedBanner.js'
 import { SearchBar } from 'react-native-elements';
 import ChannelCollection from "../components/ChannelCollection.js";
 
@@ -252,10 +253,12 @@ function HomeScreen({ navigation }) {
       >
         <View style={{
           height: HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT,
-          backgroundColor: theme.colors.background
+          backgroundColor: theme.colors.background,
+          marginBottom: 20,
         }} />
 
         {/* TODO: Featured videos banner */}
+        <FeaturedBanner />
 
         {/* The banner showing the logo for each sponsor */}
         <SponsorBanner
