@@ -368,21 +368,30 @@ class RainbowChannel extends React.Component {
     // Define heights
     const top_bar_height = 20;
 
+    const end_val = this.state.full_width - screen_width;
+
+    const view_all_opacity = this.state.scroll_x.interpolate({
+      inputRange:  [end_val - this.card_width, end_val - (this.card_width / 2)],
+      outputRange: [1, 0],
+      extrapolate: 'clamp'
+    });
+
     return (
       <View>
 
       {/* Header - Channel Title */}
-      <Animated.View style={{
+      <View style={{
         width: screen_width * 0.75, height: top_bar_height, paddingLeft: 20,
       }}>
         <Text style={styles.header_text}>{this.props.channelTitle}</Text>
-      </Animated.View>
+      </View>
 
       {/* Header - View More */}
       { this.show_view_all &&
-        <View style={{
+        <Animated.View style={{
           width: screen_width * 0.25, height: top_bar_height, paddingRight: 20,
           position: "absolute", right: 0, top: 0,
+          opacity: view_all_opacity,
         }}>
           <TouchableOpacity
             style={{width: "100%"}} activeOpacity = { .5 }
@@ -392,7 +401,7 @@ class RainbowChannel extends React.Component {
               View All {"\u00BB"}
             </Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       }
 
       {/* Horizontal ScrollView holding the video icons */}
