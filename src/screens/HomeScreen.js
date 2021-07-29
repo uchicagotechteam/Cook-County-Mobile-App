@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import { TouchableOpacity, View, Text, Image, ImageBackground, StyleSheet,
-          ScrollView, Animated, Dimensions
+          ScrollView, Animated, Dimensions, StatusBar
       } from 'react-native';
 import { styles, theme, PALETTE } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
@@ -33,59 +33,62 @@ function HomeScreen({ navigation }) {
       channelImage : "music",
       playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
     },
-    { channelTitle : "Test Channel 2",
+    { channelTitle : "Negaunee Music",
       channelImage : "music",
-      playlistId : "PLsPUh22kYmNCzNFNDwxIug8q1Zz0Mj60H",
+      playlistId : "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
     },
-    { channelTitle : "Test Channel 3",
+    { channelTitle : "Chicago Children's Museum",
       channelImage : "music",
-      playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
+      playlistId : "PL8GKxgb3LyNfoqt77eaW6N6smu75evr5Q",
     },
     { channelTitle : "Test Channel 4",
       channelImage : "music",
       playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
     },
+    { channelTitle : "Test Channel 5",
+      channelImage : "music",
+      playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
+    },
+    { channelTitle : "Test Channel 6",
+      channelImage : "music",
+      playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
+    },
   ];
 
-  // return (
-  //   <View>
-  //     <Text>Hello world</Text>
-  //   </View>
-  // );
+  // Set the height of the header when expanded and when collapsed
+  const HEADER_EXP_HEIGHT = 180;
+  const HEADER_COL_HEIGHT = 50;
 
-  const HEADER_EXP_HEIGHT = 300;
-  const HEADER_COL_HEIGHT = 0;
-
-  // Create a new variable that will track the object's opacity
-  // const scroll_y = useRef(new Animated.Value(0.01)).current;
+  // Create a new variable that will track how far the user has scrolled
   const scroll_y = new Animated.Value(0);
 
+  // Get the range of values between when the header is expanded and collapsed
+  // This is the range we will interpolate the animated values on
+  // i.e. once the screen has scrolled this much, the header is completely closed
+  const range = HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT;
 
-
+  // Animate the height of the header
   const headerHeight = scroll_y.interpolate({
-    inputRange:  [0, HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT],
+    inputRange:  [0, range],
     outputRange: [HEADER_EXP_HEIGHT, HEADER_COL_HEIGHT],
     extrapolate: 'clamp'
   });
 
-  const bannerMargin = scroll_y.interpolate({
-    inputRange:  [0, HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT],
-    outputRange: [50, 0],
-    extrapolate: 'clamp'
-  });
-
-  const headerTitleOpacity = scroll_y.interpolate({
-    inputRange:  [0, HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT],
+  // Set the collapsed header to start becoming visible halfway into the scroll
+  const headerColOpacity = scroll_y.interpolate({
+    inputRange:  [range/2, range],
     outputRange: [0, 1],
     extrapolate: 'clamp'
   });
 
-  const heroTitleOpacity = scroll_y.interpolate({
-    inputRange:  [0, HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT],
+  // Set the expanded header to become invisible halfway into the scroll
+  const headerExpOpacity = scroll_y.interpolate({
+    inputRange:  [0, range/2],
     outputRange: [1, 0],
     extrapolate: 'clamp'
   });
 
+  // Get the dimensions of the screen
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen')
 
   // return (
@@ -190,66 +193,85 @@ function HomeScreen({ navigation }) {
   return (
     <View style={[ styles.centerColumn ]}>
 
+      <StatusBar
+        animated={true}
+        backgroundColor={PALETTE.back.light}
+        barStyle={'dark-content'}
+      />
+
       {/* The collapsing header component */}
       <Animated.View style={{
         height: headerHeight, width: SCREEN_WIDTH,
         position: 'absolute', top: 0, left: 0,
+        backgroundColor: PALETTE.back.light,
+        borderBottomWidth: 5, borderColor: PALETTE.green.dark,
       }}>
-
-        {/* The expanded header */}
-        <Animated.View style={{
-          opacity: heroTitleOpacity,
-          position: 'absolute', top: 0, left: 0, height: headerHeight,
-          flex: 1, alignItems: 'center', justifyContent: 'center',
-        }}>
-
-          {/* TODO: Featured videos banner */}
-
-          {/* The banner showing the logo for each sponsor */}
-          <SponsorBanner
-            // image_ids={[ "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE" ]}
-            image_ids={[
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-            ]}
-            navigation={navigation}
-            shuffle={true}
-            // style={{ marginVertical: bannerMargin }}
-          />
-        </Animated.View>
 
         {/* The collapsed header */}
         <Animated.View style={{
-          opacity: headerTitleOpacity,
-          position: 'absolute', top: 0, left: 0, height: headerHeight, width: "100%"
+          opacity: headerColOpacity, height: headerHeight,
+          position: 'absolute', top: 0, //left: 0,
+          flex: 1, alignItems: 'center', justifyContent: 'center',
         }}>
-          <Text>Hello</Text>
+          <View style={[styles.centerColumn, {width: SCREEN_WIDTH}]}>
+            <Image
+              source={require("../assets/images/PR_logo.png")}
+              style={{width: 25, height: 25}}
+              resizeMode={"contain"}
+            />
+          </View>
         </Animated.View>
+
+        {/* The expanded header */}
+        <Animated.View style={{
+          opacity: headerExpOpacity,
+          // height: headerHeight,
+          flex: 1, alignItems: 'center', justifyContent: 'center',
+        }}>
+          <Image
+            source={require("../assets/images/PR_logo_horizontal.png")}
+            style={{ width: SCREEN_WIDTH * 2/3 }}
+            resizeMode={"contain"}
+          />
+        </Animated.View>
+
       </Animated.View>
 
       {/* The shelf view for the Rainbow Channels */}
       <ScrollView
         style={{
-          width: "100%", paddingTop: HEADER_COL_HEIGHT, height: 300,
-          borderTop: PALETTE.red.normal,
-          // backgroundColor: RAINBOW_COLORS.yellow,
+          width: "100%", height: SCREEN_HEIGHT - HEADER_COL_HEIGHT - 20,
+          marginTop: HEADER_COL_HEIGHT,
           zIndex: -1,
         }}
-        // contentContainerStyle={{ paddingTop: HEADER_EXP_HEIGHT }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scroll_y } } }],
           { useNativeDriver: false }
         )}
         scrollEventThrottle={16}
-        stickyHeaderIndices={[1]}
       >
-        <View style={{ height: HEADER_EXP_HEIGHT, backgroundColor: theme.colors.background }} />
+        <View style={{
+          height: HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT,
+          backgroundColor: theme.colors.background
+        }} />
+
+        {/* TODO: Featured videos banner */}
+
+        {/* The banner showing the logo for each sponsor */}
+        <SponsorBanner
+          image_ids={[
+            "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
+            "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
+            "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
+            "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
+            "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
+            "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
+            "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
+            "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
+          ]}
+          navigation={navigation}
+          shuffle={true}
+        />
 
         {/* The search bar for the channels */}
         <SearchBar

@@ -17,7 +17,7 @@ function App() {
     <NavigationContainer theme={theme}>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen}
-          options={{ title:'Project Rainbow', headerStyle: styles.searchColor}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="Org"         component={OrgScreen}  options={{headerStyle: styles.searchColor}} />
         <Stack.Screen name="Base Screen" component={BaseScreen} options={{headerStyle: styles.searchColor}} />
