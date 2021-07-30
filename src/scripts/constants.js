@@ -395,7 +395,7 @@ export const styles = StyleSheet.create({
   videoTitleText: {
     fontFamily: 'sans-serif',
     textAlign: 'center',
-    width: 324
+    width: "100%"
   },
   // Logo shown when app first starts
   splashLogo: {
@@ -483,7 +483,7 @@ export const styles = StyleSheet.create({
     paddingBottom:5,
     marginLeft:10,
     marginRight:10,
-    backgroundColor: PALETTE.red.normal,
+    backgroundColor: PALETTE.red.light,
     borderRadius:20,
     borderWidth: 1,
     borderColor: '#000',

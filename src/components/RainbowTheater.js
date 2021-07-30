@@ -70,12 +70,13 @@ function RainbowTheater(props) {
             description={activeProps.description}
             link={activeProps.link}
           />  }
-          <View style={{height: 190}} />
+          <View style={{height: 170}} />
+          <View style={{...styles.lineStyle, width: "90%"}} />
           <RainbowChannel
             videoArray={props.videoArray}
             channelTitle={props.channelTitle}
             channelImage={props.channelImage}
-            currentSearch={""}
+            currentSearch={searchText}
             dateInfo={
               {
                 restriction : "",

@@ -106,7 +106,7 @@ class RainbowVideoIcon extends React.Component {
     // });
 
     getYoutubeMeta(this.props.videoId).then(meta => {
-        console.log("Got meta!", meta);
+        // console.log("Got meta!", meta);
         thumbnail = meta.thumbnail_url.replace("/hqdefault.jpg", "/maxresdefault.jpg");
         this.setState({thumbnail});
     });
@@ -162,7 +162,15 @@ class RainbowVideoIcon extends React.Component {
           resizeMode={"cover"}
         />
         <View style={{margin: 10, marginBottom: 0}}>
-          <Text style={{fontWeight: 'bold'}}>{this.props.title}</Text>
+        <AdjustableText
+            fontSize={18}
+            text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map((s, index) =>
+                    s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
+                  : this.props.title}
+                  </Text>
+            style={{fontWeight:"bold"}}
+            maxHeight={20}
+          />
           <Text>{this.props.duration}</Text>
         </View>
       </View>

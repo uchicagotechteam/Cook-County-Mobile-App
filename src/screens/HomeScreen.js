@@ -246,7 +246,7 @@ function HomeScreen({ navigation }) {
           {/* TODO: Featured videos banner */}
 
           {/* The banner showing the logo for each sponsor */}
-          <SponsorBanner
+          {/*<SponsorBanner
             // image_ids={[ "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE" ]}
             image_ids={[
               "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
@@ -261,7 +261,7 @@ function HomeScreen({ navigation }) {
             navigation={navigation}
             shuffle={true}
             // style={{ marginVertical: bannerMargin }}
-          />
+          />*/}
         </Animated.View>
 
         {/* The collapsed header */}

@@ -3,7 +3,7 @@ import RainbowThumbnail from "../components/RainbowThumbnail.js";
 import AdjustableText from "../components/AdjustableText.js";
 import ToggleSort from "../components/ToggleSort.js";
 import { Dimensions } from 'react-native';
-import { View, ScrollView, StyleSheet, Image, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Image, Animated, Text } from 'react-native';
 import {search} from '../scripts/Search.js';
 import { styles } from '../scripts/constants.js'
 
@@ -21,13 +21,20 @@ class RainbowChannel extends React.Component {
 
     // Constant hardcoding the keys in each video's object which will be targetted by the search
     this.searchVals = ["title", "dateString"];
+    
+    this.card_height = 200;
+    this.card_width  = 150;
+    
     // State includes
     //   forward : Bool - Stores whether the videos should be shown from newest to oldest (true) or oldest to newest
     this.state = {
-      forward : true
+      forward : true,
+      scroll_x : new Animated.Value(0),
+      full_width: 0,
     };
     this.setOrder = this.setOrder.bind(this);
     this.broadcastActiveVideo = this.broadcastActiveVideo.bind(this);
+    this.handleContentSizeChange = this.handleContentSizeChange.bind(this);
   }
 
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
@@ -59,6 +66,10 @@ class RainbowChannel extends React.Component {
 
   // Function that looks at the videoArray and currentSearch in props and returns two objects – options which stores the videos that passed the search and displays which contains details on how to highlight the search results
   applySearch(dateVideoArray){
+    if(this.props.currentSearch == undefined || this.props.currentSearch == null){
+      return {options: [], displays : new Object()}
+    }
+    
     // Split search string into individual lowercase terms
     let terms = this.props.currentSearch.split(' ')
       .filter(s => s.length > 0)
@@ -233,8 +244,14 @@ class RainbowChannel extends React.Component {
         broadcastActiveVideo={this.broadcastActiveVideo}
         activeId={this.props.activeId}
         key={videoInfo.videoId}
+        width={this.card_width}
+        height={this.card_height}
       />
     )
+  }
+  
+  handleContentSizeChange(new_size) {
+    this.setState({ full_width: new_size });
   }
 
   // Changes the forward state when the sort icon is toggled
@@ -249,31 +266,48 @@ class RainbowChannel extends React.Component {
   }
 
   render() {
+    // Retrieve the screen width
+    const screen_width = Dimensions.get('window').width;
 
+    // Define heights
+    const top_bar_height = 30;
+    
     return (
-      <ScrollView horizontal={true} style={{ flex: 1, backgroundColor: '#00C4C2' }}>
-         {/* Horizontal padding */}
-        <View style={{ width: 20, height:255, }} />
-        <View style={{width: 240, alignItems : "center"}}>
-          <View style={{height: 50}}>
-            <AdjustableText
-              fontSize={30}
-              text=<Text>{this.props.channelTitle  + " \u279E"}</Text>
-              style={styles.channelTitleText}
-              maxHeight={50}
-            />
-          </View>
-          <Image
-            source={this.getChannelImage()}
-            style={{width: 240, height : 160, resizeMode: 'contain'}}
-          />
-          <ToggleSort style={{alignItems : "center"}} onPress={this.setOrder} />
-        </View>
-        <View style={{ width: 20}} />
+      <View>
+      {/* Header - Channel Title */}
+      <Animated.View style={{
+        width: screen_width * 0.6, height: top_bar_height, paddingLeft: 20,
+      }}>
+        <AdjustableText
+          fontSize={20}
+          text=<Text>{this.props.channelTitle}</Text>
+          style={[styles.channelTitleText, {textAlign: "left"}]}
+          maxHeight={50}
+        />
+      </Animated.View>
+
+      {/* Horizontal ScrollView holding the video icons */}
+      <ScrollView
+        horizontal={true}
+        style={{ flex: 1 }}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 20, paddingVertical: 10,
+          alignItems: 'center',
+        }}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: this.state.scroll_x } } }],
+          { useNativeDriver: false }
+        )}
+        scrollEventThrottle={16}
+        onContentSizeChange={this.handleContentSizeChange}
+      >
+
+        {/* List of Videos */}
         { this.getFilteredVideoArray() }
-        {/* Horizontal padding */}
-         <View style={{ width: 20}} />
+
       </ScrollView>
+      </View>
       );
   }
 }

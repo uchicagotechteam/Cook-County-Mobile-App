@@ -91,6 +91,10 @@ class RainbowChannelIcons extends React.Component {
 
   // Function that looks at the videoArray and currentSearch in props and returns two objects – options which stores the videos that passed the search and displays which contains details on how to highlight the search results
   applySearch(dateVideoArray){
+    if(this.props.currentSearch == undefined || this.props.currentSearch == null){
+      return {options: [], displays : new Object()}
+    }
+    
     // Split search string into individual lowercase terms
     let terms = this.props.currentSearch.split(' ')
       .filter(s => s.length > 0)
@@ -254,6 +258,9 @@ class RainbowChannelIcons extends React.Component {
     if(options.length <= 0){
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
+    for(var i = 0; i < options.length; i++){
+      options[i].display = displays[options[i].videoId];
+    }
     return options.map(this.renderVideo)
   }
 
@@ -310,7 +317,7 @@ class RainbowChannelIcons extends React.Component {
           title={videoInfo.title}
           date={videoInfo.date}
           duration={videoInfo.duration}
-          // display={displays[videoInfo.videoId]}
+          display={videoInfo.display}
           isAdult={this.props.isAdult}
           description={videoInfo.description}
           broadcastActiveVideo={this.broadcastActiveVideo}
