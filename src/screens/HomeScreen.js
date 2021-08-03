@@ -219,9 +219,24 @@ function HomeScreen({ navigation }) {
 
 
 
+  let [isScrolling,   setScrolling]     = useState(false);
+  let [scrollEnabled, setScrollEnabled] = useState(true);
 
+  const onGrab = () => {
+    if (!isScrolling) setScrollEnabled(false);
+  }
+  const onRelease = () => {
+    setScrollEnabled(true);
+  }
 
+  const startScroll = () => {
+    setScrollEnabled(true);
+    setScrolling(true);
+  }
 
+  const endScroll = () => {
+    setScrolling(false);
+  }
 
 
   return (
@@ -282,10 +297,13 @@ function HomeScreen({ navigation }) {
           [{ nativeEvent: { contentOffset: { y: scroll_y } } }],
           { useNativeDriver: false }
         )}
+        onScrollBeginDrag={startScroll}
+        onMomentumScrollEnd={endScroll}
         scrollEventThrottle={16}
         snapToOffsets={[ SCREEN_HEIGHT - HEADER_EXP_HEIGHT + HEADER_COL_HEIGHT ]}
         decelerationRate={"fast"}
         snapToEnd={false}
+        scrollEnabled={scrollEnabled}
       >
 
         {/* The components at the top, which should take up one screen height for the landing page */}
@@ -306,20 +324,33 @@ function HomeScreen({ navigation }) {
           <DividerLine color="blue" style={{ marginVertical: 0 }} />
 
           {/* Banner showing the logo for each sponsor */}
-          <SponsorBanner
-            image_ids={[
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-              "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
-              "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
-              "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
-              "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
-            ]}
-            navigation={navigation}
-            shuffle={true}
-          />
+          <View>
+            <Text style={[styles.header_text, {paddingLeft: 20}]}>Brought To You By</Text>
+            <SponsorBanner
+              image_ids={[
+                "190NCHKJNKfsIkVJjwStxLOhSjRodwTXY",
+                "1uO5JM4dFdrG_da6WWIV_zAKpj-Oq9OHI",
+                "14CI6-BLCK8rN88q1E8_HzAJX2O4N8liH",
+                "13MR-zF0RgRApeAD-RNY-nTZATzrhUoH0",
+                "18or-3ae4GWE1t8L8V0HrwQ2TsEuTYmM5",
+                "1EROOFcwtSbzt9OixaLV8fbWJYsqygSa5",
+                "1Zzpn53KafJ-vjRpqOB-1rKM_BFtagiOt",
+                "1Y36qzXx2QIggHufzDWr_7sWWKGLfYmkD",
+                "1yFKx0qh7f6BUPirSOfrWLl6MOiMS76Si",
+                "1gILEl3TfYAHRyzWsXqDTso5_rk7wNMk6",
+                "1bKjY7EvQaR893QnZ8VsOn3AFSB0lsK5F",
+                "1BBuvgZG6lzSkOhUk3Jg8OJPtnKxhIr_F",
+                "1uJaJWP6ZL24ABLvz-jc7hbbUibfuH03V",
+                "1ew7_49xa4m_HkaccuoFFtz3Nd533NqTs",
+                "1AIwIhSw68x7HFd7M7uTXmhSjN1t3UvJ1",
+              ]}
+              navigation={navigation}
+              shuffle={true}
+              onGrab={onGrab}
+              onRelease={onRelease}
+              parentScrolling={isScrolling}
+            />
+          </View>
 
         </View>
 

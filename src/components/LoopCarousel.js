@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, ScrollView, Text, Dimensions,
-		 Animated, PanResponder, Component
-	} from 'react-native'
+import { View, ScrollView, Text, Dimensions, Component } from 'react-native'
 
 // Import functions to retrieve props
 import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
@@ -34,6 +32,11 @@ export default class LoopCarousel extends React.Component {
 		this.autoscroll       = getPropDefault(props, "autoscroll",       false);
 		this.autoscrollDelay  = getPropDefault(props, "autoscrollDelay",  10000);
 
+		// Retrieve props dealing with scrolling
+		this.onGrab    = getPropDefault( props, "onGrab",    ()=>{} );
+		this.onRelease = getPropDefault( props, "onRelease", ()=>{} );
+		this.parentScrolling = getPropDefault(props, "parentScrolling", false);
+
 		// Compute the width of a single item in the carousel
 		// TODO: This should probably update dynamically with the dimensions of the screen
 		this.itemWidth = Math.round(Dimensions.get('window').width / this.itemsPerInterval);
@@ -52,35 +55,6 @@ export default class LoopCarousel extends React.Component {
 
 		// Create a ref for the ScrollView component so we can access its scrollTo method
 		this.scroll_view_ref = React.createRef();
-
-		// Track when the user starts and stops interacting with the carousel
-		this.panResponder = PanResponder.create({
-			onMoveShouldSetPanResponder: () => true,
-
-			// When the user grabs the carousel, cancel any existing snap check so it does not
-			// fire while the user is moving the carousel
-			onPanResponderGrant: () => {
-				this.setState({ auto_scrolling: false });
-				this.clear_snap_check();
-				this.stop_autoscroll_timer();
-			},
-
-			// When the user lets go of the carousel, set a JS interval which will continually
-			// check if the carousel has stopped moving, then snap it to a carousel interval
-			// and delete itself
-			// The use of the word interval for these two different concepts is a coincidence
-			onPanResponderRelease: () => {
-				this.state.snap_check = setInterval(() => {
-					if (this.state.prev_x == this.state.curr_x) {
-						this.snap_to_interval();
-						this.clear_snap_check();
-						if (this.autoscroll) {
-							this.start_autoscroll_timer();
-						}
-					}
-				}, 100);
-			},
-		});
 
 		// Store the variables we expect might change in the state
 		this.state = {
@@ -255,16 +229,28 @@ export default class LoopCarousel extends React.Component {
 		this.scrollTo({ x: target_interval * this.itemWidth, animated: true });
 	}
 
+	onScrollBeginDrag() {
+		if (this.parentScrolling) return;
+		this.setState({ auto_scrolling: false });
+		this.stop_autoscroll_timer();
+		this.onGrab();
+	}
+
+	onScrollEndDrag() {
+		this.onRelease();
+	}
+
+	onMomentumScrollEnd() {
+		this.snap_to_interval();
+		if (this.autoscroll) this.start_autoscroll_timer();
+	}
+
 	// Return a ScrollView element, whose entries consist of the items array with renderItem
 	// mapped over each item
-	// We don't want to throttle the scroll event here - this helps make sure that it will fire
-	// when the carousel finally stops moving, such that prev_x and curr_x will equal one another
-	// and the repeating check will register that the carousel has stopped
-	// (A throttle of 16 is the fastest possible)
 	render() {
 		const itemWidth = this.itemWidth
 		return (
-			<Animated.View {...this.panResponder.panHandlers} >
+			<View>
 				<ScrollView ref={this.scroll_view_ref}
 					horizontal={true}
 					contentContainerStyle={{ width: itemWidth * this.extended_items.length }}
@@ -273,10 +259,13 @@ export default class LoopCarousel extends React.Component {
 					scrollEventThrottle={16}
 					decelerationRate="fast"
 					onScroll={({nativeEvent}) => this.onScroll(nativeEvent)}
+					onScrollBeginDrag={this.onScrollBeginDrag.bind(this)}
+					onScrollEndDrag={this.onScrollEndDrag.bind(this)}
+					onMomentumScrollEnd={this.onMomentumScrollEnd.bind(this)}
 				>
 					{this.extended_items.map( (item, idx) => this.renderItem(item, idx, itemWidth) )}
 				</ScrollView>
-			</Animated.View>
+			</View>
 		)
 	}
 }

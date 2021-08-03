@@ -54,15 +54,23 @@ function SponsorBanner(props) {
   const shuffle    = getPropDefault(props, "shuffle", false);
   const style      = getPropDefault(props, "style",   {});
 
+  // Retrieve scrolling stuff
+  const onGrab    = getPropDefault( props, "onGrab",    ()=>{} );
+  const onRelease = getPropDefault( props, "onRelease", ()=>{} );
+  const parentScrolling = getPropDefault(props, "parentScrolling", false);
+
   return (
     <View style={ [styles.sponsorBannerContainer, style] }>
-      {/* <LoopCarousel
+      <LoopCarousel
         itemsPerInterval={5}
         items={shuffle ? shuffleLogos(image_ids) : image_ids}
         renderItem={renderLogo(navigation)}
         autoscroll={true}
         autoscrollDelay={SPONSOR_AUTOSCROLL_DELAY}
-      /> */ }
+        onGrab={onGrab}
+        onRelease={onRelease}
+        parentScrolling={parentScrolling}
+      />
     </View>
   );
 }
