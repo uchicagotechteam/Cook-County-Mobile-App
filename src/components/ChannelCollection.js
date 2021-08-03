@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from 'axios';
-import RainbowChannel from "../components/RainbowChannel.js";
+import RainbowChannelIcons from "../components/RainbowChannelIcons.js";
 import RoundedButton from '../components/RoundedButton.js'
 import { styles, api_key } from '../scripts/constants.js'
 import { View } from 'react-native';
@@ -142,7 +142,7 @@ function ChannelCollection(props) {
   return (
     props.channels.map((channel, index) =>
       <View key={`${channel.playlistId} ${index}`}>
-        <RoundedButton
+        {/*<RoundedButton
           onPress={() => props.navigation.navigate('Base Screen', {
             videoArray : getVideoArrayByIndex(channel, index),
             channelTitle: channel.channelTitle,
@@ -151,8 +151,9 @@ function ChannelCollection(props) {
           buttonStyle={styles.mainButtonStyle}
           textStyle={styles.mainButtonText}
           text={channel.channelTitle}
-        />
-        <RainbowChannel
+        />*/}
+        <View style={styles.lineStyle} />
+        <RainbowChannelIcons
           videoArray={getVideoArrayByIndex(channel, index)}
           channelTitle={channel.channelTitle}
           channelImage={channel.channelImage}
@@ -169,7 +170,6 @@ function ChannelCollection(props) {
           // activeId={activeId}
           navigation={navigation}
         />
-        <View style={styles.lineStyle} />
       </View>
     ));
 }

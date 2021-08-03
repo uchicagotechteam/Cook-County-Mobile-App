@@ -1,11 +1,17 @@
 import React from 'react';
 import RainbowThumbnail from "../components/RainbowThumbnail.js";
+import RainbowVideoIcon from "../components/RainbowVideoIcon.js";
 import AdjustableText from "../components/AdjustableText.js";
 import ToggleSort from "../components/ToggleSort.js";
 import { Dimensions } from 'react-native';
-import { View, ScrollView, StyleSheet, Image, Animated, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Image, Text, Animated, TouchableOpacity } from 'react-native';
 import {search} from '../scripts/Search.js';
-import { styles } from '../scripts/constants.js'
+import { styles, PALETTE } from '../scripts/constants.js'
+
+// Import functions to retrieve props
+import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
+
+import { Icon } from 'react-native-elements';
 
 // Props include
 //   channelImage : String  - value that is mapped to a hardcoded image or a default image if no match is found
@@ -15,16 +21,18 @@ import { styles } from '../scripts/constants.js'
 //   dateInfo : Object      - Object containing the info about the search date filter {restriction : String, afterDate: Date, beforeDate : Date}
 //   activeId : String      - youtube identifier of the video actively playing in the theatre
 //   broadcastActiveVideo : Func - tells the component's parent when the video becomes the active thumbnail
-class RainbowChannel extends React.Component {
+class RainbowChannelIcons extends React.Component {
   constructor(props) {
     super(props);
 
+    this.navigation = getPropDefault(props, "navigation", "RainbowChannel");
+
     // Constant hardcoding the keys in each video's object which will be targetted by the search
     this.searchVals = ["title", "dateString"];
-    
+
     this.card_height = 200;
     this.card_width  = 150;
-    
+
     // State includes
     //   forward : Bool - Stores whether the videos should be shown from newest to oldest (true) or oldest to newest
     this.state = {
@@ -32,37 +40,54 @@ class RainbowChannel extends React.Component {
       scroll_x : new Animated.Value(0),
       full_width: 0,
     };
+
+    // Bind self to functions
     this.setOrder = this.setOrder.bind(this);
     this.broadcastActiveVideo = this.broadcastActiveVideo.bind(this);
+    this.renderVideo = this.renderVideo.bind(this);
     this.handleContentSizeChange = this.handleContentSizeChange.bind(this);
   }
 
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
-  getChannelImage(){
-    let re = /(http(?:s?):\/\/(?:www\.))?(drive.google.com?(.*))/
-    let google_drive_link = this.props.channelImage.match(re)[0];
-    let image_id = google_drive_link.split("/").slice(-2)[0];
-    console.log("Channel image id: " + image_id);
-    return {uri: "https://drive.google.com/thumbnail?id=" + image_id }
-    // if(this.props.channelImage == "music"){
-    //   return require('../images/cdefg.png');
-    // }
-    // else if(this.props.channelImage == "interview"){
-    //   return require('../images/interview_channel.png');
-    // }
-    // else if(this.props.channelImage == "golden"){
-    //   return require('../images/golden_channel.jpeg');
-    // }
-    // else if(this.props.channelImage == "forest"){
-    //   return require('../images/tree.png');
-    // }
-    // else if(this.props.channelImage == "garden"){
-    //   return require('../images/flower.png');
-    // }
-    // else { // if(this.props.channelImage == "zoo"){
-    //   return require('../images/elephant.png');
-    // }
-  }
+  // getChannelImage(){
+  // 
+  //   return {uri: "https://drive.google.com/thumbnail?id=" + "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE" };
+  // 
+  //   // if (this.props.channelImage == null) {
+  //   //   return {uri: ""};
+  //   // }
+  //   // 
+  //   // let re = /(http(?:s?):\/\/(?:www\.))?(drive.google.com?(.*))/
+  //   // let google_drive_link_match = this.props.channelImage.match(re);
+  //   // 
+  //   // if (google_drive_link_match != null) {
+  //   //   let google_drive_link = google_drive_link_match[0];
+  //   //   let image_id = google_drive_link.split("/").slice(-2)[0];
+  //   //   return {uri: "https://drive.google.com/thumbnail?id=" + image_id }
+  //   // }
+  //   // 
+  //   // else {
+  //   //   return {uri: ""};
+  //   // }
+  //   // if(this.props.channelImage == "music"){
+  //   //   return require('../images/cdefg.png');
+  //   // }
+  //   // else if(this.props.channelImage == "interview"){
+  //   //   return require('../images/interview_channel.png');
+  //   // }
+  //   // else if(this.props.channelImage == "golden"){
+  //   //   return require('../images/golden_channel.jpeg');
+  //   // }
+  //   // else if(this.props.channelImage == "forest"){
+  //   //   return require('../images/tree.png');
+  //   // }
+  //   // else if(this.props.channelImage == "garden"){
+  //   //   return require('../images/flower.png');
+  //   // }
+  //   // else { // if(this.props.channelImage == "zoo"){
+  //   //   return require('../images/elephant.png');
+  //   // }
+  // }
 
   // Function that looks at the videoArray and currentSearch in props and returns two objects – options which stores the videos that passed the search and displays which contains details on how to highlight the search results
   applySearch(dateVideoArray){
@@ -233,25 +258,10 @@ class RainbowChannel extends React.Component {
     if(options.length <= 0){
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
-    return options.map(videoInfo =>
-      <RainbowThumbnail videoId={videoInfo.videoId}
-        title={videoInfo.title}
-        date={videoInfo.date}
-        duration={videoInfo.duration}
-        description={videoInfo.description}
-        link={videoInfo.link}
-        display={displays[videoInfo.videoId]}
-        broadcastActiveVideo={this.broadcastActiveVideo}
-        activeId={this.props.activeId}
-        key={videoInfo.videoId}
-        width={this.card_width}
-        height={this.card_height}
-      />
-    )
-  }
-  
-  handleContentSizeChange(new_size) {
-    this.setState({ full_width: new_size });
+    for(var i = 0; i < options.length; i++){
+      options[i].display = displays[options[i].videoId];
+    }
+    return options.map(this.renderVideo)
   }
 
   // Changes the forward state when the sort icon is toggled
@@ -265,13 +275,87 @@ class RainbowChannel extends React.Component {
     this.props.broadcastActiveVideo(videoProps);
   }
 
+  testVideoArray() {
+    var options = [
+    { videoId: "181Nj060xMQ",
+      title: "Test video 1",
+      date: 1,
+      duration: "1:00",
+      description: "This is a test video"
+    },
+    { videoId: "oQLJqMquGEw",
+      title: "Test video 2",
+      date: 1,
+      duration: "1:00",
+      description: "This is another test video"
+    },
+    { videoId: "vgYQglmYU-8",
+      title: "Test video 3",
+      date: 1,
+      duration: "1:00",
+      description: "This is yet another test video"
+    }];
+
+    return options.map(this.renderVideo);
+  }
+
+  renderVideo(videoInfo, index) {
+
+    return (
+      <TouchableOpacity
+        key={`${videoInfo.videoId} ${index}`}
+        activeOpacity={.5}
+        onPress={ () => this.navigation.navigate('Base Screen', {
+          videoArray : this.props.videoArray,
+          channelTitle: this.props.channelTitle,
+          channelImage: this.props.channelImage,
+          startingVideo: videoInfo
+        }) }
+      >
+        <RainbowVideoIcon
+          videoId={videoInfo.videoId}
+          title={videoInfo.title}
+          date={videoInfo.date}
+          duration={videoInfo.duration}
+          display={videoInfo.display}
+          isAdult={this.props.isAdult}
+          description={videoInfo.description}
+          broadcastActiveVideo={this.broadcastActiveVideo}
+          activeId={this.props.activeId}
+          key={`${videoInfo.videoId} ${index}`}
+          width={this.card_width}
+          height={this.card_height}
+          style={{ margin: 10 }}
+        />
+      </TouchableOpacity>
+    );
+
+    return (
+      <TouchableOpacity activeOpacity = { .5 } onPress={ () => this.navigation.navigate('Org') }
+        style={{ height: "100%", width: 150, margin: 10, borderRadus: 25, }}
+      >
+        <View style={{
+          height: "100%", width: "100%",
+          backgroundColor: PALETTE.red.normal, borderRadus: 25,
+        }}>
+          <Text>{videoInfo.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  handleContentSizeChange(new_size) {
+    this.setState({ full_width: new_size });
+  }
+
   render() {
+
     // Retrieve the screen width
     const screen_width = Dimensions.get('window').width;
 
     // Define heights
     const top_bar_height = 30;
-    
+
     return (
       <View>
       {/* Header - Channel Title */}
@@ -285,6 +369,23 @@ class RainbowChannel extends React.Component {
           maxHeight={50}
         />
       </Animated.View>
+
+      {/* Header - View More */}
+      <View style={{
+        width: screen_width * 0.4, height: top_bar_height, paddingRight: 20,
+        position: "absolute", right: 0, top: 0,
+      }}>
+        <TouchableOpacity
+          style={{width: "100%"}} activeOpacity = { .5 }
+          onPress={ () => this.navigation.navigate('Org') }
+        >
+          <AdjustableText
+            fontSize={20} maxHeight={50}
+            text=<Text>View All {"\u00BB"}</Text>
+            style={[styles.channelTitleText, {textAlign: "right", width: "100%"}]}
+          />
+        </TouchableOpacity>
+      </View>
 
       {/* Horizontal ScrollView holding the video icons */}
       <ScrollView
@@ -305,11 +406,60 @@ class RainbowChannel extends React.Component {
 
         {/* List of Videos */}
         { this.getFilteredVideoArray() }
+        {/* this.testVideoArray() */}
+
+        {/* End Card - View All */}
+        <View style={{
+          width: this.card_width, //height: this.card_height,
+          marginLeft: 10,
+          alignItems: 'center', justifyContent: 'center',
+          backgroundColor: 'rgba(255,255,255,0.5)',
+          borderWidth: 4, borderColor: "black", borderStyle: "solid",
+          borderRadius: 15,
+        }}>
+          <TouchableOpacity
+            activeOpacity = { .5 } onPress={ () => this.navigation.navigate('Org') }
+            style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}
+          >
+            <AdjustableText
+              fontSize={20} maxHeight={50}
+              text=<Text>View All</Text>
+              style={styles.channelTitleText}
+            />
+            <Icon type="ionicon" name='chevron-forward-circle-outline' size={40} />
+          </TouchableOpacity>
+        </View>
 
       </ScrollView>
+
       </View>
       );
   }
 }
 
-export default RainbowChannel;
+export default RainbowChannelIcons;
+
+
+
+// <View style={{
+//   width: "100%", height: top_bar_height,
+//   display: "flex",
+//   flex: 5, alignItems: 'center', justifyContent: 'flex-start',
+// }}>
+//   <View style={{flexGrow: 3}}>
+//     <AdjustableText
+//       fontSize={20}
+//       text=<Text>{this.props.channelTitle}</Text>
+//       style={styles.channelTitleText}
+//       maxHeight={50}
+//     />
+//   </View>
+//   <View style={{flexGrow: 2}}>
+//     <AdjustableText
+//       fontSize={20}
+//       text=<Text>See More</Text>
+//       style={styles.channelTitleText}
+//       maxHeight={50}
+//     />
+//   </View>
+// </View>

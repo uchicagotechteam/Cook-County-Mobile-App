@@ -7,7 +7,7 @@ import ProgressBar from 'react-native-progress/Bar';
 
 import AdjustableText from "../components/AdjustableText.js";
 import LoadingThumbnail from "../components/LoadingThumbnail.js";
-import { styles } from '../scripts/constants.js'
+import { styles, PALETTE } from '../scripts/constants.js'
 import moment from "moment";
 
 // Props include
@@ -106,8 +106,9 @@ class RainbowVideoIcon extends React.Component {
     // });
 
     getYoutubeMeta(this.props.videoId).then(meta => {
-        console.log("Got meta!", meta);
-        this.setState({thumbnail : meta.thumbnail_url});
+        // console.log("Got meta!", meta);
+        thumbnail = meta.thumbnail_url.replace("/hqdefault.jpg", "/maxresdefault.jpg");
+        this.setState({thumbnail});
     });
   }
   
@@ -136,16 +137,40 @@ class RainbowVideoIcon extends React.Component {
     // const 
     return (
       <View style={[
-        {width: this.width},
+        { width: this.width
+          +20,
+          backgroundColor: PALETTE.purple.light,
+          padding: 10,
+          borderRadius: 10,
+        },
         this.props.style
       ]}>
         <Image
           source={{uri: this.state.thumbnail }}
-          style={{width: this.width, height: this.width * 4 / 5, borderRadius: 20}}
+          style={{
+            width: this.width, height: this.width * 4 / 5,
+            borderRadius: 20,
+            // boxShadow: "10px 10px 5px grey",
+            shadowOffset: {
+              width: 10,
+              height: -10
+            },
+            shadowOpacity: 5,
+            shadowRadius:  10,
+            elevation: 5,
+          }}
           resizeMode={"cover"}
         />
         <View style={{margin: 10, marginBottom: 0}}>
-          <Text style={{fontWeight: 'bold'}}>{this.props.title}</Text>
+        <AdjustableText
+            fontSize={18}
+            text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map((s, index) =>
+                    s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
+                  : this.props.title}
+                  </Text>
+            style={{fontWeight:"bold"}}
+            maxHeight={20}
+          />
           <Text>{this.props.duration}</Text>
         </View>
       </View>

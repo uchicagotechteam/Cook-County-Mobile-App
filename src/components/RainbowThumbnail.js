@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Image, TouchableHighlight, StyleSheet, Text, Alert, Linking } from 'react-native';
+import { Button, View, Image, TouchableOpacity, StyleSheet, Text, Alert, Linking } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import {getYoutubeMeta} from 'react-native-youtube-iframe';
 import { Dimensions } from 'react-native';
@@ -8,7 +8,7 @@ import { useState } from "react";
 import ProgressBar from 'react-native-progress/Bar';
 import AdjustableText from "../components/AdjustableText.js";
 import LoadingThumbnail from "../components/LoadingThumbnail.js";
-import { styles } from '../scripts/constants.js'
+import { styles, PALETTE } from '../scripts/constants.js'
 import moment from "moment";
 
 // Props include
@@ -37,6 +37,9 @@ class RainbowThumbnail extends React.Component {
       thumbnail : null,
       progressFraction: 0,
     };
+    
+    this.width = props.width;
+    this.height = props.height;
 
     // bind methods
     this.thumbnailClicked = this.thumbnailClicked.bind(this);
@@ -82,9 +85,23 @@ class RainbowThumbnail extends React.Component {
   // Gives a special green background to the thumbnail corresponding to the actively playing video
   getActiveBackground(){
     if(this.props.activeId == this.props.videoId){
-      return {width: 340, backgroundColor : "#b9ffb7", borderRadius:20};
+      return {width: this.width + 20, backgroundColor : "#b9ffb7", borderRadius:10, margin: 10,
+      shadowOffset: {
+        width: 10,
+        height: -10
+      },
+      shadowOpacity: 5,
+      shadowRadius:  10,
+      elevation: 5,};
     } else {
-      return {width: 340}
+      return {width: this.width + 20, backgroundColor : PALETTE.purple.light, borderRadius:10, margin: 10,
+        shadowOffset: {
+          width: 10,
+          height: -10
+        },
+        shadowOpacity: 5,
+        shadowRadius:  10,
+        elevation: 5,}
     }
   }
 
@@ -130,9 +147,14 @@ class RainbowThumbnail extends React.Component {
   render() {
     return (
       <View style={this.getActiveBackground()}>
-        <View style={{height: 60}}>
+      <TouchableOpacity
+        activeOpacity = { .5 }
+        onPress={ () => this.thumbnailClicked() }
+        style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}
+      >
+        <View style={{height: 40}}>
           <AdjustableText
-            fontSize={30}
+            fontSize={18}
             text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map((s, index) =>
                     s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
                   : this.props.title}
@@ -142,35 +164,36 @@ class RainbowThumbnail extends React.Component {
                   : this.props.title}
                   </Text>
             style={styles.videoTitleText}
-            maxHeight={60}
+            maxHeight={40}
           />
         </View>
         <View style={{flexGrow: 1, alignItems: 'center'}} >
-            <View style={{height: 240,
+            <View style={{
                 top: 0,
-                width: 288,
+                width: this.width,
+                height: this.width * 4 / 5,
                 alignItems: 'center'}}>
               {this.state.thumbnail === null ? (<View style={{height: "67%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "67%", width: '100%'}} source={{uri : this.state.thumbnail}}/>)
               }
-              <TouchableHighlight style={{height: "45%",
+              <View style={{height: "45%",
                           bottom: "58%",
                           width: "36%",
-                          alignItems: 'center'}}
-                onPress={() => this.thumbnailClicked()}>
+                          alignItems: 'center'}}>
                   <Image
                     style={{width: "100%", height: "100%"}}
                     source={this.getPauseImage()}
                   />
-              </TouchableHighlight>
+              </View>
               <View style={{bottom: "55%", elevation:1, backgroundColor : "#FFFFFF"}}>
                 <ProgressBar
                   progress={this.state.progressFraction}
-                  width={259}
+                  width={this.width * 0.8}
                   color={"black"}
                 />
               </View>
             </View>
         </View>
+      </TouchableOpacity>
       </View>);
   }
 }

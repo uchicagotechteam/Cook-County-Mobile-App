@@ -56,13 +56,13 @@ function SponsorBanner(props) {
 
   return (
     <View style={ [styles.sponsorBannerContainer, style] }>
-      <LoopCarousel
+      {/* <LoopCarousel
         itemsPerInterval={5}
         items={shuffle ? shuffleLogos(image_ids) : image_ids}
         renderItem={renderLogo(navigation)}
         autoscroll={true}
         autoscrollDelay={SPONSOR_AUTOSCROLL_DELAY}
-      />
+      /> */ }
     </View>
   );
 }
