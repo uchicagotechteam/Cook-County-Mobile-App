@@ -5,6 +5,7 @@ import RainbowChannelIcons from "../components/RainbowChannelIcons.js";
 import RoundedButton from '../components/RoundedButton.js'
 import { styles, api_key } from '../scripts/constants.js'
 import { View } from 'react-native';
+import DividerLine from "../components/DividerLine.js";
 
 // Props include
 //   channels : Array    - array of objects that describe a channel. [{channelTitle : String, channelImage : String, playlistID : String}]
@@ -152,7 +153,9 @@ function ChannelCollection(props) {
           textStyle={styles.mainButtonText}
           text={channel.channelTitle}
         />*/}
-        <View style={styles.lineStyle} />
+
+        <DividerLine color="green" />
+
         <RainbowChannelIcons
           videoArray={getVideoArrayByIndex(channel, index)}
           channelTitle={channel.channelTitle}

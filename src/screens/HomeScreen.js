@@ -12,6 +12,7 @@ import SponsorBanner  from '../components/SponsorBanner.js'
 import FeaturedBanner from '../components/FeaturedBanner.js'
 import { SearchBar } from 'react-native-elements';
 import ChannelCollection from "../components/ChannelCollection.js";
+import DividerLine from "../components/DividerLine.js";
 
 function HomeScreen({ navigation }) {
 
@@ -297,8 +298,12 @@ function HomeScreen({ navigation }) {
             marginBottom: 20,
           }} />
 
+          <DividerLine color="blue" style={{ marginVertical: 0 }} />
+
           {/* Banner showing featured videos */}
           <FeaturedBanner />
+
+          <DividerLine color="blue" style={{ marginVertical: 0 }} />
 
           {/* Banner showing the logo for each sponsor */}
           <SponsorBanner
@@ -318,6 +323,8 @@ function HomeScreen({ navigation }) {
 
         </View>
 
+        <DividerLine color="blue" style={{ marginVertical: 0 }} />
+
         {/* The search bar for the channels */}
         <SearchBar
           containerStyle={{ margin: 15, borderRadius: 25 }}
@@ -327,11 +334,8 @@ function HomeScreen({ navigation }) {
           platform={"android"}
           round={true}
         />
-        <View style={{
-          borderWidth: 2,
-          borderColor: PALETTE.blue.normal,
-          margin: 20, marginTop: 0,
-        }} />
+
+        <DividerLine color="blue" style={{ marginTop: 0 }} />
 
         {/* The list of channels themselves */}
         <ChannelCollection
