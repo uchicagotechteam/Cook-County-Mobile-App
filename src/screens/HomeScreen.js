@@ -270,7 +270,7 @@ function HomeScreen({ navigation }) {
 
       </Animated.View>
 
-      {/* The shelf view for the Rainbow Channels */}
+      {/* Body */}
       <ScrollView
         style={{
           width: "100%", height: SCREEN_HEIGHT - HEADER_COL_HEIGHT - 20,
@@ -282,31 +282,41 @@ function HomeScreen({ navigation }) {
           { useNativeDriver: false }
         )}
         scrollEventThrottle={16}
+        snapToOffsets={[ SCREEN_HEIGHT - HEADER_EXP_HEIGHT + HEADER_COL_HEIGHT ]}
+        decelerationRate={"fast"}
+        snapToEnd={false}
       >
-        <View style={{
-          height: HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT,
-          backgroundColor: theme.colors.background,
-          marginBottom: 20,
-        }} />
 
-        {/* TODO: Featured videos banner */}
-        <FeaturedBanner />
+        {/* The components at the top, which should take up one screen height for the landing page */}
+        <View style={{ height: SCREEN_HEIGHT - HEADER_EXP_HEIGHT + HEADER_COL_HEIGHT }}>
 
-        {/* The banner showing the logo for each sponsor */}
-        <SponsorBanner
-          image_ids={[
-            "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-            "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-            "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-            "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
-            "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
-            "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
-            "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
-            "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
-          ]}
-          navigation={navigation}
-          shuffle={true}
-        />
+          {/* Spacer component that gets hidden behind the header */}
+          <View style={{
+            height: HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT,
+            backgroundColor: theme.colors.background,
+            marginBottom: 20,
+          }} />
+
+          {/* Banner showing featured videos */}
+          <FeaturedBanner />
+
+          {/* Banner showing the logo for each sponsor */}
+          <SponsorBanner
+            image_ids={[
+              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
+              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
+              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
+              "19Y4tCXEbft3isAWAT-4l34t8fRiZzpWE",
+              "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
+              "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
+              "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
+              "1WHN_VDbOesXyuRlGc6Qv3TSG96XW5MNV",
+            ]}
+            navigation={navigation}
+            shuffle={true}
+          />
+
+        </View>
 
         {/* The search bar for the channels */}
         <SearchBar
