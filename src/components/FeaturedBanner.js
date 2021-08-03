@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Dimensions } from 'react-native';
 
-import RainbowChannel from "../components/RainbowChannel.js";
+import RainbowChannelIcons from "../components/RainbowChannelIcons.js";
 
 function FeaturedBanner(props) {
 
@@ -10,9 +10,9 @@ function FeaturedBanner(props) {
 
   // Return the object
   return (
-    <RainbowChannel
+    <RainbowChannelIcons
       cardWidth={SCREEN_WIDTH - 20}
-      channelTitle={"Featured"}
+      channelTitle={"Featured Videos"}
       pagingEnabled={true}
       showViewAll={false}
       videoArray={[]}

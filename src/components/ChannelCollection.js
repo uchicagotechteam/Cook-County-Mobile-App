@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from 'axios';
-import RainbowChannel from "../components/RainbowChannel.js";
+import RainbowChannelIcons from "../components/RainbowChannelIcons.js";
 import RoundedButton from '../components/RoundedButton.js'
 import { styles, api_key } from '../scripts/constants.js'
 import { View } from 'react-native';
@@ -153,7 +153,7 @@ function ChannelCollection(props) {
           text={channel.channelTitle}
         />*/}
         <View style={styles.lineStyle} />
-        <RainbowChannel
+        <RainbowChannelIcons
           videoArray={getVideoArrayByIndex(channel, index)}
           channelTitle={channel.channelTitle}
           channelImage={channel.channelImage}

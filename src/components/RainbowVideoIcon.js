@@ -106,9 +106,13 @@ class RainbowVideoIcon extends React.Component {
     // });
 
     getYoutubeMeta(this.props.videoId).then(meta => {
-        console.log("Got meta!", meta);
+
+        // TODO: We would prefer to use maxresdefault, but there's no guarantee it exists
+        // console.log("Got meta!", meta);
         thumbnail = meta.thumbnail_url.replace("/hqdefault.jpg", "/mqdefault.jpg");
+        // thumbnail = meta.thumbnail_url.replace("/hqdefault.jpg", "/maxresdefault.jpg");
         // thumbnail = meta.thumbnail_url.replace("/vi/", "/vi_webp/").replace("/hqdefault.jpg", "/maxresdefault.jpg");
+
         this.setState({thumbnail});
     });
   }
@@ -158,12 +162,21 @@ class RainbowVideoIcon extends React.Component {
             },
             shadowOpacity: 5,
             shadowRadius:  10,
-            elevation: 5,
+            // elevation: 5,
           }}
           resizeMode={"cover"}
         />
         <View style={{marginHorizontal: 4, marginTop: 10, marginBottom: 0}}>
-          <Text style={[styles.subheader_text]}>{this.props.title}</Text>
+          {/*<Text style={[styles.subheader_text]}>{this.props.title}</Text>*/}
+          <Text>
+            {this.isRecent()}
+            { this.props.display !== undefined
+                ? this.props.display["title"].map((s, index) => s.mark
+                  ? <Text key={index} style={styles.search_highlight}>{s.seg}</Text>
+                  : <Text key={index}>{s.seg}</Text>)
+                : this.props.title
+            }
+          </Text>
           <Text style={styles.body_text}>{this.props.duration}</Text>
         </View>
       </View>

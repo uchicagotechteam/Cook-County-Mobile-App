@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 // since env variables are bundled into the app's build and thus can be exposed to clients after the app is shipped
 // more info here: https://docs.expo.io/guides/environment-variables/
 // const API_KEY = process.env.EXPO_CCMA_YT_API_KEY;
-export const api_key = "AIzaSyDjPXW02VUyBCE_NdYof8__iGIo8IoFJGQ"; // dummy value to build
+export const api_key = "AIzaSyC-x97X1_c0_zTo2LbfgqNXRemFoDRJ404"; // dummy value to build
 
 // The spacing between two icons in the sponsor bar
 export const SPONSOR_LOGO_SPACING = 10;
@@ -427,7 +427,7 @@ export const styles = StyleSheet.create({
   videoTitleText: {
     fontFamily: 'sans-serif',
     textAlign: 'center',
-    width: 324
+    width: "100%"
   },
   // Logo shown when app first starts
   splashLogo: {
@@ -450,6 +450,7 @@ export const styles = StyleSheet.create({
   regLogo: {
     width: 340,
     height: 270,
+    // alignItems: 'center'
   },
   regLogo2: {
     width: 340,
@@ -516,7 +517,7 @@ export const styles = StyleSheet.create({
     paddingBottom:5,
     marginLeft:10,
     marginRight:10,
-    backgroundColor: PALETTE.red.normal,
+    backgroundColor: PALETTE.red.light,
     borderRadius:20,
     borderWidth: 1,
     borderColor: '#000',

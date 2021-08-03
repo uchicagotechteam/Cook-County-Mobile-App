@@ -32,6 +32,7 @@ function RainbowTheater(props) {
       headerRight: () => (
         <ToggleSearch onPress={active => {setSearchActive(active);}} />
       ),
+      title: props.channelTitle,
     });
   }, [props.navigation]);
 
@@ -39,6 +40,10 @@ function RainbowTheater(props) {
     props.addRecentVideo(videoProps)
     setActiveProps(videoProps)
   }, []);
+  
+  useEffect(() => {
+    setActiveProps(props.startingVideo)
+  }, [])
 
   return (
     <View>
@@ -49,8 +54,9 @@ function RainbowTheater(props) {
         active={searchActive}
       />
       <ScrollView>
+        <View style={{alignItems: 'center'}}>
           { activeProps == null ?
-            <View style={{height: 260, width:340}}>
+            <View style={{height: 260, width: 340}}>
               <Image
                 style={styles.regLogo}
                 source={require('../assets/images/rainbow.jpg')}
@@ -64,12 +70,13 @@ function RainbowTheater(props) {
             description={activeProps.description}
             link={activeProps.link}
           />  }
-          <View style={{height: 30}} />
+          <View style={{height: 170}} />
+          <View style={{...styles.lineStyle, width: "90%"}} />
           <RainbowChannel
             videoArray={props.videoArray}
             channelTitle={props.channelTitle}
             channelImage={props.channelImage}
-            currentSearch={""}
+            currentSearch={searchText}
             dateInfo={
               {
                 restriction : "",
@@ -78,15 +85,9 @@ function RainbowTheater(props) {
               }
             }
             broadcastActiveVideo={broadcastActiveVideo}
-            activeId={""}
+            activeId={ activeProps == null ? "" : activeProps.videoId }
           />
-          {/*<ChannelCollection
-            channels={props.channels}
-            searchText={searchText}
-            dateInfo={dateInfo}
-            isAdult={props.isAdult}
-            broadcastActiveVideo={broadcastActiveVideo}
-          />*/}
+        </View>
       </ScrollView>
     </View>
   );

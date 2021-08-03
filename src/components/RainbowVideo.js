@@ -7,7 +7,9 @@ import { AsyncStorage } from 'react-native';
 import { useState } from "react";
 import ProgressBar from 'react-native-progress/Bar';
 import AdjustableText from "../components/AdjustableText.js";
+import ShowMoreText from "../components/ShowMoreText.js";
 import LoadingThumbnail from "../components/LoadingThumbnail.js";
+import RoundedButton from "../components/RoundedButton.js";
 import { styles } from '../scripts/constants.js'
 import moment from "moment";
 
@@ -226,7 +228,7 @@ class RainbowVideo extends React.Component {
 
   render() {
     return (
-      <View style={{width: 340, height: 260 }}>
+      <View style={{width: 340, height: 260}}>
         <View style={{height: 60}}>
           <AdjustableText
             fontSize={30}
@@ -272,22 +274,16 @@ class RainbowVideo extends React.Component {
             <View style={{height: 240 * 0.67, width: 288, position: "absolute"}}>
               { this.state.isBuffering ? <LoadingThumbnail /> : null}
             </View>
-            { this.props.link != null ? <View style={{height: 40, position: "absolute", bottom:5}}>
-              <AdjustableText
-                fontSize={20}
-                text={<Text style={{color: 'orange'}}
-                        onPress={() => Linking.openURL(this.props.link)}>
-                        See worksheets
-                      </Text>}
-                style={styles.videoTitleText}
-                maxHeight={40}
-              />
+            { this.props.link != null ? <View style={{height: 40, position: "absolute", bottom:160}}>
+              <RoundedButton
+                  onPress={() => Linking.openURL(this.props.link)}
+                  buttonStyle={styles.buttonStyle}
+                  textStyle={styles.baseText}
+                  text= "See video worksheet"                       
+                />
             </View> : null }
-            <ScrollView>       
-              <Text>
-               { this.props.description }
-             </Text>
-           </ScrollView>
+            <View style={{height: 20}} />
+            <ShowMoreText text={this.props.description} />
         </View>
       </View>);
   }
