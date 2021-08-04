@@ -15,7 +15,6 @@ import moment from "moment";
 //   videoId : String      - youtube identifier to fetch the video
 //   duration : String     - ISO 8601 string corresponding to the duration of the video
 //   title : String        - title of the video
-//   display : Object      - object describing what parts of the title should be highlighted
 //   description : String  - the youtube video's description. Could be used to encode data instead of a database 
 //   link : String         - the youtube video's worksheet google drive folder link 
 //   date : Date           - video's date

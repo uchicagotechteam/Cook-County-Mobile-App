@@ -7,6 +7,7 @@ import { styles } from '../scripts/constants.js'
 // Component which toggles between a forward icon and a backward icon. Sends an onPress event to its parent when clicked, which presumably will be used to switch between sorting in regular or reverse order.
 // Props include
 //   setForward : Func(Bool) - Result of activating or deactiving the sort direction
+//   onPress : Func(Bool) - Result of activating or deactiving the toggle
 function ToggleSort(props) {
   var [forward, setForward] = useState(true);
 
