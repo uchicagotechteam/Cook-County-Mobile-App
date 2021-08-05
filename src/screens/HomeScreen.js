@@ -8,6 +8,7 @@ import { styles, theme, PALETTE, RATIOS, api_key } from '../scripts/constants.js
 import RoundedButton from '../components/RoundedButton.js'
 
 // The components used in the Homescreen
+import HeaderLogo from  '../components/HeaderLogo.js';
 import SponsorBanner  from '../components/SponsorBanner.js'
 import FeaturedBanner from '../components/FeaturedBanner.js'
 import { SearchBar } from 'react-native-elements';
@@ -192,11 +193,7 @@ function HomeScreen({ navigation }) {
           flex: 1, alignItems: 'center', justifyContent: 'center',
         }}>
           <View style={[styles.centerColumn, {width: SCREEN_WIDTH}]}>
-            <Image
-              source={require("../assets/images/PR_logo.png")}
-              style={{width: 35, height: 35}}
-              resizeMode={"contain"}
-            />
+            <HeaderLogo />
           </View>
         </Animated.View>
 

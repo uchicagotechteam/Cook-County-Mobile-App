@@ -450,6 +450,10 @@ export const styles = StyleSheet.create({
     width: 320,
     height: 150,
   },
+  headerLogo: {
+    width: 35,
+    height: 35,
+  },
   sponsorLogo: {
     margin: SPONSOR_LOGO_SPACING / 2,
   },

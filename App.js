@@ -8,6 +8,8 @@ import OrgScreen  from "./src/screens/OrgScreen.js";
 import LogoScreen from "./src/screens/LogoScreen.js";
 // import NewhomeScreen from "./screens/NewhomeScreen.js";
 
+import HeaderLogo from "./src/components/HeaderLogo.js";
+
 import { Image, View } from 'react-native';
 import { theme, styles } from './src/scripts/constants.js'
 import withSplashScreen from './src/components/withSplashScreen';
@@ -33,41 +35,29 @@ function App() {
 
 
 
-function header_title() {
-
-  return (
-    <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-      <Image 
-        style={{ width: 22, height: 30}}
-        source={require('./src/assets/images/PR_logo.png')} 
-      />
-    </View>
-  );
-
-  return (
-    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
-      <Image
-        style={{ width: 30, height: 30 }} 
-        source={require('./src/assets/images/PR_logo.png')} 
-      /> 
-    </View>
-  );
-}
-
-
 function App() {
+
+  // Create the default header options with the Project Rainbow logo in the header
+  const header_options = {
+    headerTitle: <HeaderLogo />,
+    headerTitleAlign: 'center'
+  };
+
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen}
-          options={{
-            headerShown: false,
-            // headerTitle: header_title(),
-          }}
+        <Stack.Screen name="Home"
+          component={HomeScreen} options={{ headerShown: false }}
         />
-        <Stack.Screen name="Org"         component={OrgScreen}  options={{headerStyle: styles.searchColor}} />
-        <Stack.Screen name="Base Screen" component={BaseScreen} options={{headerStyle: styles.searchColor}} />
-        <Stack.Screen name="Logo Screen" component={LogoScreen} options={{headerStyle: styles.searchColor}} />
+        <Stack.Screen name="Org"
+          component={OrgScreen}  options={header_options}
+        />
+        <Stack.Screen name="Base Screen"
+          component={BaseScreen} options={header_options}
+        />
+        <Stack.Screen name="Logo Screen"
+          component={LogoScreen} options={header_options}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
