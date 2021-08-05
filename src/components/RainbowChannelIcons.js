@@ -415,12 +415,11 @@ class RainbowChannelIcons extends React.Component {
       {/* Horizontal ScrollView holding the video icons */}
       <ScrollView
         horizontal={true}
-        style={{ flex: 1 }}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: this.padding,
           paddingVertical: 10,
-          // height: this.card_height,
+          height: this.card_height,
         }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { x: this.state.scroll_x } } }],
