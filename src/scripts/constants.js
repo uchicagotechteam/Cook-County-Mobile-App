@@ -541,4 +541,10 @@ export const styles = StyleSheet.create({
     width: "100%",
     padding: SPONSOR_LOGO_SPACING / 2,
   },
+  logoScreenContainer: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
+  },
 });

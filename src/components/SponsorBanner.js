@@ -9,14 +9,16 @@ import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js
 
 
 // Function to shuffle the array of logos, if required
+// Returns a shallow copy of the original array, with the elements in a random order
 function shuffleLogos(array) {
-  for (var i = array.length - 1; i > 0; i--) {
+  var array_copy = [...array]
+  for (var i = array_copy.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+    var temp = array_copy[i];
+    array_copy[i] = array_copy[j];
+    array_copy[j] = temp;
   }
-  return array;
+  return array_copy;
 }
 
 // Given the navigation item, create a function that will render an individual logo

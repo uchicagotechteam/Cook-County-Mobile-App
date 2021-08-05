@@ -343,7 +343,7 @@ function HomeScreen({ navigation }) {
 
           {/* Banner showing the logo for each sponsor */}
           <View>
-            <Text style={[styles.header_text, {paddingLeft: 20}]}>Brought To You By</Text>
+            <Text style={[styles.subheader_text, {textAlign: 'center'}]}>in collaboration with</Text>
             <SponsorBanner
               image_ids={image_ids}
               navigation={navigation}
@@ -353,6 +353,16 @@ function HomeScreen({ navigation }) {
               onRelease={onRelease}
               parentScrolling={isScrolling}
             />
+            <View style={{ paddingRight: 25, width: "100%" }}>
+              <TouchableOpacity
+                activeOpacity = {0.5}
+                onPress={() => navigation.navigate('Logo Screen', { image_ids })}
+              >
+                <Text style={[styles.body_text, { width: "100%", textAlign: "right" }]} >
+                  View All {"\u00BB"}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
         </View>
