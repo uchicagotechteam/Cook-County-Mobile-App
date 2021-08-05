@@ -294,7 +294,6 @@ function HomeScreen({ navigation }) {
           channels={channels}
           searchText={searchText}
           dateInfo={dateInfo}
-          isAdult={true}
           itemsPerInterval={2}
           imageRatio={RATIOS.channels}
         />

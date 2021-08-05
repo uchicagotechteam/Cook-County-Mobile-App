@@ -17,8 +17,6 @@ import moment from "moment";
 //   duration : String           - ISO 8601 string corresponding to the duration of the video
 //   title : String              - title of the video
 //   display : Object            - object describing what parts of the title should be highlighted
-//   link : String         - the youtube video's worksheet google drive folder link
-//   description : String        - the youtube video's description. Could be used to encode data instead of a database 
 //   broadcastActiveVideo : Func - tells the component's parent when the video becomes the active thumbnail
 //   date : Date                 - video's date
 class RainbowThumbnail extends React.Component {
@@ -199,4 +197,3 @@ class RainbowThumbnail extends React.Component {
 }
 
 export default RainbowThumbnail;
-
