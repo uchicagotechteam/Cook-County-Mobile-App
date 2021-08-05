@@ -431,10 +431,7 @@ class RainbowChannelIcons extends React.Component {
       >
 
         {/* List of Videos */}
-        { this.props.channelTitle == "Featured Videos"
-            ? this.testVideoArray()
-            : this.getFilteredVideoArray()
-        }
+        { this.getFilteredVideoArray() }
 
         {/* End Card - View All */}
         { this.show_view_all &&

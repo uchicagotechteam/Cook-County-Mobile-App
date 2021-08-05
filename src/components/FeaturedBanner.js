@@ -16,6 +16,27 @@ function FeaturedBanner(props) {
   // Width to Height -> divide
   const image_ratio = getPropDefault(props, "imageRatio", 5 / 4);
 
+  const video_array = [
+    { videoId: "181Nj060xMQ",
+      title: "Test video 1",
+      date: 1,
+      duration: "1:00",
+      description: "This is a test video"
+    },
+    { videoId: "oQLJqMquGEw",
+      title: "Test video 2",
+      date: 1,
+      duration: "1:00",
+      description: "This is another test video"
+    },
+    { videoId: "vgYQglmYU-8",
+      title: "Test video 3",
+      date: 1,
+      duration: "1:00",
+      description: "This is yet another test video"
+    }
+  ];
+
   // Return the object
   return (
     <RainbowChannelIcons
@@ -23,7 +44,7 @@ function FeaturedBanner(props) {
       channelTitle={"Featured Videos"}
       pagingEnabled={true}
       showViewAll={false}
-      videoArray={[]}
+      videoArray={video_array}
       imageRatio={image_ratio}
     />
   );
