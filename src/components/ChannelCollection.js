@@ -7,6 +7,9 @@ import { styles, api_key } from '../scripts/constants.js'
 import { View } from 'react-native';
 import DividerLine from "../components/DividerLine.js";
 
+// Import functions to retrieve props
+import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
+
 // Props include
 //   channels : Array    - array of objects that describe a channel. [{channelTitle : String, channelImage : String, playlistID : String}]
 //   searchText : String - string typed into the search bar
@@ -30,6 +33,7 @@ function ChannelCollection(props) {
   }, [videoArrays]);
 
   const navigation = props.navigation;
+  const itemsPerInterval = getProp(props, "itemsPerInterval");
 
   // useEffect function runs when function initially loads
   // and runs again whenever there is a change to data in second argument array (fetchData)
@@ -172,6 +176,7 @@ function ChannelCollection(props) {
           // dateInfo={props.dateInfo}
           // activeId={activeId}
           navigation={navigation}
+          itemsPerInterval={itemsPerInterval}
         />
       </View>
     ));

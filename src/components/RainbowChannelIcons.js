@@ -25,18 +25,42 @@ class RainbowChannelIcons extends React.Component {
   constructor(props) {
     super(props);
 
+    // Get the dimensions of the screen
+    const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen')
+
+    // Get the width of this component, defaulting to the full width of the screen
+    this.width = getPropDefault(props, "width", SCREEN_WIDTH);
+
     // Get the navigation item from the props
     this.navigation = getPropDefault(props, "navigation", "RainbowChannel");
-
-    // Get the dimensions for each card from the props
-    this.card_height = getPropDefault(props, "cardHeight", 200);
-    this.card_width  = getPropDefault(props, "cardWidth",  150);
 
     // Get whether there should be a "view all" option
     this.show_view_all = getPropDefault(props, "showViewAll", true);
 
     // Get whether to apply paging to ScrollView component
     this.pagingEnabled = getPropDefault(props, "pagingEnabled", false);
+
+    // Get the padding value
+    this.card_spacing = getPropDefault(props, "cardSpacing", 10);
+
+    // Get the number of items per interval, if applicable
+    this.itemsPerInterval = getProp(props, "itemsPerInterval");
+
+    // Use the items per interval to compute card width and padding values
+    var dim;
+    if (this.itemsPerInterval == undefined) {
+      this.padding = 0
+      dim = 150;
+    }
+    else {
+      this.padding = (this.itemsPerInterval == 1) ? 0 : this.card_spacing;
+      var whitespace = (this.card_spacing * 2 * this.itemsPerInterval) + (this.padding * 2)
+      dim = (this.width - whitespace) / this.itemsPerInterval;
+    }
+
+    // Set the card dimensions
+    this.card_height = getPropDefault(props, "cardHeight", dim * 4/3);
+    this.card_width  = getPropDefault(props, "cardWidth",  dim);
 
     // Constant hardcoding the keys in each video's object which will be targetted by the search
     this.searchVals = ["title", "dateString"];
@@ -289,14 +313,12 @@ class RainbowChannelIcons extends React.Component {
 
   renderVideo(videoInfo, index) {
 
-    console.log(this.props.channelTitle)
-
     return (
       <TouchableOpacity
         key={`${videoInfo.videoId} ${index}`}
         activeOpacity={.5}
         onPress={ () => this.navigation.navigate('Base Screen', {
-          videoArray : this.props.videoArray,
+          videoArray:   this.props.videoArray,
           channelTitle: this.props.channelTitle,
           channelImage: this.props.channelImage,
           startingVideo: videoInfo
@@ -315,23 +337,10 @@ class RainbowChannelIcons extends React.Component {
           key={`${videoInfo.videoId} ${index}`}
           width={this.card_width}
           height={this.card_height}
-          style={{ margin: 10 }}
+          style={{ margin: this.card_spacing }}
         />
       </TouchableOpacity>
     );
-
-    // return (
-    //   <TouchableOpacity activeOpacity = { .5 } onPress={ () => this.navigation.navigate('Org') }
-    //     style={{ height: "100%", width: 150, margin: 10, borderRadus: 25, }}
-    //   >
-    //     <View style={{
-    //       height: "100%", width: "100%",
-    //       backgroundColor: PALETTE.red.normal, borderRadus: 25,
-    //     }}>
-    //       <Text>{videoInfo.title}</Text>
-    //     </View>
-    //   </TouchableOpacity>
-    // );
   }
 
   handleContentSizeChange(new_size) {
@@ -340,14 +349,14 @@ class RainbowChannelIcons extends React.Component {
 
   render() {
 
-    // Retrieve the screen width
-    const screen_width = Dimensions.get('window').width;
-
     // Define heights
     const top_bar_height = 20;
 
-    const end_val = this.state.full_width - screen_width;
+    // Get the furthest possible scroll value
+    const end_val = this.state.full_width - this.width;
 
+    // Create an animated value for the opacity of the "View All" message
+    // This makes it disappear when the end card comes on screen
     const view_all_opacity = this.state.scroll_x.interpolate({
       inputRange:  [end_val - this.card_width, end_val - (this.card_width / 2)],
       outputRange: [1, 0],
@@ -356,9 +365,10 @@ class RainbowChannelIcons extends React.Component {
 
     return (
       <View>
+
       {/* Header - Channel Title */}
       <View style={{
-        width: screen_width * 0.75, height: top_bar_height, paddingLeft: 20,
+        width: this.width * 0.75, height: top_bar_height, paddingLeft: 25,
       }}>
         <Text style={styles.header_text}>{this.props.channelTitle}</Text>
       </View>
@@ -366,7 +376,7 @@ class RainbowChannelIcons extends React.Component {
       {/* Header - View More */}
       { this.show_view_all &&
         <Animated.View style={{
-          width: screen_width * 0.25, height: top_bar_height, paddingRight: 20,
+          width: this.width * 0.25, height: top_bar_height, paddingRight: 25,
           position: "absolute", right: 0, top: 0,
           opacity: view_all_opacity,
         }}>
@@ -387,9 +397,8 @@ class RainbowChannelIcons extends React.Component {
         style={{ flex: 1 }}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          paddingHorizontal: this.show_view_all ? 20 : 0,
+          paddingHorizontal: this.padding,
           paddingVertical: 10,
-          alignItems: 'center',
           // height: this.card_height,
         }}
         onScroll={Animated.event(
@@ -411,7 +420,7 @@ class RainbowChannelIcons extends React.Component {
         { this.show_view_all &&
           <View style={{
             width: this.card_width, //height: this.card_height,
-            marginLeft: 10,
+            margin: this.card_spacing,
             alignItems: 'center', justifyContent: 'center',
             backgroundColor: 'rgba(255,255,255,0.5)',
             borderWidth: 4, borderColor: "black", borderStyle: "solid",

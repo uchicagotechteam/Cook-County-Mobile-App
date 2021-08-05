@@ -294,6 +294,7 @@ function HomeScreen({ navigation }) {
           searchText={searchText}
           dateInfo={dateInfo}
           isAdult={true}
+          itemsPerInterval={2}
         />
       </ScrollView>
     </View>

@@ -11,7 +11,7 @@ function FeaturedBanner(props) {
   // Return the object
   return (
     <RainbowChannelIcons
-      cardWidth={SCREEN_WIDTH - 20}
+      itemsPerInterval={1}
       channelTitle={"Featured Videos"}
       pagingEnabled={true}
       showViewAll={false}
