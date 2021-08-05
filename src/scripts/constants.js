@@ -541,7 +541,6 @@ export const styles = StyleSheet.create({
   },
   lineStyle:{
     borderWidth: 2,
-    borderColor: PALETTE.green.normal,
     margin:20,
   },
   contentContainer: {
