@@ -150,22 +150,49 @@ function HomeScreen({ navigation }) {
     setScrolling(false);
   }
 
-  const image_ids = [
-    "190NCHKJNKfsIkVJjwStxLOhSjRodwTXY",
-    "1uO5JM4dFdrG_da6WWIV_zAKpj-Oq9OHI",
-    "14CI6-BLCK8rN88q1E8_HzAJX2O4N8liH",
-    "13MR-zF0RgRApeAD-RNY-nTZATzrhUoH0",
-    "18or-3ae4GWE1t8L8V0HrwQ2TsEuTYmM5",
-    "1EROOFcwtSbzt9OixaLV8fbWJYsqygSa5",
-    "1Zzpn53KafJ-vjRpqOB-1rKM_BFtagiOt",
-    "1Y36qzXx2QIggHufzDWr_7sWWKGLfYmkD",
-    "1yFKx0qh7f6BUPirSOfrWLl6MOiMS76Si",
-    "1gILEl3TfYAHRyzWsXqDTso5_rk7wNMk6",
-    "1bKjY7EvQaR893QnZ8VsOn3AFSB0lsK5F",
-    "1BBuvgZG6lzSkOhUk3Jg8OJPtnKxhIr_F",
-    "1uJaJWP6ZL24ABLvz-jc7hbbUibfuH03V",
-    "1ew7_49xa4m_HkaccuoFFtz3Nd533NqTs",
-    "1AIwIhSw68x7HFd7M7uTXmhSjN1t3UvJ1",
+  // const image_ids = [
+  //   "190NCHKJNKfsIkVJjwStxLOhSjRodwTXY",
+  //   "1uO5JM4dFdrG_da6WWIV_zAKpj-Oq9OHI",
+  //   "14CI6-BLCK8rN88q1E8_HzAJX2O4N8liH",
+  //   "13MR-zF0RgRApeAD-RNY-nTZATzrhUoH0",
+  //   "18or-3ae4GWE1t8L8V0HrwQ2TsEuTYmM5",
+  //   "1EROOFcwtSbzt9OixaLV8fbWJYsqygSa5",
+  //   "1Zzpn53KafJ-vjRpqOB-1rKM_BFtagiOt",
+  //   "1Y36qzXx2QIggHufzDWr_7sWWKGLfYmkD",
+  //   "1yFKx0qh7f6BUPirSOfrWLl6MOiMS76Si",
+  //   "1gILEl3TfYAHRyzWsXqDTso5_rk7wNMk6",
+  //   "1bKjY7EvQaR893QnZ8VsOn3AFSB0lsK5F",
+  //   "1BBuvgZG6lzSkOhUk3Jg8OJPtnKxhIr_F",
+  //   "1uJaJWP6ZL24ABLvz-jc7hbbUibfuH03V",
+  //   "1ew7_49xa4m_HkaccuoFFtz3Nd533NqTs",
+  //   "1AIwIhSw68x7HFd7M7uTXmhSjN1t3UvJ1",
+  // ];
+
+  channels = [
+    { channelTitle : "Adler Planetarium",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "190NCHKJNKfsIkVJjwStxLOhSjRodwTXY",
+    },
+    { channelTitle : "Ariel Investments",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "1uO5JM4dFdrG_da6WWIV_zAKpj-Oq9OHI",
+    },
+    { channelTitle : "Art Institute Chicago",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "14CI6-BLCK8rN88q1E8_HzAJX2O4N8liH",
+    },
+    { channelTitle : "Chicago Botanic Garden",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "13MR-zF0RgRApeAD-RNY-nTZATzrhUoH0",
+    },
+    { channelTitle : "Brookfield Zoo",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "18or-3ae4GWE1t8L8V0HrwQ2TsEuTYmM5",
+    },
+    { channelTitle : "Golden Apples",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "1EROOFcwtSbzt9OixaLV8fbWJYsqygSa5",
+    },
   ];
 
 
@@ -242,7 +269,7 @@ function HomeScreen({ navigation }) {
           <View>
             <Text style={[styles.subheader_text, {textAlign: 'center'}]}>in collaboration with</Text>
             <SponsorBanner
-              image_ids={image_ids}
+              channels={channels}
               navigation={navigation}
               shuffle={true}
               style={{marginHorizontal: 5}}
@@ -254,7 +281,7 @@ function HomeScreen({ navigation }) {
             <View style={{ paddingRight: 25, width: "100%" }}>
               <TouchableOpacity
                 activeOpacity = {0.5}
-                onPress={() => navigation.navigate('Logo Screen', { image_ids })}
+                onPress={() => navigation.navigate('Logo Screen', { channels })}
               >
                 <Text style={[styles.body_text, { width: "100%", textAlign: "right" }]} >
                   View All {"\u00BB"}

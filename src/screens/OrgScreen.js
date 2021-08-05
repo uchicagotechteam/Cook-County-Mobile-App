@@ -13,14 +13,18 @@ import RoundedButton from "../components/RoundedButton.js";
 
 //props needed: image id (from google drive), organization name, link to worksheet google drive, playlist id
 
-function OrgScreen({ navigation }) {
+function OrgScreen({ route, navigation }) {
 
-	const channel = {
-    channelTitle : "Partner TEST NAME",
-    channelImage : "golden",
-    playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
-    image_id: "1IuCEcIGstbYhj22wZqcn2HBMO600bCHm",
-  };
+  // const channel = route.params.channel;
+  const channel = route.params.channel != undefined
+    ? route.params.channel
+    : {
+      channelTitle : "Partner TEST NAME",
+      channelImage : "golden",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      // image_id: "1IuCEcIGstbYhj22wZqcn2HBMO600bCHm",
+      image_id: "1yFKx0qh7f6BUPirSOfrWLl6MOiMS76Si",
+    };
   // const channel = [{
   //   channelTitle : "Golden Apples",
   //   channelImage : "../assets/images/golden_channel.jpeg",

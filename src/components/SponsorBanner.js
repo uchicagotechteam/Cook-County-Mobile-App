@@ -24,17 +24,17 @@ function shuffleLogos(array) {
 
 // Given the navigation item, create a function that will render an individual logo
 function renderLogo(image_ratio) {
-  return (image_id, index, width) => {
+  return (channel, index, width) => {
 
     // Compute the dimensions of each icon using the width and the spacing between them
     var dim = width - SPONSOR_LOGO_SPACING;
 
     // Return an image with the appropriate dimensions and source URL
     return (
-      <View key={`${image_id} - ${index}`}>
+      <View key={`sponsor_banner_item_${index}`}>
         <LogoImage
-          imageId={image_id} width={dim} imageRatio={image_ratio} style={styles.sponsorLogo}
-          navParams={{}}
+          imageId={channel.image_id} navParams={{channel}}
+          width={dim} imageRatio={image_ratio} style={styles.sponsorLogo}
         />
       </View>
     );
@@ -48,7 +48,7 @@ function renderLogo(image_ratio) {
 function SponsorBanner(props) {
 
   // Retrieve props
-  const image_ids  = getPropRequired(props, "image_ids", "SponsorBanner");
+  const channels   = getPropRequired(props, "channels",   "SponsorBanner");
   const navigation = getPropRequired(props, "navigation", "SponsorBanner");
   const shuffle    = getPropDefault(props, "shuffle", false);
   const style      = getPropDefault(props, "style",   {});
@@ -70,7 +70,7 @@ function SponsorBanner(props) {
     <View style={ [styles.sponsorBannerContainer, style] }>
       <LoopCarousel
         itemsPerInterval={3}
-        items={shuffle ? shuffleLogos(image_ids) : image_ids}
+        items={shuffle ? shuffleLogos(channels) : channels}
         renderItem={ renderLogo(image_ratio) }
         autoscroll={true}
         autoscrollDelay={SPONSOR_AUTOSCROLL_DELAY}

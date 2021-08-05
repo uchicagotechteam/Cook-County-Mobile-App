@@ -11,15 +11,12 @@ const MARGIN = 6;
 
 // Produces a mappable function that will render an image from its ID
 function renderLogo(width) {
-	return (image_id, index) => {
-
-	  // Get the URI
-	  var uri = "https://drive.google.com/thumbnail?id=" + image_id;
+	return (channel, index) => {
 
 	  // Return a wrapped LogoImage with the appropriate styling, dimensions, and source image
 	  return (
-	    <View key={`grid_item_${image_id}_${index}`} style={{marginVertical: MARGIN/2}}>
-	      <LogoImage imageId={image_id} width={width} navParams={{}} />
+	    <View key={`logo_grid_item_${index}`} style={{marginVertical: MARGIN/2}}>
+	      <LogoImage imageId={channel.image_id} width={width} navParams={{channel}} />
 	    </View>
 	  );
 	};
@@ -39,7 +36,7 @@ function LogoScreen({ route, navigation }) {
 	return (
 		<ScrollView style={{height: SCREEN_HEIGHT, marginVertical: MARGIN}}>
 			<View style={styles.logoScreenContainer}>
-				{ route.params.image_ids.map( renderLogo(item_width) ) }
+				{ route.params.channels.map( renderLogo(item_width) ) }
 			</View>
 		</ScrollView>
 	);

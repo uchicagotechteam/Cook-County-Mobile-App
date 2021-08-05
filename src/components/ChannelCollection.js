@@ -163,6 +163,7 @@ function ChannelCollection(props) {
     if (use_icons) {
       return (
         <RainbowChannelIcons
+          channel={channel}
           videoArray={getVideoArrayByIndex(channel, index)}
           channelTitle={channel.channelTitle}
           channelImage={channel.channelImage}
