@@ -131,7 +131,7 @@ useEffect(() => {
         active={searchActive}
       />
 
-      <LogoTitle channel={channel}/>
+      <LogoTitle channel={channel} style={{marginBottom: 20}} />
 
       <RoundedButton
         onPress={() => alert('Button clicked (change later)')}
