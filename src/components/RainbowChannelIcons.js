@@ -113,9 +113,10 @@ class RainbowChannelIcons extends React.Component {
   }
 
   // Function that looks at the videoArray and currentSearch in props and returns two objects – options which stores the videos that passed the search and displays which contains details on how to highlight the search results
-  applySearch(dateVideoArray){
+  applySearch(dateVideoArray) {
+
     if(this.props.currentSearch == undefined || this.props.currentSearch == null){
-      return {options: [], displays : new Object()}
+      return { options: dateVideoArray, displays: new Object() }
     }
     
     // Split search string into individual lowercase terms
@@ -124,7 +125,7 @@ class RainbowChannelIcons extends React.Component {
       .map(s => s.toLowerCase());
     let num_terms = terms.length;
 
-    if(dateVideoArray == undefined){
+    if (dateVideoArray == undefined) {
       return {options: [], displays : new Object()}
     }
 
@@ -234,56 +235,68 @@ class RainbowChannelIcons extends React.Component {
       return {options, displays};
   }
 
+  getFullVideoArray() {
+    return this.props.videoArray.map(this.renderVideo);
+  }
+
   // Returns the JSX needed to display each video which fits the search criteria
-  getFilteredVideoArray(){
-    // Returns message if the channel is empty
-    if(this.props.videoArray == []){
+  getFilteredVideoArray() {
+
+    // If channel is empty, return a text component
+    if (this.props.videoArray == []) {
       return (<Text style={styles.emptySearch}>No videos in this channel. Check back later</Text>)
     }
-    var dateVideoArray = [];
-    // Applies the sort order to the videos
-    if(!this.state.forward){
-      dateVideoArray = [...this.props.videoArray].reverse();
-    } else {
-      dateVideoArray = this.props.videoArray
+
+    // Apply the sort order to the videos
+    var dateVideoArray = this.state.forward
+      ? this.props.videoArray
+      : [...this.props.videoArray].reverse();
+
+    // Filter the videos by date, if applicable
+    // Either after, before or between dates (inclusive)
+    if (this.props.dateInfo != undefined) {
+
+      // Get filters
+      let restriction = this.props.dateInfo.dateRestriction;
+      let afterDate   = this.props.dateInfo.afterDate;
+      let beforeDate  = this.props.dateInfo.beforeDate;
+      let afterNull   = afterDate == null;
+      let beforeNull  = beforeDate == null;
+
+      // Run through each possible filter and remove videos if applicable
+      if (restriction == "After" && !afterNull) {
+        dateVideoArray = dateVideoArray.filter(videoInfo => {
+            return videoInfo.date > afterDate;
+          })
+      }
+      if (restriction == "Before" && !beforeNull) {
+        dateVideoArray = dateVideoArray.filter(videoInfo => {
+            return videoInfo.date < beforeDate;
+          });
+      }
+      if (restriction == "Between" && !afterNull && !beforeNull) {
+        dateVideoArray = dateVideoArray.filter(videoInfo => {
+            return videoInfo.date < beforeDate && videoInfo.date > afterDate;
+          });
+      }
     }
     
-    // Filters the videos by date. Either after, before or between dates (inclusive)
-    let restriction = this.props.dateInfo.dateRestriction;
-    let afterDate = this.props.dateInfo.afterDate;
-    let beforeDate = this.props.dateInfo.beforeDate;
-    let afterNull = afterDate == null;
-    let beforeNull = beforeDate == null;
-    if(restriction == "After" && !afterNull){
-      dateVideoArray = dateVideoArray.filter(videoInfo =>
-        {
-          return videoInfo.date > afterDate;
-        })
-    }
-    if(restriction == "Before" && !beforeNull){
-      dateVideoArray = dateVideoArray.filter(videoInfo =>
-        {
-          return videoInfo.date < beforeDate;
-        });
-      
-    }
-    if(restriction == "Between"&& !afterNull && !beforeNull){
-      dateVideoArray = dateVideoArray.filter(videoInfo =>
-        {
-          return videoInfo.date < beforeDate && videoInfo.date > afterDate;
-        });
-    }
-    
-    // Applies the text search onto the remaining videos
-    let searchResults = this.applySearch(dateVideoArray);
-    let options = searchResults.options
-    let displays = searchResults.displays
-    if(options.length <= 0){
+    // Apply the text search onto the videos that passed the date filter
+    let {options, displays} = this.applySearch(dateVideoArray);
+
+    // If no videos passed all filters, return a filler text component
+    if (options.length <= 0) {
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
-    for(var i = 0; i < options.length; i++){
-      options[i].display = displays[options[i].videoId];
+
+    // Save the display results into the options array
+    for (var i = 0; i < options.length; i++) {
+      let display = displays[options[i].videoId];
+      if (display != undefined)
+        options[i].display = display
     }
+
+    // Map the rendering function over all the passing videos
     return options.map(this.renderVideo)
   }
 
