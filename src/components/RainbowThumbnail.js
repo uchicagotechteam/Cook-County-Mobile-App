@@ -150,28 +150,30 @@ class RainbowThumbnail extends React.Component {
         onPress={ () => this.thumbnailClicked() }
         style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}
       >
-        <View style={{height: 40}}>
+        <View style={{height: 60, justifyContent:'center'}}>
           <AdjustableText
-            fontSize={18}
-            text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map((s, index) =>
-                    s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
-                  : this.props.title}
-                  &nbsp;-&nbsp;
-                  {this.props.display !== undefined ? this.props.display["dateString"].map((s, index) =>
-                    s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
-                  : this.props.title}
-                  </Text>
+            fontSize={30}
+            // text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map((s, index) =>
+            //         s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
+            //       : this.props.title}
+            //       &nbsp;-&nbsp;
+            //       {this.props.display !== undefined ? this.props.display["dateString"].map((s, index) =>
+            //         s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
+            //       : this.props.title}
+            //       </Text>
+            text=<Text>{this.isRecent()} {this.props.title}</Text>
             style={styles.videoTitleText}
             maxHeight={40}
           />
         </View>
-        <View style={{flexGrow: 1, alignItems: 'center'}} >
+        <View style={{flexGrow: 1, alignItems: 'center', justifyContent:'center'}} >
             <View style={{
+                height: 240,
                 top: 0,
                 width: this.width,
                 height: this.width * 4 / 5,
                 alignItems: 'center'}}>
-              {this.state.thumbnail === null ? (<View style={{height: "67%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "67%", width: '100%'}} source={{uri : this.state.thumbnail}}/>)
+              {this.state.thumbnail === null ? (<View style={{height: "67%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "67%", width: '100%', borderRadius: 20}} source={{uri : this.state.thumbnail}}/>)
               }
               <View style={{height: "45%",
                           bottom: "58%",
