@@ -194,7 +194,7 @@ function HomeScreen({ navigation }) {
           <View style={[styles.centerColumn, {width: SCREEN_WIDTH}]}>
             <Image
               source={require("../assets/images/PR_logo.png")}
-              style={{width: 25, height: 25}}
+              style={{width: 35, height: 35}}
               resizeMode={"contain"}
             />
           </View>
