@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Image, View, ScrollView, Text, TouchableOpacity, Dimensions } from 'react-native';
-import { styles, SPONSOR_LOGO_SPACING, SPONSOR_AUTOSCROLL_DELAY } from '../scripts/constants.js'
+import { styles, RATIOS, SPONSOR_LOGO_SPACING, SPONSOR_AUTOSCROLL_DELAY } from '../scripts/constants.js'
 
 import LoopCarousel from './LoopCarousel';
+import LogoImage from '../components/LogoImage.js';
 
 // Import functions to retrieve props
 import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
@@ -22,11 +23,8 @@ function shuffleLogos(array) {
 }
 
 // Given the navigation item, create a function that will render an individual logo
-function renderLogo(navigation, image_ratio) {
+function renderLogo(image_ratio) {
   return (image_id, index, width) => {
-
-    // Get the URI
-    var uri = "https://drive.google.com/thumbnail?id=" + image_id;
 
     // Compute the dimensions of each icon using the width and the spacing between them
     var dim = width - SPONSOR_LOGO_SPACING;
@@ -34,13 +32,10 @@ function renderLogo(navigation, image_ratio) {
     // Return an image with the appropriate dimensions and source URL
     return (
       <View key={`${image_id} - ${index}`}>
-        <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org') }>
-          <Image
-            style={[styles.sponsorLogo, {width: dim, height: dim / image_ratio}]}
-            source={{ uri }}
-            resizeMode={"contain"}
-          />
-        </TouchableOpacity>
+        <LogoImage
+          imageId={image_id} width={dim} imageRatio={image_ratio} style={styles.sponsorLogo}
+          navParams={{}}
+        />
       </View>
     );
   }
@@ -66,7 +61,7 @@ function SponsorBanner(props) {
   // Get the image ratio, as a a fraction of width over height
   // Height to Width -> multiply
   // Width to Height -> divide
-  const image_ratio = getPropDefault(props, "imageRatio", 3 / 2);
+  const image_ratio = getPropDefault(props, "imageRatio", RATIOS.sponsors);
 
   // Retrieve the screen width
   const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -76,7 +71,7 @@ function SponsorBanner(props) {
       <LoopCarousel
         itemsPerInterval={3}
         items={shuffle ? shuffleLogos(image_ids) : image_ids}
-        renderItem={renderLogo(navigation, image_ratio)}
+        renderItem={ renderLogo(image_ratio) }
         autoscroll={true}
         autoscrollDelay={SPONSOR_AUTOSCROLL_DELAY}
         width={SCREEN_WIDTH - (SPONSOR_LOGO_SPACING * 2)}
