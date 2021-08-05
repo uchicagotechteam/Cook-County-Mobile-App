@@ -346,6 +346,7 @@ function HomeScreen({ navigation }) {
               ]}
               navigation={navigation}
               shuffle={true}
+              style={{marginHorizontal: 5}}
               onGrab={onGrab}
               onRelease={onRelease}
               parentScrolling={isScrolling}

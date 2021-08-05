@@ -37,9 +37,12 @@ export default class LoopCarousel extends React.Component {
 		this.onRelease = getPropDefault( props, "onRelease", ()=>{} );
 		this.parentScrolling = getPropDefault(props, "parentScrolling", false);
 
+		// Get the width of the component, defaulting to the full screen width
+		this.width = getPropDefault(props, "width", Dimensions.get('window').width);
+
 		// Compute the width of a single item in the carousel
 		// TODO: This should probably update dynamically with the dimensions of the screen
-		this.itemWidth = Math.round(Dimensions.get('window').width / this.itemsPerInterval);
+		this.itemWidth = Math.round(this.width / this.itemsPerInterval);
 
 		// The list to use as the actual data for the ScrollView element - make a copy of the
 		// elements on either side, so the user can scroll infinitely in either direction
@@ -250,7 +253,7 @@ export default class LoopCarousel extends React.Component {
 	render() {
 		const itemWidth = this.itemWidth
 		return (
-			<View>
+			<View style={{ width: this.width }}>
 				<ScrollView ref={this.scroll_view_ref}
 					horizontal={true}
 					contentContainerStyle={{ width: itemWidth * this.extended_items.length }}
@@ -262,6 +265,7 @@ export default class LoopCarousel extends React.Component {
 					onScrollBeginDrag={this.onScrollBeginDrag.bind(this)}
 					onScrollEndDrag={this.onScrollEndDrag.bind(this)}
 					onMomentumScrollEnd={this.onMomentumScrollEnd.bind(this)}
+					style={{overflow: "hidden"}}
 				>
 					{this.extended_items.map( (item, idx) => this.renderItem(item, idx, itemWidth) )}
 				</ScrollView>

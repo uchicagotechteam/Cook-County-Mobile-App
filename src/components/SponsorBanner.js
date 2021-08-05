@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { Image, View, ScrollView, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { styles, SPONSOR_LOGO_SPACING, SPONSOR_AUTOSCROLL_DELAY }  from '../scripts/constants.js'
 
 import LoopCarousel from './LoopCarousel';
@@ -59,6 +59,9 @@ function SponsorBanner(props) {
   const onRelease = getPropDefault( props, "onRelease", ()=>{} );
   const parentScrolling = getPropDefault(props, "parentScrolling", false);
 
+  // Retrieve the screen width
+  const SCREEN_WIDTH = Dimensions.get('window').width;
+
   return (
     <View style={ [styles.sponsorBannerContainer, style] }>
       <LoopCarousel
@@ -67,6 +70,7 @@ function SponsorBanner(props) {
         renderItem={renderLogo(navigation)}
         autoscroll={true}
         autoscrollDelay={SPONSOR_AUTOSCROLL_DELAY}
+        width={SCREEN_WIDTH - (SPONSOR_LOGO_SPACING * 2)}
         onGrab={onGrab}
         onRelease={onRelease}
         parentScrolling={parentScrolling}

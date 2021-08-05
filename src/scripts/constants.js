@@ -543,9 +543,6 @@ export const styles = StyleSheet.create({
   },
   sponsorBannerContainer: {
     width: "100%",
-    paddingTop:    SPONSOR_LOGO_SPACING / 2,
-    paddingBottom: SPONSOR_LOGO_SPACING / 2,
-    marginTop: 20, marginBottom: 20,
-    backgroundColor: PALETTE.green.light,
+    padding: SPONSOR_LOGO_SPACING / 2,
   },
 });
