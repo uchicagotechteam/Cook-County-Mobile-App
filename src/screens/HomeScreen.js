@@ -4,7 +4,7 @@ import axios from 'axios';
 import { TouchableOpacity, View, Text, Image, ImageBackground, StyleSheet,
           ScrollView, Animated, Dimensions, StatusBar
       } from 'react-native';
-import { styles, theme, PALETTE, api_key } from '../scripts/constants.js'
+import { styles, theme, PALETTE, RATIOS, api_key } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
 
 // The components used in the Homescreen
@@ -252,6 +252,7 @@ function HomeScreen({ navigation }) {
               onGrab={onGrab}
               onRelease={onRelease}
               parentScrolling={isScrolling}
+              imageRatio={RATIOS.sponsors}
             />
             <View style={{ paddingRight: 25, width: "100%" }}>
               <TouchableOpacity
@@ -269,7 +270,7 @@ function HomeScreen({ navigation }) {
           <View style={{height: 10}} />
 
           {/* Banner showing featured videos */}
-          <FeaturedBanner />
+          <FeaturedBanner imageRatio={RATIOS.featured} />
 
         </View>
 
@@ -295,6 +296,7 @@ function HomeScreen({ navigation }) {
           dateInfo={dateInfo}
           isAdult={true}
           itemsPerInterval={2}
+          imageRatio={RATIOS.channels}
         />
       </ScrollView>
     </View>

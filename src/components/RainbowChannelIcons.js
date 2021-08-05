@@ -43,6 +43,11 @@ class RainbowChannelIcons extends React.Component {
     // Get the padding value
     this.card_spacing = getPropDefault(props, "cardSpacing", 10);
 
+    // Get the image ratio, as a a fraction of width over height
+    // Height to Width -> multiply
+    // Width to Height -> divide
+    this.image_ratio = getPropDefault(props, "imageRatio", 5 / 4);
+
     // Get the number of items per interval, if applicable
     this.itemsPerInterval = getProp(props, "itemsPerInterval");
 
@@ -59,7 +64,9 @@ class RainbowChannelIcons extends React.Component {
     }
 
     // Set the card dimensions
-    this.card_height = getPropDefault(props, "cardHeight", dim * 4/3);
+    // TODO: Experimentally, the text below the video image is about 80 in height,
+    //       but this is a bad long-term solution!
+    this.card_height = getPropDefault(props, "cardHeight", dim / this.image_ratio + 80);
     this.card_width  = getPropDefault(props, "cardWidth",  dim);
 
     // Constant hardcoding the keys in each video's object which will be targetted by the search
@@ -351,6 +358,7 @@ class RainbowChannelIcons extends React.Component {
           width={this.card_width}
           height={this.card_height}
           style={{ margin: this.card_spacing }}
+          imageRatio={this.image_ratio}
         />
       </TouchableOpacity>
     );

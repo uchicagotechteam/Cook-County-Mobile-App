@@ -15,6 +15,16 @@ export const SPONSOR_LOGO_SPACING = 10;
 export const SPONSOR_AUTOSCROLL_DELAY = 10000;
 
 
+// The ratios for various images, each formatted as a a fraction of width over height
+// To convert  height  to  width,   multiply by this value
+// To convert  width   to  height,   divide  by this value
+export const RATIOS = {
+  featured: 5/4,
+  channels: 3/2,
+  sponsors: 3/2,
+};
+
+
 // An accessible color palette for the project
 // Light values are designed to be paired with black text, and dark values are designed
 // to be paired with white text

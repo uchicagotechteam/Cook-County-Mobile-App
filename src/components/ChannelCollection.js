@@ -35,6 +35,11 @@ function ChannelCollection(props) {
   const navigation = props.navigation;
   const itemsPerInterval = getProp(props, "itemsPerInterval");
 
+  // Get the image ratio, as a a fraction of width over height
+  // Height to Width -> multiply
+  // Width to Height -> divide
+  const image_ratio = getPropDefault(props, "imageRatio", 5 / 4);
+
   // useEffect function runs when function initially loads
   // and runs again whenever there is a change to data in second argument array (fetchData)
   // beware of infinite loops
@@ -177,6 +182,7 @@ function ChannelCollection(props) {
           // activeId={activeId}
           navigation={navigation}
           itemsPerInterval={itemsPerInterval}
+          imageRatio={image_ratio}
         />
       </View>
     ));

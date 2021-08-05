@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TouchableOpacity, View, Image, ScrollView, Dimensions } from 'react-native';
-import { styles, PALETTE } from '../scripts/constants.js'
+import { styles, PALETTE, RATIOS } from '../scripts/constants.js'
 
 
 // The margin width for the elements in this screen
@@ -19,7 +19,7 @@ function renderLogo(navigation, width) {
 	    <View key={`grid_item_${image_id}_${index}`} style={{marginVertical: MARGIN/2}}>
 	      <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org') }>
 	        <Image
-	          style={{width: width, height: width * 2/3}}
+	          style={{width: width, height: width / RATIOS.sponsors}}
 	          source={{ uri }}
 	          resizeMode={"contain"}
 	        />

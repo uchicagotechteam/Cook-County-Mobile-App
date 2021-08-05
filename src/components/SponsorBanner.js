@@ -22,7 +22,7 @@ function shuffleLogos(array) {
 }
 
 // Given the navigation item, create a function that will render an individual logo
-function renderLogo(navigation) {
+function renderLogo(navigation, image_ratio) {
   return (image_id, index, width) => {
 
     // Get the URI
@@ -36,7 +36,7 @@ function renderLogo(navigation) {
       <View key={`${image_id} - ${index}`}>
         <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org') }>
           <Image
-            style={[styles.sponsorLogo, {width: dim, height: dim * 2/3}]}
+            style={[styles.sponsorLogo, {width: dim, height: dim / image_ratio}]}
             source={{ uri }}
             resizeMode={"contain"}
           />
@@ -63,6 +63,11 @@ function SponsorBanner(props) {
   const onRelease = getPropDefault( props, "onRelease", ()=>{} );
   const parentScrolling = getPropDefault(props, "parentScrolling", false);
 
+  // Get the image ratio, as a a fraction of width over height
+  // Height to Width -> multiply
+  // Width to Height -> divide
+  const image_ratio = getPropDefault(props, "imageRatio", 3 / 2);
+
   // Retrieve the screen width
   const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -71,7 +76,7 @@ function SponsorBanner(props) {
       <LoopCarousel
         itemsPerInterval={3}
         items={shuffle ? shuffleLogos(image_ids) : image_ids}
-        renderItem={renderLogo(navigation)}
+        renderItem={renderLogo(navigation, image_ratio)}
         autoscroll={true}
         autoscrollDelay={SPONSOR_AUTOSCROLL_DELAY}
         width={SCREEN_WIDTH - (SPONSOR_LOGO_SPACING * 2)}

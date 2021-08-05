@@ -10,6 +10,9 @@ import LoadingThumbnail from "../components/LoadingThumbnail.js";
 import { styles, PALETTE } from '../scripts/constants.js'
 import moment from "moment";
 
+// Import functions to retrieve props
+import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
+
 // Props include
 //   videoId : String            - youtube identifier to fetch the video
 //   activeId : String           - youtube identifier of the video actively playing in the theatre
@@ -35,8 +38,14 @@ class RainbowVideoIcon extends React.Component {
       progressFraction: 0,
     };
 
-    this.width = props.width;
-    this.height = props.height;
+    // Get the dimensions for each card from the props
+    this.width  = getPropDefault(props, "width",  150);
+    // this.height = getPropDefault(props, "height", this.width * 4/5 + 80);
+
+    // Get the image ratio, as a a fraction of width over height
+    // Height to Width -> multiply
+    // Width to Height -> divide
+    this.image_ratio = getPropDefault(props, "imageRatio", 5 / 4);
 
     // bind methods
     this.thumbnailClicked = this.thumbnailClicked.bind(this);
@@ -153,7 +162,7 @@ class RainbowVideoIcon extends React.Component {
         <Image
           source={{uri: this.state.thumbnail }}
           style={{
-            width: this.width, height: this.width * 4 / 5,
+            width: this.width, height: this.width / this.image_ratio,
             borderRadius: 20,
             // boxShadow: "10px 10px 5px grey",
             shadowOffset: {
