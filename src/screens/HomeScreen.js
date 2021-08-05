@@ -96,6 +96,9 @@ function HomeScreen({ navigation }) {
   const HEADER_EXP_HEIGHT = 180;
   const HEADER_COL_HEIGHT = 50;
 
+  // Compute the height of the top section - the big logo, sponsor bar, and featured videos
+  const TOP_SECTION_HEIGHT = SCREEN_HEIGHT - HEADER_EXP_HEIGHT + HEADER_COL_HEIGHT  - 40
+
   // Create a new variable that will track how far the user has scrolled
   const scroll_y = new Animated.Value(0);
 
@@ -215,7 +218,7 @@ function HomeScreen({ navigation }) {
       {/* Body */}
       <ScrollView
         style={{
-          width: "100%", height: SCREEN_HEIGHT - HEADER_COL_HEIGHT - 20,
+          width: "100%", height: SCREEN_HEIGHT - HEADER_COL_HEIGHT,
           marginTop: HEADER_COL_HEIGHT,
           zIndex: -1,
         }}
@@ -226,28 +229,17 @@ function HomeScreen({ navigation }) {
         onScrollBeginDrag={startScroll}
         onMomentumScrollEnd={endScroll}
         scrollEventThrottle={16}
-        snapToOffsets={[ SCREEN_HEIGHT - HEADER_EXP_HEIGHT + HEADER_COL_HEIGHT ]}
+        snapToOffsets={[ TOP_SECTION_HEIGHT ]}
         decelerationRate={"fast"}
         snapToEnd={false}
         scrollEnabled={scrollEnabled}
       >
 
         {/* The components at the top, which should take up one screen height for the landing page */}
-        <View style={{ height: SCREEN_HEIGHT - HEADER_EXP_HEIGHT + HEADER_COL_HEIGHT }}>
+        <View style={{ height: TOP_SECTION_HEIGHT }}>
 
           {/* Spacer component that gets hidden behind the header */}
-          <View style={{
-            height: HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT,
-            backgroundColor: theme.colors.background,
-            marginBottom: 20,
-          }} />
-
-          <DividerLine color="blue" style={{ marginVertical: 0 }} />
-
-          {/* Banner showing featured videos */}
-          <FeaturedBanner />
-
-          <DividerLine color="blue" style={{ marginVertical: 0 }} />
+          <View style={{ height: HEADER_EXP_HEIGHT - HEADER_COL_HEIGHT }} />
 
           {/* Banner showing the logo for each sponsor */}
           <View>
@@ -272,6 +264,12 @@ function HomeScreen({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
+
+          {/*<DividerLine color="blue" style={{ marginVertical: 0 }} />*/}
+          <View style={{height: 10}} />
+
+          {/* Banner showing featured videos */}
+          <FeaturedBanner />
 
         </View>
 
