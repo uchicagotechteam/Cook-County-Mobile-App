@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import BaseScreen from "./src/screens/BaseScreen.js";
 import HomeScreen from "./src/screens/HomeScreen.js";
 import OrgScreen  from "./src/screens/OrgScreen.js";
+import LogoScreen from "./src/screens/LogoScreen.js";
 
 import { theme, styles } from './src/scripts/constants.js'
 import withSplashScreen from './src/components/withSplashScreen';
@@ -21,6 +22,7 @@ function App() {
         />
         <Stack.Screen name="Org"         component={OrgScreen}  options={{headerStyle: styles.searchColor}} />
         <Stack.Screen name="Base Screen" component={BaseScreen} options={{headerStyle: styles.searchColor}} />
+        <Stack.Screen name="Logo Screen" component={LogoScreen} options={{headerStyle: styles.searchColor}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
