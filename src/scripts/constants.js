@@ -440,11 +440,7 @@ export const styles = StyleSheet.create({
     height: 150,
   },
   sponsorLogo: {
-    width: 150,
-    height: 150,
     margin: SPONSOR_LOGO_SPACING / 2,
-    borderRadius: 5,
-    backgroundColor: PALETTE.back.light,
   },
   // Child page
   regLogo: {

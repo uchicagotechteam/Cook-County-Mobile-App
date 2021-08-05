@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Image, View, ScrollView, Text, TouchableOpacity, Dimensions } from 'react-native';
-import { styles, SPONSOR_LOGO_SPACING, SPONSOR_AUTOSCROLL_DELAY }  from '../scripts/constants.js'
+import { styles, SPONSOR_LOGO_SPACING, SPONSOR_AUTOSCROLL_DELAY } from '../scripts/constants.js'
 
 import LoopCarousel from './LoopCarousel';
 
@@ -21,8 +21,10 @@ function shuffleLogos(array) {
 
 // Given the navigation item, create a function that will render an individual logo
 function renderLogo(navigation) {
-  return (item, index, width) => {
-    var image_id = item;
+  return (image_id, index, width) => {
+
+    // Get the URI
+    var uri = "https://drive.google.com/thumbnail?id=" + image_id;
 
     // Compute the dimensions of each icon using the width and the spacing between them
     var dim = width - SPONSOR_LOGO_SPACING;
@@ -32,9 +34,9 @@ function renderLogo(navigation) {
       <View key={`${image_id} - ${index}`}>
         <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org') }>
           <Image
-            style={[styles.sponsorLogo, {width: dim, height: dim}]}
-            source={{uri: "https://drive.google.com/thumbnail?id=" + image_id }}
-            resizeMode={"stretch"}
+            style={[styles.sponsorLogo, {width: dim, height: dim * 2/3}]}
+            source={{ uri }}
+            resizeMode={"contain"}
           />
         </TouchableOpacity>
       </View>
@@ -65,7 +67,7 @@ function SponsorBanner(props) {
   return (
     <View style={ [styles.sponsorBannerContainer, style] }>
       <LoopCarousel
-        itemsPerInterval={5}
+        itemsPerInterval={3}
         items={shuffle ? shuffleLogos(image_ids) : image_ids}
         renderItem={renderLogo(navigation)}
         autoscroll={true}

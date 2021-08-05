@@ -238,6 +238,24 @@ function HomeScreen({ navigation }) {
     setScrolling(false);
   }
 
+  const image_ids = [
+    "190NCHKJNKfsIkVJjwStxLOhSjRodwTXY",
+    "1uO5JM4dFdrG_da6WWIV_zAKpj-Oq9OHI",
+    "14CI6-BLCK8rN88q1E8_HzAJX2O4N8liH",
+    "13MR-zF0RgRApeAD-RNY-nTZATzrhUoH0",
+    "18or-3ae4GWE1t8L8V0HrwQ2TsEuTYmM5",
+    "1EROOFcwtSbzt9OixaLV8fbWJYsqygSa5",
+    "1Zzpn53KafJ-vjRpqOB-1rKM_BFtagiOt",
+    "1Y36qzXx2QIggHufzDWr_7sWWKGLfYmkD",
+    "1yFKx0qh7f6BUPirSOfrWLl6MOiMS76Si",
+    "1gILEl3TfYAHRyzWsXqDTso5_rk7wNMk6",
+    "1bKjY7EvQaR893QnZ8VsOn3AFSB0lsK5F",
+    "1BBuvgZG6lzSkOhUk3Jg8OJPtnKxhIr_F",
+    "1uJaJWP6ZL24ABLvz-jc7hbbUibfuH03V",
+    "1ew7_49xa4m_HkaccuoFFtz3Nd533NqTs",
+    "1AIwIhSw68x7HFd7M7uTXmhSjN1t3UvJ1",
+  ];
+
 
   return (
     <View style={[ styles.centerColumn ]}>
@@ -327,23 +345,7 @@ function HomeScreen({ navigation }) {
           <View>
             <Text style={[styles.header_text, {paddingLeft: 20}]}>Brought To You By</Text>
             <SponsorBanner
-              image_ids={[
-                "190NCHKJNKfsIkVJjwStxLOhSjRodwTXY",
-                "1uO5JM4dFdrG_da6WWIV_zAKpj-Oq9OHI",
-                "14CI6-BLCK8rN88q1E8_HzAJX2O4N8liH",
-                "13MR-zF0RgRApeAD-RNY-nTZATzrhUoH0",
-                "18or-3ae4GWE1t8L8V0HrwQ2TsEuTYmM5",
-                "1EROOFcwtSbzt9OixaLV8fbWJYsqygSa5",
-                "1Zzpn53KafJ-vjRpqOB-1rKM_BFtagiOt",
-                "1Y36qzXx2QIggHufzDWr_7sWWKGLfYmkD",
-                "1yFKx0qh7f6BUPirSOfrWLl6MOiMS76Si",
-                "1gILEl3TfYAHRyzWsXqDTso5_rk7wNMk6",
-                "1bKjY7EvQaR893QnZ8VsOn3AFSB0lsK5F",
-                "1BBuvgZG6lzSkOhUk3Jg8OJPtnKxhIr_F",
-                "1uJaJWP6ZL24ABLvz-jc7hbbUibfuH03V",
-                "1ew7_49xa4m_HkaccuoFFtz3Nd533NqTs",
-                "1AIwIhSw68x7HFd7M7uTXmhSjN1t3UvJ1",
-              ]}
+              image_ids={image_ids}
               navigation={navigation}
               shuffle={true}
               style={{marginHorizontal: 5}}
