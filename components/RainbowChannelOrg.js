@@ -1,9 +1,9 @@
 import React from 'react';
-import RainbowThumbnail from "../components/RainbowThumbnail.js";
+import RainbowThumbnailOrg from "../components/RainbowThumbnailOrg.js";
 import AdjustableText from "../components/AdjustableText.js";
 import ToggleSort from "../components/ToggleSort.js";
 import { Dimensions } from 'react-native';
-import { View, ScrollView, StyleSheet, Image, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Image, Animated, Text } from 'react-native';
 import {search} from '../scripts/Search.js';
 import { styles } from '../scripts/constants.js'
 
@@ -11,7 +11,6 @@ import { styles } from '../scripts/constants.js'
 //   channelImage : String  - value that is mapped to a hardcoded image or a default image if no match is found
 //   channelTitle : String  - the channels title
 //   currentSearch : String - string typed into the search bar
-//   isAdult : Bool         - if the channel should display extra content for the adult page
 //   videoArray : Array     - array of objects specifying a video. Follows the format [{videoId : String, title : String, date : Date, dateString : String, duration : String, description : String}, ...]
 //   dateInfo : Object      - Object containing the info about the search date filter {restriction : String, afterDate: Date, beforeDate : Date}
 //   activeId : String      - youtube identifier of the video actively playing in the theatre
@@ -26,10 +25,13 @@ class RainbowChannel extends React.Component {
     // State includes
     //   forward : Bool - Stores whether the videos should be shown from newest to oldest (true) or oldest to newest
     this.state = {
-      forward : true
+      forward : true,
+      scroll_x : new Animated.Value(0),
+      full_width: 0,
     };
     this.setOrder = this.setOrder.bind(this);
     this.broadcastActiveVideo = this.broadcastActiveVideo.bind(this);
+    //this.handleContentSizeChange = this.handleContentSizeChange.bind(this);
   }
 
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
@@ -39,24 +41,6 @@ class RainbowChannel extends React.Component {
     let image_id = google_drive_link.split("/").slice(-2)[0];
     console.log("Channel image id: " + image_id);
     return {uri: "https://drive.google.com/thumbnail?id=" + image_id }
-    // if(this.props.channelImage == "music"){
-    //   return require('../images/cdefg.png');
-    // }
-    // else if(this.props.channelImage == "interview"){
-    //   return require('../images/interview_channel.png');
-    // }
-    // else if(this.props.channelImage == "golden"){
-    //   return require('../images/golden_channel.jpeg');
-    // }
-    // else if(this.props.channelImage == "forest"){
-    //   return require('../images/tree.png');
-    // }
-    // else if(this.props.channelImage == "garden"){
-    //   return require('../images/flower.png');
-    // }
-    // else { // if(this.props.channelImage == "zoo"){
-    //   return require('../images/elephant.png');
-    // }
   }
 
   // Function that looks at the videoArray and currentSearch in props and returns two objects – options which stores the videos that passed the search and displays which contains details on how to highlight the search results
@@ -69,6 +53,18 @@ class RainbowChannel extends React.Component {
       .map(s => s.toLowerCase());
     let num_terms = terms.length;
     */
+    
+
+    if(this.props.currentSearch == undefined || this.props.currentSearch == null){
+      return {options: [], displays : new Object()}
+    }
+    
+    // Split search string into individual lowercase terms
+    let terms = this.props.currentSearch.split(' ')
+      .filter(s => s.length > 0)
+      .map(s => s.toLowerCase());
+    let num_terms = terms.length;
+
     if(dateVideoArray == undefined){
       return {options: [], displays : new Object()}
     }
@@ -182,12 +178,15 @@ class RainbowChannel extends React.Component {
   // Returns the JSX needed to display each video which fits the search criteria
   getFilteredVideoArray(){
     // Returns message if the channel is empty
-    var videoArray = this.props.videoArray
+    //var videoArray = this.props.videoArray
     if(this.props.videoArray == []){
       return (<Text style={styles.emptySearch}>No videos in this channel. Check back later</Text>)
     }
+    
+    
+
     var dateVideoArray = [];
-    // Applies the sort order to the videos
+    /// Applies the sort order to the videos
     if(!this.state.forward){
       dateVideoArray = [...this.props.videoArray].reverse();
     } else {
@@ -195,7 +194,7 @@ class RainbowChannel extends React.Component {
     }
     
     // Filters the videos by date. Either after, before or between dates (inclusive)
-    /*
+    
     let restriction = this.props.dateInfo.dateRestriction;
     let afterDate = this.props.dateInfo.afterDate;
     let beforeDate = this.props.dateInfo.beforeDate;
@@ -219,7 +218,7 @@ class RainbowChannel extends React.Component {
         {
           return videoInfo.date < beforeDate && videoInfo.date > afterDate;
         });
-    } 
+    }  
     
     // Applies the text search onto the remaining videos
     let searchResults = this.applySearch(dateVideoArray);
@@ -228,14 +227,15 @@ class RainbowChannel extends React.Component {
     if(options.length <= 0){
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
-    */
-    return videoArray.map(videoInfo =>
-      <RainbowThumbnail videoId={videoInfo.videoId}
+    
+    return options.map(videoInfo =>
+      <RainbowThumbnailOrg videoId={videoInfo.videoId}
         title={videoInfo.title}
         date={videoInfo.date}
         duration={videoInfo.duration}
-        isAdult={this.props.isAdult}
         description={videoInfo.description}
+        link={videoInfo.link}
+        display={displays[videoInfo.videoId]}
         broadcastActiveVideo={this.broadcastActiveVideo}
         activeId={this.props.activeId}
         key={videoInfo.videoId}
@@ -243,7 +243,7 @@ class RainbowChannel extends React.Component {
     )
   }
 
-  // Changes the forward state when the sort icon is toggled
+  /// Changes the forward state when the sort icon is toggled
   setOrder(forward){
     console.log("IsForward: " + forward)
     this.setState({ forward : forward });

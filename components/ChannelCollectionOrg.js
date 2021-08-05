@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from 'axios';
-import RainbowChannel from "../components/RainbowChannel.js";
+import RainbowChannelOrg from "../components/RainbowChannelOrg.js";
 import RoundedButton from '../components/RoundedButton.js'
 import { styles, api_key } from '../scripts/constants.js'
 import { View } from 'react-native';
@@ -9,7 +9,6 @@ import { View } from 'react-native';
 // Props include
 //   channels : Array    - array of objects that describe a channel. [{channelTitle : String, channelImage : String, playlistID : String}]
 //   searchText : String - string typed into the search bar
-//   isAdult : Bool      - if the channels should display extra content for the adult page
 function ChannelCollection(props) {
   // logic to maintain state of array which maps each channel to its array of videos
   const [videoArrays, setVideoArrays] = useState([]);
@@ -37,9 +36,8 @@ function ChannelCollection(props) {
   // beware of infinite loops
   useEffect(() => {
     const fetchData = function(playlistId, index, localVideoArrays, pageToken) {
-      console.log(playlistId);
-      console.log(api_key);
-      console.log("IN COLLECTION USE EFFECT")
+      //console.log(playlistId);
+      //console.log(api_key);
       var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
       console.log(token_text);
       axios({
@@ -48,8 +46,8 @@ function ChannelCollection(props) {
       })
       .then((response) => {
         setResponseData(response.data)
-        console.log("*****ITEMS*****")
-        console.log(response.data.items)
+        //console.log("*****ITEMS*****")
+        //console.log(response.data.items)
         var nextPageToken = null;
         if(response.data.nextPageToken != undefined && response.data.nextPageToken != null){
           nextPageToken = response.data.nextPageToken;
@@ -59,18 +57,28 @@ function ChannelCollection(props) {
         let videoArray = response.data.items.map(video => {
           let date = new Date(video.contentDetails.videoPublishedAt);
           // If the video will be in a channel for adults, store the description because that could help with the curriculum
+          var full_description = video.snippet.description;
           var description = "";
-          if(props.isAdult){
-            description = video.snippet.description;
+          var link = null
+
+          var lines = full_description.split("\n");
+          for (var i = 0; i < lines.length; i++){
+            var words = lines[i].split(" ");
+            if(words.length > 0 && words[0] == "LINK:"){
+              link = lines[i].substring(lines[i].indexOf(' ')+1)
+            } else {
+              description += lines[i] + "\n"
+            }
           }
-          let re = /(http(?:s?):\/\/(?:www\.))?(drive.google.com?(.*))/
-          let google_drive_link = video.snippet.description.match(re)
+
+        
           return {
             videoId: video.contentDetails.videoId,
             title: video.snippet.title,
             date : date,
             dateString : date.toLocaleDateString("en-US"),
-            description : google_drive_link
+            description : description,
+            link : link
           }
         })
 
@@ -138,14 +146,21 @@ function ChannelCollection(props) {
   return (
     props.channels.map((channel, index) =>
       <View key={channel.playlistId}>
-        <RainbowChannel
+        <RainbowChannelOrg
           videoArray={getVideoArrayByIndex(channel, index)}
           channelTitle={channel.channelTitle}
           channelImage={channel.channelImage}
           currentSearch={props.searchText}
-          dateInfo={props.dateInfo}
-          isAdult={props.isAdult}
-          activeId={activeId}
+          //dateInfo={props.dateInfo}
+          dateInfo={
+            {
+              restriction : null,
+              afterDate : null,
+              beforeDate : null
+            }
+          }
+          activeId={""}
+         // activeId={activeId}
         />
         <View style={{height: 160}} />
       </View>
