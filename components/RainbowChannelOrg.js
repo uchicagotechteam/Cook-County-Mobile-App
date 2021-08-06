@@ -5,7 +5,8 @@ import ToggleSort from "../components/ToggleSort.js";
 import { Dimensions } from 'react-native';
 import { View, ScrollView, StyleSheet, Image, Animated, Text } from 'react-native';
 import {search} from '../scripts/Search.js';
-import { styles } from '../scripts/constants.js'
+import { styles } from '../scripts/constants.js';
+import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
 
 // Props include
 //   channelImage : String  - value that is mapped to a hardcoded image or a default image if no match is found
@@ -19,7 +20,18 @@ import { styles } from '../scripts/constants.js'
 class RainbowChannel extends React.Component {
   constructor(props) {
     super(props);
+     // Get the navigation item from the props
+    this.navigation = getPropDefault(props, "navigation", "RainbowChannel");
 
+    // Get the dimensions for each card from the props
+    this.card_height = getPropDefault(props, "cardHeight", 200);
+    this.card_width  = getPropDefault(props, "cardWidth",  150);
+
+     // Get whether there should be a "view all" option
+    this.show_view_all = getPropDefault(props, "showViewAll", true);
+
+    // Get whether to apply paging to ScrollView component
+    this.pagingEnabled = getPropDefault(props, "pagingEnabled", false);
     // Constant hardcoding the keys in each video's object which will be targetted by the search
     this.searchVals = ["title", "dateString"];
     // State includes
@@ -35,6 +47,7 @@ class RainbowChannel extends React.Component {
   }
 
   // Returns an image for each channel, assuming that we know all the channels that the CCB will want in advance
+  /*
   getChannelImage(){
     let re = /(http(?:s?):\/\/(?:www\.))?(drive.google.com?(.*))/
     let google_drive_link = this.props.channelImage.match(re)[0];
@@ -42,20 +55,34 @@ class RainbowChannel extends React.Component {
     console.log("Channel image id: " + image_id);
     return {uri: "https://drive.google.com/thumbnail?id=" + image_id }
   }
+*/
+  getChannelImage(){
+
+    // if (this.props.channelImage == null) {
+    //   return {uri: ""};
+    // }
+
+    let re = /(http(?:s?):\/\/(?:www\.))?(drive.google.com?(.*))/
+    let google_drive_link_match = this.props.channelImage.match(re);
+
+    if (google_drive_link_match != null) {
+      let google_drive_link = google_drive_link_match[0];
+      let image_id = google_drive_link.split("/").slice(-2)[0];
+      return {uri: "https://drive.google.com/thumbnail?id=" + image_id }
+    }
+
+    else {
+      return {uri: ""};
+    }
+  }
 
   // Function that looks at the videoArray and currentSearch in props and returns two objects – options which stores the videos that passed the search and displays which contains details on how to highlight the search results
   
   applySearch(dateVideoArray){
-    /*
-    // Split search string into individual lowercase terms
-    let terms = this.props.currentSearch.split(' ')
-      .filter(s => s.length > 0)
-      .map(s => s.toLowerCase());
-    let num_terms = terms.length;
-    */
     
 
     if(this.props.currentSearch == undefined || this.props.currentSearch == null){
+      console.log("line85")
       return {options: [], displays : new Object()}
     }
     
@@ -174,11 +201,12 @@ class RainbowChannel extends React.Component {
       // Return the options and displays as one object
       return {options, displays};
   }
+
   
   // Returns the JSX needed to display each video which fits the search criteria
   getFilteredVideoArray(){
     // Returns message if the channel is empty
-    //var videoArray = this.props.videoArray
+    var videoArray = this.props.videoArray
     if(this.props.videoArray == []){
       return (<Text style={styles.emptySearch}>No videos in this channel. Check back later</Text>)
     }
@@ -221,26 +249,34 @@ class RainbowChannel extends React.Component {
     }  
     
     // Applies the text search onto the remaining videos
+/*
     let searchResults = this.applySearch(dateVideoArray);
+    console.log(searchResults)
     let options = searchResults.options
     let displays = searchResults.displays
+    console.log("OPTIONS************")
+  console.log(options)
     if(options.length <= 0){
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
-    
-    return options.map(videoInfo =>
+*/
+    return videoArray.map(videoInfo =>
       <RainbowThumbnailOrg videoId={videoInfo.videoId}
         title={videoInfo.title}
         date={videoInfo.date}
         duration={videoInfo.duration}
         description={videoInfo.description}
         link={videoInfo.link}
-        display={displays[videoInfo.videoId]}
+        //display={displays[videoInfo.videoId]}
         broadcastActiveVideo={this.broadcastActiveVideo}
         activeId={this.props.activeId}
         key={videoInfo.videoId}
       />
     )
+  }
+
+  handleContentSizeChange(new_size) {
+    this.setState({ full_width: new_size });
   }
 
   /// Changes the forward state when the sort icon is toggled

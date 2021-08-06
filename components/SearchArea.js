@@ -214,9 +214,9 @@ class SearchArea extends React.Component {
         <Animated.View style={[{top:-100, width:"100%", zIndex: 1, ...styles.searchColor, elevation: 3,position:"absolute"}, {
                 opacity: this.state.animationValue
               }]} >
-          <View style={{paddingBottom : 5}}>
+          <View style={{paddingBottom : 5, paddingTop : 20}}>
             <SearchBar
-              placeholder="Search title"
+              placeholder="Search here"
               onChangeText={this.props.updateSearch}
               value={this.props.searchText}
               platform={"android"}

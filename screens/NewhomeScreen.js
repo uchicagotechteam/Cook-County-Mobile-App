@@ -45,7 +45,8 @@ function NewhomeScreen({ navigation }) {
 useEffect(() => {
     // logic to fetch data from youtube api
     const fetchChannels = function(channelId) {
-      console.log("API CALL Playlists from https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key);
+      console.log("Playlists from https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key);
+      console.log("API call home")
       axios({
         "method": "GET",
         "url": "https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key
@@ -75,7 +76,7 @@ useEffect(() => {
     //console.log(JSON.stringify(channels))
     console.log("CHANNELS")
     console.log(channels)
-/*    
+ /*  
 const setObjectValue = async (value) => {
   try {
     const jsonValue = JSON.stringify(value)

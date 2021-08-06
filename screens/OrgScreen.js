@@ -166,7 +166,7 @@ useEffect(() => {
       searchText={searchText}
       active={searchActive}
     />
-
+    
     <LogoTitle channel={channel}/>
 
     <RoundedButton

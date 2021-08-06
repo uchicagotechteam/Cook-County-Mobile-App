@@ -40,6 +40,7 @@ function ChannelCollection(props) {
       //console.log(api_key);
       var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
       console.log(token_text);
+      console.log("API CALL cHannel collection")
       axios({
         "method": "GET",
         "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text
@@ -54,6 +55,7 @@ function ChannelCollection(props) {
         }
 
         // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
+        //console.log(response.data.items)
         let videoArray = response.data.items.map(video => {
           let date = new Date(video.contentDetails.videoPublishedAt);
           // If the video will be in a channel for adults, store the description because that could help with the curriculum
@@ -123,6 +125,8 @@ function ChannelCollection(props) {
             // Once all the fetches have been accumulated, set the array of video arrays in state.
             // Note: I tried to do run the fetchdata requests in parallel for a bit, but it got pretty ugly and changed things so the next request would only start once the previous one finished. I might return and try parallel requests again later though
             setVideoArrays(newVideoArrays);
+            console.log("vid arrays");
+            console.log(videoArrays);
             // console.log("New video array " + JSON.stringify(newVideoArrays));
           }
         })
