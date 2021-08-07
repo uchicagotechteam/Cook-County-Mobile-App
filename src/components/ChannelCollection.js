@@ -167,6 +167,7 @@ function ChannelCollection(props) {
 
         <RainbowChannelIcons
           videoArray={getVideoArrayByIndex(channel, index)}
+          channel={channel}
           channelTitle={channel.channelTitle}
           channelImage={channel.channelImage}
           currentSearch={props.searchText}

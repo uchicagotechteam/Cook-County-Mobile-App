@@ -24,10 +24,12 @@ function shuffleLogos(array) {
 // Given the navigation item, create a function that will render an individual logo
 function renderLogo(navigation, image_ratio, props) {
   const orgChannels = getPropRequired(props, "channels", "SponsorBanner");
-  console.log("render")
-  console.log(orgChannels[1]);
+  const orgChannel = orgChannels[1];
   return (image_id, index, width) => {
-
+    console.log(index)
+    //var orgChannel = orgChannels[index];
+    //console.log("render")
+  //console.log(orgChannel);
     // Get the URI
     var uri = "https://drive.google.com/thumbnail?id=" + image_id;
 
@@ -37,7 +39,7 @@ function renderLogo(navigation, image_ratio, props) {
     // Return an image with the appropriate dimensions and source URL
     return (
       <View key={`${image_id} - ${index}`}>
-        <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org', {orgChannels,}) }>
+        <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org', {orgChannel,}) }>
           <Image
             style={[styles.sponsorLogo, {width: dim, height: dim / image_ratio}]}
             source={{ uri }}

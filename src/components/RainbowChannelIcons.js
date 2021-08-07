@@ -384,6 +384,8 @@ class RainbowChannelIcons extends React.Component {
       extrapolate: 'clamp'
     });
 
+    const orgChannel = this.props.channel;
+
     return (
       <View>
 
@@ -399,11 +401,11 @@ class RainbowChannelIcons extends React.Component {
         <Animated.View style={{
           width: this.width * 0.25, height: top_bar_height, paddingRight: 25,
           position: "absolute", right: 0, top: 0,
-          opacity: view_all_opacity,
+          opacity: view_all_opacity, 
         }}>
           <TouchableOpacity
             style={{width: "100%"}} activeOpacity = { .5 }
-            onPress={ () => this.navigation.navigate('Org') }
+            onPress={ () => this.navigation.navigate('Org', {orgChannel}) }
           >
             <Text style={[styles.subheader_text, {textAlign: "right", width: "100%"}]} >
               View All {"\u00BB"}

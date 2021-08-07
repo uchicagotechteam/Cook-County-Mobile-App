@@ -66,7 +66,7 @@ const getMyObject = async () => {
   }; 
 //console.log(channelHardCode);
 
-const channel = route.params.orgChannels[1];
+const channel = route.params.orgChannel;
 //channel= channel.channels[0];
 console.log("FINALLY!!!");
 console.log(channel);
