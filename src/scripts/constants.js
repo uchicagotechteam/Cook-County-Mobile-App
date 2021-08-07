@@ -534,7 +534,7 @@ export const styles = StyleSheet.create({
     color: "#000000"
   },
   searchColor: {
-    backgroundColor: PALETTE.blue.normal, //#ADD8E6
+    backgroundColor: PALETTE.back.light, //#ADD8E6
   },
   backColor: {
     backgroundColor: PALETTE.back.light //6699CC (blue gray)
