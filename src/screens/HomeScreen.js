@@ -17,6 +17,7 @@ import DividerLine from "../components/DividerLine.js";
 function HomeScreen({ navigation }) {
 
   // Logic to maintain state of search text
+  const [isBusy, setBusy] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [dateInfo, setDateInfo] = useState({
     dateRestriction : "Anytime",
@@ -41,7 +42,7 @@ function HomeScreen({ navigation }) {
   useEffect(() => {
     // logic to fetch data from youtube api
     const fetchChannels = function(channelId) {
-      console.log("Playlists from https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key);
+      //console.log("Playlists from https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key);
       axios({
         "method": "GET",
         "url": "https://www.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&maxResults=50&channelId=" + channelId + "&key=" + api_key
@@ -57,8 +58,12 @@ function HomeScreen({ navigation }) {
             channelImage : playlist.snippet.description
           }
         });
-        console.log(playlistArray);
+        //console.log(playlistArray);
         setChannels(playlistArray);
+        console.log("CHANNEL START")
+        console.log(channels);
+        console.log("CHANNEL END")
+        setBusy(false);
       })
       .catch((error) => {
         console.log("Axios error");
@@ -233,7 +238,7 @@ function HomeScreen({ navigation }) {
         decelerationRate={"fast"}
         snapToEnd={false}
         scrollEnabled={scrollEnabled}
-      >
+      > 
 
         {/* The components at the top, which should take up one screen height for the landing page */}
         <View style={{ height: TOP_SECTION_HEIGHT }}>
@@ -244,8 +249,10 @@ function HomeScreen({ navigation }) {
           {/* Banner showing the logo for each sponsor */}
           <View>
             <Text style={[styles.subheader_text, {textAlign: 'center'}]}>in collaboration with</Text>
+            {isBusy ? (<View/>) : (
             <SponsorBanner
               image_ids={image_ids}
+              channels={channels}
               navigation={navigation}
               shuffle={true}
               style={{marginHorizontal: 5}}
@@ -253,7 +260,7 @@ function HomeScreen({ navigation }) {
               onRelease={onRelease}
               parentScrolling={isScrolling}
               imageRatio={RATIOS.sponsors}
-            />
+            /> )}
             <View style={{ paddingRight: 25, width: "100%" }}>
               <TouchableOpacity
                 activeOpacity = {0.5}
@@ -270,7 +277,7 @@ function HomeScreen({ navigation }) {
           <View style={{height: 10}} />
 
           {/* Banner showing featured videos */}
-          <FeaturedBanner imageRatio={RATIOS.featured} />
+          <FeaturedBanner imageRatio={RATIOS.featured} /> 
 
         </View>
 

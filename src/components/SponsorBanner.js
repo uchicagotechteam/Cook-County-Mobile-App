@@ -22,7 +22,10 @@ function shuffleLogos(array) {
 }
 
 // Given the navigation item, create a function that will render an individual logo
-function renderLogo(navigation, image_ratio) {
+function renderLogo(navigation, image_ratio, props) {
+  const orgChannels = getPropRequired(props, "channels", "SponsorBanner");
+  console.log("render")
+  console.log(orgChannels[1]);
   return (image_id, index, width) => {
 
     // Get the URI
@@ -34,7 +37,7 @@ function renderLogo(navigation, image_ratio) {
     // Return an image with the appropriate dimensions and source URL
     return (
       <View key={`${image_id} - ${index}`}>
-        <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org') }>
+        <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org', {orgChannels,}) }>
           <Image
             style={[styles.sponsorLogo, {width: dim, height: dim / image_ratio}]}
             source={{ uri }}
@@ -47,7 +50,7 @@ function renderLogo(navigation, image_ratio) {
 }
 
 
-// Wrapper component for a rounded button
+// Wrapper component for a rounded button 
 // Props include
 //   image_ids : [String]        - IDs to get the image links from Google Drive
 function SponsorBanner(props) {
@@ -76,7 +79,7 @@ function SponsorBanner(props) {
       <LoopCarousel
         itemsPerInterval={3}
         items={shuffle ? shuffleLogos(image_ids) : image_ids}
-        renderItem={renderLogo(navigation, image_ratio)}
+        renderItem={renderLogo(navigation, image_ratio, props)}
         autoscroll={true}
         autoscrollDelay={SPONSOR_AUTOSCROLL_DELAY}
         width={SCREEN_WIDTH - (SPONSOR_LOGO_SPACING * 2)}
