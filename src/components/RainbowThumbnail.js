@@ -55,12 +55,6 @@ class RainbowThumbnail extends React.Component {
   getPauseImage(){
     if(this.state.finished){
       return require('../assets/images/check.png');
-    } else {
-      if (this.state.inProgress){
-        return require('../assets/images/green-play.png');
-      } else {
-        return require('../assets/images/white-play.png');
-      }
     }
   }
   
@@ -72,7 +66,7 @@ class RainbowThumbnail extends React.Component {
   // Checks if the video was published within the last day and, if so, gives it a special "New" tag
   isRecent(){
     let yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 10);
+    yesterday.setDate(yesterday.getDate() - 3);
     if(this.props.date > yesterday){
       return (<Text style={styles.new_highlight}>New:&nbsp;</Text>)
     } else {
@@ -88,20 +82,13 @@ class RainbowThumbnail extends React.Component {
         width: 10,
         height: -10
       },
-      height: this.height,
+      height: (this.width * 4 / 5) + 60,
       shadowOpacity: 5,
       shadowRadius:  10,
       elevation: 5,};
     } else {
-      return {width: this.width + 20, backgroundColor : PALETTE.purple.light, borderRadius:10, margin: 10,
-        shadowOffset: {
-          width: 10,
-          height: -10
-        },
-        height: this.height,
-        shadowOpacity: 5,
-        shadowRadius:  10,
-        elevation: 5,}
+      return {width: this.width + 20, borderRadius:10, margin: 10,
+        height: (this.width * 4 / 5) + 60}
     }
   }
 
@@ -181,10 +168,10 @@ class RainbowThumbnail extends React.Component {
                           bottom: "58%",
                           width: "36%",
                           alignItems: 'center'}}>
-                  <Image
+                  { this.state.finished ? <Image
                     style={{width: "100%", height: "100%"}}
                     source={this.getPauseImage()}
-                  />
+                  /> : null }
               </View>
               <View style={{bottom: "55%", elevation:1, backgroundColor : "#FFFFFF"}}>
                 <ProgressBar
