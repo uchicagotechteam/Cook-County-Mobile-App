@@ -88,6 +88,7 @@ class RainbowThumbnail extends React.Component {
         width: 10,
         height: -10
       },
+      height: this.height,
       shadowOpacity: 5,
       shadowRadius:  10,
       elevation: 5,};
@@ -97,6 +98,7 @@ class RainbowThumbnail extends React.Component {
           width: 10,
           height: -10
         },
+        height: this.height,
         shadowOpacity: 5,
         shadowRadius:  10,
         elevation: 5,}
