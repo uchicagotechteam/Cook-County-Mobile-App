@@ -152,7 +152,7 @@ useEffect(() => {
     return (
       <ChannelCollectionOrg
         channels={channels}
-        navigation={navigation}
+        navigation={navigation} 
       />
     )
   }, [channels]);

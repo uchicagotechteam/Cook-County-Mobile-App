@@ -131,7 +131,7 @@ function ChannelCollection(props) {
           } else {
             // Once all the fetches have been accumulated, set the array of video arrays in state.
             // Note: I tried to do run the fetchdata requests in parallel for a bit, but it got pretty ugly and changed things so the next request would only start once the previous one finished. I might return and try parallel requests again later though
-            setVideoArrays(newVideoArrays);
+            setVideoArrays(newVideoArrays); 
             // console.log("New video array " + JSON.stringify(newVideoArrays));
           }
         })

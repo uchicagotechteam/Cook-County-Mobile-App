@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Image, TouchableHighlight, StyleSheet, Text, Alert, Linking } from 'react-native';
+import { Button, View, Image, TouchableHighlight, TouchableOpacity, StyleSheet, Text, Alert, Linking } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import {getYoutubeMeta} from 'react-native-youtube-iframe';
 import { Dimensions } from 'react-native';
@@ -8,8 +8,10 @@ import { useState } from "react";
 import ProgressBar from 'react-native-progress/Bar';
 import AdjustableText from "../components/AdjustableText.js";
 import LoadingThumbnail from "../components/LoadingThumbnail.js";
+import RainbowVideoIcon from "../components/RainbowVideoIcon.js";
 import { styles } from '../scripts/constants.js'
 import moment from "moment";
+import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
 
 // Props include
 //   videoId : String            - youtube identifier to fetch the video
@@ -30,6 +32,7 @@ class RainbowThumbnail extends React.Component {
       thumbnail : String? - Either null (the initial value) or a string giving the url where the video's thumbnail can be retrieved
       progressFraction : Number - Fraction of the video that has been watched 
       */
+    this.navigation = getPropDefault(props, "navigation", "RainbowChannel");
     this.state = {
       finished: false,
       inProgress : false,
@@ -145,16 +148,26 @@ class RainbowThumbnail extends React.Component {
                 alignItems: 'center'}}>
               {this.state.thumbnail === null ? (<View style={{height: "67%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "67%", width: '100%', borderRadius: 20}} source={{uri : this.state.thumbnail}}/>)
               }
-              <TouchableHighlight style={{height: "45%",
+             <TouchableOpacity style={{height: "45%",
                           bottom: "58%",
                           width: "36%",
                           alignItems: 'center'}}
-                onPress={() => this.thumbnailClicked()}>
-                  <Image
+                key={`${this.props.videoId}`}
+                activeOpacity={.5}
+                onPress={ () => this.navigation.navigate('Base Screen', {
+                  videoArray:   this.props.videoArray,
+                  channelTitle: this.props.title,
+                  channelImage: this.props.channelImage,
+                  startingVideo: this.props.videoInfo
+                }) }
+              >
+                <Image
                     style={{width: "100%", height: "100%"}}
                     source={this.getPauseImage()}
                   />
-              </TouchableHighlight>
+              </TouchableOpacity>
+              
+
               <View style={{bottom: "55%", elevation:1, backgroundColor : "#FFFFFF"}}>
                 <ProgressBar
                   progress={this.state.progressFraction}
@@ -162,8 +175,11 @@ class RainbowThumbnail extends React.Component {
                   color={"black"}
                 />
               </View>
+
             </View>
+
         </View>
+        
       </View>);
   }
 }

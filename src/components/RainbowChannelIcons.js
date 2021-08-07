@@ -350,7 +350,6 @@ class RainbowChannelIcons extends React.Component {
           date={videoInfo.date}
           duration={videoInfo.duration}
           display={videoInfo.display}
-          isAdult={this.props.isAdult}
           description={videoInfo.description}
           broadcastActiveVideo={this.broadcastActiveVideo}
           activeId={this.props.activeId}

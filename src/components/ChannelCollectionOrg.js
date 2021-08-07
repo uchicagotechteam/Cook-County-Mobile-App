@@ -5,12 +5,15 @@ import RainbowChannelOrg from "../components/RainbowChannelOrg.js";
 import RoundedButton from '../components/RoundedButton.js'
 import { styles, api_key } from '../scripts/constants.js'
 import { View } from 'react-native';
+import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
 
 // Props include
 //   channels : Array    - array of objects that describe a channel. [{channelTitle : String, channelImage : String, playlistID : String}]
 //   searchText : String - string typed into the search bar
 function ChannelCollection(props) {
   // logic to maintain state of array which maps each channel to its array of videos
+  //this.navigation = getPropDefault(props, "navigation", "RainbowChannel");
+
   const [videoArrays, setVideoArrays] = useState([]);
 
   // logic to maintain state of request to youtube API
@@ -164,6 +167,7 @@ function ChannelCollection(props) {
             }
           }
           activeId={""}
+          navigation={props.navigation}
          // activeId={activeId}
         />
         <View style={{height: 160}} />

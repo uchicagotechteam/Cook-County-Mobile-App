@@ -21,6 +21,7 @@ class RainbowChannel extends React.Component {
   constructor(props) {
     super(props);
      // Get the navigation item from the props
+     //console.log(this.props.navigation)
     this.navigation = getPropDefault(props, "navigation", "RainbowChannel");
 
     // Get the dimensions for each card from the props
@@ -262,6 +263,8 @@ class RainbowChannel extends React.Component {
 */
     return videoArray.map(videoInfo =>
       <RainbowThumbnailOrg videoId={videoInfo.videoId}
+        videoArray={videoArray}
+        videoInfo={videoInfo}
         title={videoInfo.title}
         date={videoInfo.date}
         duration={videoInfo.duration}
@@ -271,6 +274,7 @@ class RainbowChannel extends React.Component {
         broadcastActiveVideo={this.broadcastActiveVideo}
         activeId={this.props.activeId}
         key={videoInfo.videoId}
+        navigation={this.navigation}
       />
     )
   }

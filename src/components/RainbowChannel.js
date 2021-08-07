@@ -247,6 +247,7 @@ class RainbowChannel extends React.Component {
     }
     return options.map(videoInfo =>
       <RainbowThumbnail videoId={videoInfo.videoId}
+        videoInfo={videoInfo}
         title={videoInfo.title}
         date={videoInfo.date}
         duration={videoInfo.duration}
