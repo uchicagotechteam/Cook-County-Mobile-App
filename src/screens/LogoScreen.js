@@ -8,16 +8,17 @@ const MARGIN = 6;
 
 
 // Produces a mappable function that will render an image from its ID
-function renderLogo(navigation, width) {
+function renderLogo(navigation, route, width) {
 	return (image_id, index) => {
 
 	  // Get the URI
 	  var uri = "https://drive.google.com/thumbnail?id=" + image_id;
-
+	  const orgChannels = route.params.channels[1];
+	  const orgChannel = orgChannels[1];
 	  // Return an image with the appropriate dimensions and source URL
 	  return (
 	    <View key={`grid_item_${image_id}_${index}`} style={{marginVertical: MARGIN/2}}>
-	      <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org') }>
+	      <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org', {orgChannel},) }>
 	        <Image
 	          style={{width: width, height: width / RATIOS.sponsors}}
 	          source={{ uri }}
@@ -43,7 +44,7 @@ function LogoScreen({ route, navigation }) {
 	return (
 		<ScrollView style={{height: SCREEN_HEIGHT, marginVertical: MARGIN}}>
 			<View style={styles.logoScreenContainer}>
-				{ route.params.image_ids.map(renderLogo(navigation, item_width)) }
+				{ route.params.image_ids.map(renderLogo(navigation, route, item_width)) }
 			</View>
 		</ScrollView>
 	);

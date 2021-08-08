@@ -264,7 +264,7 @@ function HomeScreen({ navigation }) {
             <View style={{ paddingRight: 25, width: "100%" }}>
               <TouchableOpacity
                 activeOpacity = {0.5}
-                onPress={() => navigation.navigate('Logo Screen', { image_ids })}
+                onPress={() => navigation.navigate('Logo Screen', { image_ids, channels })}
               >
                 <Text style={[styles.body_text, { width: "100%", textAlign: "right" }]} >
                   View All {"\u00BB"}
