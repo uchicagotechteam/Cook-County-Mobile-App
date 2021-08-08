@@ -24,6 +24,12 @@ function HomeScreen({ navigation }) {
     afterDate : null,
     beforeDate : null
   });
+  //logic to handle individual channel api requests
+  const [videoArrays, setVideoArrays] = useState([]);
+
+  let [responseData, setResponseData] = useState('');
+  
+  let [channelNum, setChannelNum] = useState(0);
   
   // Logic to handle the youtube API request for playlists
   let [playlistResponseData, setPlaylistResponseData] = useState('');
@@ -73,6 +79,114 @@ function HomeScreen({ navigation }) {
     
     fetchChannels(ccbChannel);
   }, [])
+
+  useEffect(() => {
+    // logic to fetch data from youtube api
+    const fetchData = function(playlistId, index, localVideoArrays, pageToken) {
+      console.log(playlistId);
+      console.log(api_key);
+      var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
+      //console.log(token_text);
+      axios({
+        "method": "GET",
+        "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text
+      })
+      .then((response) => {
+        setResponseData(response.data)
+        var nextPageToken = null;
+        if(response.data.nextPageToken != undefined && response.data.nextPageToken != null){
+          nextPageToken = response.data.nextPageToken;
+        }
+
+        // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
+        let videoArray = response.data.items.map(video => {
+          let date = new Date(video.contentDetails.videoPublishedAt);
+          // Store the description because that could help with the curriculum
+          var full_description = video.snippet.description;
+          var description = ""
+          var link = null
+          
+          var lines = full_description.split("\n");
+          for (var i = 0; i < lines.length; i++){
+            var words = lines[i].split(" ");
+            if(words.length > 0 && words[0] == "LINK:"){
+              link = lines[i].substring(lines[i].indexOf(' ')+1)
+            } else {
+              description += lines[i] + "\n"
+            }
+          }
+          console.log("Link: " + link)
+          console.log("Description: " + description)
+          
+          return {
+            videoId: video.contentDetails.videoId,
+            title: video.snippet.title,
+            date : date,
+            dateString : date.toLocaleDateString("en-US"),
+            description : description,
+            link : link
+          }
+        })
+
+        // Joins all the ids in the channel to make a query for the video durations.
+        // IMPORTANT: The API is limited to 50 videoIds per query (according to stack overflow, haven't tried it myself), so so if channels can have more than 50 videos, we would need to do this in batches of 50.
+        let ids = videoArray.map(video => video.videoId).join(',');
+
+        axios({
+          "method": "GET",
+          "url": "https://www.googleapis.com/youtube/v3/videos?id=" + ids + "&part=contentDetails&key=" + api_key
+        })
+        .then((durationResponse) => {
+
+          let durations = durationResponse.data.items.map(video => {
+            let duration = video.contentDetails.duration;
+            return duration;
+          })
+
+          if(durations.length == videoArray.length){
+            for(var i = 0; i < videoArray.length ; i++){
+              videoArray[i]["duration"] = durations[i];
+            }
+          }
+          var newVideoArrays = [];
+          // Adds the video array to newVideoArrays, which accumulates objects with the index of the channel and the video array
+          if(pageToken == null){
+            newVideoArrays = [...localVideoArrays, {index, videoArray}];
+          } else {
+            localVideoArrays[index].videoArray.push(...videoArray);
+            newVideoArrays = localVideoArrays;
+          }
+          if(nextPageToken == null){
+            newVideoArrays[index].videoArray.sort();
+          }
+          if(index + 1 < channels.length){
+            if(nextPageToken == null){
+              fetchData(channels[index+1].playlistId, index+1, newVideoArrays, null);
+            } else {
+              fetchData(channels[index].playlistId, index, newVideoArrays, nextPageToken);
+            }
+          } else {
+            // Once all the fetches have been accumulated, set the array of video arrays in state.
+            // Note: I tried to do run the fetchdata requests in parallel for a bit, but it got pretty ugly and changed things so the next request would only start once the previous one finished. I might return and try parallel requests again later though
+            setVideoArrays(newVideoArrays); 
+            console.log("VID arrays")
+            console.log(videoArrays);
+            // console.log("New video array " + JSON.stringify(newVideoArrays));
+          }
+        })
+        .catch((error) => {
+        console.log(error)
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
+    // If there are any channels, begin fetching from the channel at index 0
+    if(channels.length > 0){
+      fetchData(channels[0].playlistId, 0, [], null);
+    }
+  }, [channels])
 
   // // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
   // const channels = [
@@ -299,6 +413,7 @@ function HomeScreen({ navigation }) {
         <ChannelCollection
           navigation={navigation}
           channels={channels}
+          videoArrays={videoArrays}
           searchText={searchText}
           dateInfo={dateInfo}
           itemsPerInterval={2}
