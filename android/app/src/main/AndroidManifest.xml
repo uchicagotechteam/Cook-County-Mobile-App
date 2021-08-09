@@ -6,17 +6,21 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+<!-- usesCleartextTraffic should only be set to True for debug!  -->
     <application
         android:allowBackup="true"
-        android:supportsRtl="true">
-        <activity android:name=".MainActivity"></activity>
-<!--        <activity android:name=".activity.MainActivity">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        android:supportsRtl="true"
+        android:name="MainApplication"
+        android:theme="@style/Theme.AppCompat"
+        android:usesCleartextTraffic="true"
+    >
+        <activity android:name="MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="com.projectrainbow.MainActivity"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

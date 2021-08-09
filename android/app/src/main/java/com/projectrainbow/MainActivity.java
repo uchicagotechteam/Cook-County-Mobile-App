@@ -1,12 +1,18 @@
 package com.projectrainbow;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.CallSuper;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.annotation.Nullable;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
+import com.facebook.react.ReactRootView;
+
+import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+
 import com.facebook.react.devsupport.interfaces.DevOptionHandler;
 import com.facebook.react.devsupport.interfaces.DevSupportManager;
 
@@ -20,7 +26,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "App";
+        return "project-rainbow";
     }
 
     /**
@@ -29,11 +35,16 @@ public class MainActivity extends ReactActivity {
     @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
         return new ReactActivityDelegate(this, getMainComponentName()) {
+//            @Override
+//            protected Bundle getLaunchOptions() {
+//                Bundle launchOptions = new Bundle();
+//                launchOptions.putString("buildType", BuildConfig.BUILD_TYPE);
+//                return launchOptions;
+//            }
+
             @Override
-            protected Bundle getLaunchOptions() {
-                Bundle launchOptions = new Bundle();
-                launchOptions.putString("buildType", BuildConfig.BUILD_TYPE);
-                return launchOptions;
+            protected ReactRootView createRootView() {
+                return new RNGestureHandlerEnabledRootView(MainActivity.this);
             }
         };
     }
@@ -46,24 +57,7 @@ public class MainActivity extends ReactActivity {
     @Override
     @CallSuper
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        MainApplication application = (MainApplication) getApplication();
-        ReactNativeHost reactNativeHost = application.getReactNativeHost();
-        ReactInstanceManager reactInstanceManager = reactNativeHost.getReactInstanceManager();
-//        DevSupportManager devSupportManager = reactInstanceManager.getDevSupportManager();
-//        devSupportManager.addCustomDevOption("Custom dev option", new DevOptionHandler() {
-//            @Override
-//            public void onOptionSelected() {
-//                if (NotificationManagerCompat.from(MainActivity.this).areNotificationsEnabled()) {
-//                    Toast.makeText(MainActivity.this, CUSTOM_DEV_OPTION_MESSAGE, Toast.LENGTH_LONG).show();
-//                } else {
-//                    AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
-//                    dialog.setTitle("Dev option");
-//                    dialog.setMessage(CUSTOM_DEV_OPTION_MESSAGE);
-//                    dialog.show();
-//                }
-//            }
-//        });
+        super.onCreate(null);
     }
 
 //    @Override
