@@ -2,24 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.projectrainbow"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
 
-<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
-<application
-    android:allowBackup="true"
-    android:supportsRtl="true"
+<!-- usesCleartextTraffic should only be set to True for debug!  -->
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true"
+        android:name="MainApplication"
+        android:theme="@style/Theme.AppCompat"
+        android:usesCleartextTraffic="true"
     >
-
-    <activity
-        android:name=".activity.ChooseAreaActivity"
-    >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-</application>
+        <activity android:name="MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="com.projectrainbow.MainActivity"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
 
 </manifest>
