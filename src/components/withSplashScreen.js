@@ -16,20 +16,20 @@ const FadeInOutView = (props) => {
 	// Total sequence should last 3 seconds
 	React.useEffect(() => {
 		Animated.sequence([
-
+	
 			// Fade-in animation lasting .75 seconds
 			Animated.timing(fadeAnim, {
 				toValue: 1,
 				duration: 750,
 				useNativeDriver: true,
 			}),
-
+	
 			// Fade-out animation lasting .75 seconds,
 			// which doesn't start until 1.5 seconds later
 			Animated.timing(fadeAnim, {
 				toValue: 0,
 				duration: 750,
-				delay: 1500,
+				delay: 9250,
 				useNativeDriver: true,
 			})
 		]).start()
@@ -39,7 +39,7 @@ const FadeInOutView = (props) => {
 	return (
 		<Animated.View style={{
 			...props.style,
-			opacity: fadeAnim,
+			opacity: 1.0,
 		}}>
 			{props.children}
 		</Animated.View>
@@ -64,7 +64,7 @@ function LoadingMessage() {
 			<Image
 				source={logo}
 				style={styles.splashLogo}
-				resizeMode={"contain"}
+				resizeMode={"cover"}
 			/>
 		</FadeInOutView>
 	)
@@ -86,7 +86,7 @@ function withSplashScreen(WrappedComponent) {
 		async componentDidMount() {
 			setTimeout(() => {
 				this.setState({ loading: false });
-			}, 3000)
+			}, 10000)
 		}
 
 		// Show the logo screen if loading, and the normal app view if not
