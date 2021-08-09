@@ -25,4 +25,5 @@ android {
 
 dependencies {
 	implementation "com.facebook.react:react-native:+"
+	implementation "com.facebook.fresco:animated-gif:2.0.0"
 }

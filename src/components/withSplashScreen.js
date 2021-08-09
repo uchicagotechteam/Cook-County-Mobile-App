@@ -48,7 +48,7 @@ const FadeInOutView = (props) => {
 
 
 // Function to generate the logo screen
-// Embedding the splash screen styling as a style element here is a bit 
+// Embedding the splash screen styling as a style element here is a bit
 function LoadingMessage() {
 
 	// Get the screen dimensions
@@ -59,9 +59,7 @@ function LoadingMessage() {
 	// Use screen dimensions to determine whether to use horizontal or vertical logo
 	// Image name in 'require' must be given statically
 	// See https://reactnative.dev/docs/images#static-image-resources
-	const logo = width < height
-		? require("../assets/images/PR_logo_vertical.png")
-		: require("../assets/images/PR_logo_horizontal.png");
+	const logo = require("../assets/images/PR_logo_animation.gif");
 
 	return (
 		// https://stackoverflow.com/questions/47203728/center-a-text-in-the-screen-with-react-native
