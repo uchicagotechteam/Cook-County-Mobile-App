@@ -50,13 +50,6 @@ const FadeInOutView = (props) => {
 // Function to generate the logo screen
 // Embedding the splash screen styling as a style element here is a bit
 function LoadingMessage() {
-
-	// Get the screen dimensions
-	const width  = Dimensions.get('window').width;
-	const height = Dimensions.get('window').height;
-
-	// Retrieve the image
-	// Use screen dimensions to determine whether to use horizontal or vertical logo
 	// Image name in 'require' must be given statically
 	// See https://reactnative.dev/docs/images#static-image-resources
 	const logo = require("../assets/images/PR_logo_animation.gif");
