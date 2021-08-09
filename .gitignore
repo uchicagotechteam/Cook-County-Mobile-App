@@ -7,3 +7,4 @@ android/gradle
 
 android/app/build
 android/app/release
+android/local.properties

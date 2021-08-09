@@ -13,6 +13,11 @@ android {
 	compileSdkVersion 29
 	buildToolsVersion "29.0.2"
 
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+
 	defaultConfig {
 		applicationId "com.projectrainbow"
 		minSdkVersion 21
@@ -51,6 +56,9 @@ dependencies {
 	androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 	androidTestImplementation 'androidx.test:core-ktx:1.1.0'
 //	testImplementation("junit:junit:4.12")
+	implementation project(':appcenter-crashes')
+	implementation project(':appcenter-analytics')
+	implementation project(':appcenter')
 }
 
 repositories {
@@ -61,7 +69,8 @@ project.ext.react = [
         bundleInDebug: true,
 		bundleInRelease: true,
 		root: "../..",
+		resourcesDirRelease   : 'src/release/res',
 ]
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-//apply from: "../../node_modules/react-native/react.gradle"
+//apply from: "../../node_modules/react-native/react.gradle"; applyNativeModulesAppBuildGradle(project)
