@@ -267,7 +267,7 @@ function HomeScreen({ navigation }) {
 
           {/* Banner showing the logo for each sponsor */}
           <View>
-            <Text style={[styles.subheader_text, {textAlign: 'center'}]}>in collaboration with</Text>
+            <Text style={[styles.subheader_text, {textAlign: 'center'}]}>Partners:</Text>
             <SponsorBanner
               channels={channels}
               navigation={navigation}
