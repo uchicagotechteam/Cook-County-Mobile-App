@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.projectrainbow"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="com.projectrainbow">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
 <!-- usesCleartextTraffic should only be set to True for debug!  -->
     <application
+        android:name="MainApplication"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher_pr"
+        android:roundIcon="@mipmap/ic_launcher_pr_round"
         android:allowBackup="true"
         android:supportsRtl="true"
-        android:name="MainApplication"
-        android:theme="@style/Theme.AppCompat"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
     >
-        <activity android:name="MainActivity">
+        <activity android:name="MainActivity" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-                <action android:name="com.projectrainbow.MainActivity"/>
+<!--                <action android:name="com.projectrainbow.MainActivity"/>-->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
