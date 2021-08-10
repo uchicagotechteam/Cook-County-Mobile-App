@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, TouchableHighlight, AsyncStorage} from 'react-native';
 import { styles, api_key } from '../scripts/constants.js'
 //import LogoTitle from '../components/LogoTitle.js';
-import SearchArea from '../components/SearchArea';
+//import SearchArea from '../components/SearchArea';
 import ChannelCollectionOrg from "../components/ChannelCollectionOrg.js";
 //import RainbowChannel from "../components/RainbowChannel.js";
 import ToggleSearch from "../components/ToggleSearch.js";
@@ -28,7 +28,7 @@ var channel = route.params.orgChannel;
 //console.log("FINALLY!!!");
 //console.log(channel);
 const [isBusy, setBusy] = useState(true);
-	const [searchText, setSearchText] = useState("");
+	//const [searchText, setSearchText] = useState("");
   	const [searchActive, setSearchActive] = useState(false);
   	const [dateInfo, setDateInfo] = useState({dateRestriction : "Anytime", afterDate : null, beforeDate : null});
 
@@ -43,9 +43,11 @@ const [isBusy, setBusy] = useState(true);
   
 
   // Function to update the text search results
+  /*
   const updateSearch = useCallback((search) => {
     setSearchText(search);
   }, []);
+  */
 
   // Function to update the date search results
   const updateDates = useCallback((dateRestriction, afterDate, beforeDate) => {
@@ -53,6 +55,7 @@ const [isBusy, setBusy] = useState(true);
     setDateInfo({dateRestriction, afterDate, beforeDate});
   }, []);
 
+/*
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -60,6 +63,8 @@ const [isBusy, setBusy] = useState(true);
       ),
     });
   }, [navigation]);
+
+*/
 
 useEffect(() => {
   setChannels([channel]);
@@ -80,12 +85,7 @@ const getChannel = useCallback(() =>{
   
   return (
     <View>
-    <SearchArea
-      updateSearch={updateSearch}
-      updateDates={updateDates}
-      searchText={searchText}
-      active={searchActive}
-    />
+  
     
   <View style = {{alignItems: 'center',justifyContent: 'center', padding: 15,}}>
    <Image
