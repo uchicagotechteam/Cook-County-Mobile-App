@@ -14,11 +14,11 @@ export default function LogoTitle(props) {
     <View style={styles.column1}>
       <Image
         style={styles.logo}
-        source={{uri: "https://drive.google.com/thumbnail?id=" + props.channel.image_id }}
+        source={props.channel.channelImage }  
       />
       </View>
       <View style={styles.column2}>
-      <Text style={styles.paragraph}>
+      <Text style={styles.header_text}>
            {props.channel.channelTitle}                              
       </Text>
        </View>

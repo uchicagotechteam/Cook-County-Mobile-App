@@ -18,11 +18,11 @@ function ChannelCollection(props) {
   const [videoArrays, setVideoArrays] = useState([]);
 
   // logic to maintain state of request to youtube API
-  let [responseData, setResponseData] = useState('');
+  //let [responseData, setResponseData] = useState('');
   
   let [channelNum, setChannelNum] = useState(0);
 
-  const getVideoArrayByIndex = useCallback((channel, index) =>{
+  const getVideoArrayByIndex = useCallback((index) =>{
     let arrayMatches = videoArrays.filter(videoObject => videoObject.index == index)
     if(arrayMatches.length > 0){
       let match = arrayMatches[0];
@@ -43,6 +43,12 @@ function ChannelCollection(props) {
   // useEffect function runs when function initially loads
   // and runs again whenever there is a change to data in second argument array (fetchData)
   // beware of infinite loops
+  
+useEffect(() => {
+  setVideoArrays(props.videoArrays);
+}, [props.videoArrays])
+
+/*
   useEffect(() => {
     // logic to fetch data from youtube api
     const fetchData = function(playlistId, index, localVideoArrays, pageToken) {
@@ -57,7 +63,7 @@ function ChannelCollection(props) {
       .then((response) => {
         setResponseData(response.data)
         var nextPageToken = null;
-        if(response.data.nextPageToken != undefined && response.data.nextPageToken != null){
+        if(response.data.nextPageToken != undefined && response.data.nextPageToken != null){ 
           nextPageToken = response.data.nextPageToken;
         }
 
@@ -73,7 +79,7 @@ function ChannelCollection(props) {
           for (var i = 0; i < lines.length; i++){
             var words = lines[i].split(" ");
             if(words.length > 0 && words[0] == "LINK:"){
-              link = lines[i].substring(lines[i].indexOf(' ')+1)
+              link = lines[i].substring(lines[i].indexOf(' ')+1) 
             } else {
               description += lines[i] + "\n"
             }
@@ -147,14 +153,14 @@ function ChannelCollection(props) {
     if(props.channels.length > 0){
       fetchData(props.channels[0].playlistId, 0, [], null);
     }
-  }, [props.channels])
+  }, [props.channels]) */
 
   return (
     props.channels.map((channel, index) =>
       <View key={`${channel.playlistId} ${index}`}>
         {/*<RoundedButton
           onPress={() => props.navigation.navigate('Base Screen', {
-            videoArray : getVideoArrayByIndex(channel, index),
+            videoArray : getVideoArrayByIndex(index),
             channelTitle: channel.channelTitle,
             channelImage: channel.channelImage,
           })}
@@ -166,7 +172,7 @@ function ChannelCollection(props) {
         <DividerLine color="green" />
 
         <RainbowChannelIcons
-          videoArray={getVideoArrayByIndex(channel, index)}
+          videoArray={getVideoArrayByIndex(index)}
           channel={channel}
           channelTitle={channel.channelTitle}
           channelImage={channel.channelImage}
