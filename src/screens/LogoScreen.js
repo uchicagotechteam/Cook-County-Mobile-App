@@ -12,16 +12,17 @@ function renderLogo(navigation, route, width) {
 	return (image_id, index) => {
 
 	  // Get the URI
-	  var uri = "https://drive.google.com/thumbnail?id=" + image_id;
-	  const orgChannels = route.params.channels[1];
-	  const orgChannel = orgChannels[1];
+	  //var uri = "https://drive.google.com/thumbnail?id=" + image_id;
+	  const orgChannels = route.params.channels;
+	  var orgIdx = index > orgChannels.length ? index % orgChannels.length : index;
+	  const orgChannel = orgChannels[orgIdx];
 	  // Return an image with the appropriate dimensions and source URL
 	  return (
 	    <View key={`grid_item_${image_id}_${index}`} style={{marginVertical: MARGIN/2}}>
 	      <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org', {orgChannel},) }>
 	        <Image
 	          style={{width: width, height: width / RATIOS.sponsors}}
-	          source={{ uri }}
+	          source={image_id}
 	          resizeMode={"contain"}
 	        />
 	      </TouchableOpacity>

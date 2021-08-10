@@ -41,10 +41,41 @@ function HomeScreen({ navigation }) {
   const updateSearch = useCallback((search) => {
     setSearchText(search);
   }, []);
+
+    // // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
+  const channelArray = [
+    { channelTitle : "Brookfield Zoo",
+       channelImage : require('../assets/images/BrookfieldZoo.png'),
+       playlistId : "PL8GKxgb3LyNcB01ujLEDS1NH27YqYsOmD",
+     },
+     { channelTitle : "National Museum of Mexican Art",
+       channelImage : require('../assets/images/MuseumofMexicanArt.png'),
+      playlistId : "PL8GKxgb3LyNfBnnwR6pc6JHZUIFLlg-rK",
+     },
+     { channelTitle : "Forest Preserves of Cook County",
+       channelImage : require('../assets/images/ForestPreserves.png'),
+       playlistId : "PL8GKxgb3LyNc82LsEdPhrK96Kj704RQ8k",
+     },
+     { channelTitle : "Chicago Children's Museum",
+       channelImage : require('../assets/images/ChildrensMuseum.png'),
+       playlistId : "PL8GKxgb3LyNfoqt77eaW6N6smu75evr5Q",
+     },
+   ];
+
+   const image_ids = [
+    require('../assets/images/BrookfieldZoo.png'),
+    require('../assets/images/MuseumofMexicanArt.png'),
+    require('../assets/images/ForestPreserves.png'),
+    require('../assets/images/ChildrensMuseum.png'),
+  ];
   
   // Channel id for the CCB user's channel 
   const ccbChannel = "UCLcTO4BeO0tlZFeMS8SKLSg";
-  
+
+  useEffect(() => {
+    setChannels(channelArray);
+    }, [])
+  /*
   useEffect(() => {
     // logic to fetch data from youtube api
     const fetchChannels = function(channelId) {
@@ -78,7 +109,7 @@ function HomeScreen({ navigation }) {
     }
     
     fetchChannels(ccbChannel);
-  }, [])
+  }, []) */
 
   useEffect(() => {
     // logic to fetch data from youtube api
@@ -188,25 +219,7 @@ function HomeScreen({ navigation }) {
     }
   }, [channels])
 
-  // // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
-  // const channels = [
-  //   { channelTitle : "WTTW Chicago",
-  //     channelImage : "music",
-  //     playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
-  //   },
-  //   { channelTitle : "Test Channel 2",
-  //     channelImage : "music",
-  //     playlistId : "PLsPUh22kYmNCzNFNDwxIug8q1Zz0Mj60H",
-  //   },
-  //   { channelTitle : "Test Channel 3",
-  //     channelImage : "music",
-  //     playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
-  //   },
-  //   { channelTitle : "Test Channel 4",
-  //     channelImage : "music",
-  //     playlistId : "PLWgiRpr4E_tV2_sL7r-6eGxVDN8EJBkkZ",
-  //   },
-  // ];
+
 
   // Get the dimensions of the screen
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen')
@@ -268,23 +281,7 @@ function HomeScreen({ navigation }) {
     setScrolling(false);
   }
 
-  const image_ids = [
-    "190NCHKJNKfsIkVJjwStxLOhSjRodwTXY",
-    "1uO5JM4dFdrG_da6WWIV_zAKpj-Oq9OHI",
-    "14CI6-BLCK8rN88q1E8_HzAJX2O4N8liH",
-    "13MR-zF0RgRApeAD-RNY-nTZATzrhUoH0",
-    "18or-3ae4GWE1t8L8V0HrwQ2TsEuTYmM5",
-    "1EROOFcwtSbzt9OixaLV8fbWJYsqygSa5",
-    "1Zzpn53KafJ-vjRpqOB-1rKM_BFtagiOt",
-    "1Y36qzXx2QIggHufzDWr_7sWWKGLfYmkD",
-    "1yFKx0qh7f6BUPirSOfrWLl6MOiMS76Si",
-    "1gILEl3TfYAHRyzWsXqDTso5_rk7wNMk6",
-    "1bKjY7EvQaR893QnZ8VsOn3AFSB0lsK5F",
-    "1BBuvgZG6lzSkOhUk3Jg8OJPtnKxhIr_F",
-    "1uJaJWP6ZL24ABLvz-jc7hbbUibfuH03V",
-    "1ew7_49xa4m_HkaccuoFFtz3Nd533NqTs",
-    "1AIwIhSw68x7HFd7M7uTXmhSjN1t3UvJ1",
-  ];
+  
 
 
   return (
@@ -363,10 +360,10 @@ function HomeScreen({ navigation }) {
           {/* Banner showing the logo for each sponsor */}
           <View>
             <Text style={[styles.subheader_text, {textAlign: 'center'}]}>in collaboration with</Text>
-            {isBusy ? (<View/>) : (
+            
             <SponsorBanner
               image_ids={image_ids}
-              channels={channels}
+              channels={channelArray}
               navigation={navigation}
               shuffle={true}
               style={{marginHorizontal: 5}}
@@ -374,7 +371,7 @@ function HomeScreen({ navigation }) {
               onRelease={onRelease}
               parentScrolling={isScrolling}
               imageRatio={RATIOS.sponsors}
-            /> )}
+            /> 
             <View style={{ paddingRight: 25, width: "100%" }}>
               <TouchableOpacity
                 activeOpacity = {0.5}

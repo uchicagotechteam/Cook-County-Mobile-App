@@ -8,24 +8,23 @@ import SearchArea from '../components/SearchArea';
 import ChannelCollectionOrg from "../components/ChannelCollectionOrg.js";
 //import RainbowChannel from "../components/RainbowChannel.js";
 import ToggleSearch from "../components/ToggleSearch.js";
-import RoundedButton from "../components/RoundedButton.js";
+import AdjustableText from "../components/AdjustableText.js";
+//import RoundedButton from "../components/RoundedButton.js";
 //import { DataContext } from '../App';
+
 
 
 //props needed: image id (from google drive), organization name, link to worksheet google drive, playlist id
 
 function OrgScreen({ route, navigation }) {
 
-  const channelHardCode = {
-    channelTitle : "Partner TEST NAME",
-    channelImage : "golden",
-    playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
-    image_id: "1IuCEcIGstbYhj22wZqcn2HBMO600bCHm",
-  }; 
+console.log(route.params.orgChannel);
 //console.log(channelHardCode);
 
-const channel = route.params.orgChannel;
-//channel= channel.channels[0];
+var channel = route.params.orgChannel;
+//const index = route.params.index;
+//var orgIdx = index > orgChannels.length ? index % orgChannels.length : index;
+//channel= channel[orgIdx];
 console.log("FINALLY!!!");
 console.log(channel);
 const [isBusy, setBusy] = useState(true);
@@ -88,14 +87,20 @@ const getChannel = useCallback(() =>{
       active={searchActive}
     />
     
-    <LogoTitle channel={channel}/>
-
-    <RoundedButton
-          onPress={() => alert('Button clicked (change later)')}
-          buttonStyle={styles.buttonStyle}
-          textStyle={styles.baseText}
-          text= "See All Channel Worksheets"                       
-        />
+  <View style = {{alignItems: 'center',justifyContent: 'center', padding: 15,}}>
+   <Image
+        style={styles.logo_org}
+        source={channel.channelImage }  
+      />
+    <View style={{ height: 10 }} />
+    <AdjustableText
+    fontSize={28}
+    text=<Text>
+           {channel.channelTitle}                              
+          </Text>
+    style={styles.org_title}
+    />
+    </View>
 
     <ScrollView>
 
@@ -104,7 +109,6 @@ const getChannel = useCallback(() =>{
       
         {getChannel()}
       
-
     </ScrollView>
       
 
