@@ -139,8 +139,8 @@ class RainbowThumbnail extends React.Component {
         onPress={ () => this.thumbnailClicked() }
         style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}
       >
-        <View style={{height: 60, justifyContent:'center'}}>
-          <AdjustableText
+        <View style={{height: 60, width: "100%", justifyContent:'center'}}>
+          {/*<AdjustableText
             fontSize={30}
             // text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map((s, index) =>
             //         s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
@@ -153,7 +153,8 @@ class RainbowThumbnail extends React.Component {
             text=<Text>{this.isRecent()} {this.props.title}</Text>
             style={styles.videoTitleText}
             maxHeight={40}
-          />
+          />*/}
+          <Text style={styles.subheader_text}>{this.isRecent()} {this.props.title}</Text>
         </View>
         <View style={{flexGrow: 1, alignItems: 'center', justifyContent:'center'}} >
             <View style={{

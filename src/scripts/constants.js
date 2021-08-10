@@ -413,6 +413,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'normal',
     fontSize: 14,
     color: PALETTE.text.dark,
+    lineHeight: 24,
   },
 
   link_text: {

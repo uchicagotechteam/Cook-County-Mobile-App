@@ -132,7 +132,7 @@ class RainbowThumbnail extends React.Component {
   render() {
     return (
       <View style={this.getActiveBackground()}>
-        <View style={{height: 60, justifyContent:'center'}}>
+        <View style={{height: 60, width: "100%", justifyContent:'center'}}>
           <AdjustableText
             fontSize={30}
             text=<Text>{this.isRecent()} {this.props.title}
