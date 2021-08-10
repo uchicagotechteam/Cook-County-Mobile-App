@@ -44,7 +44,7 @@ android {
 dependencies {
 	// Make sure to put android-jsc at the top
 	implementation 'org.webkit:android-jsc:+'
-	implementation "com.facebook.react:react-native:0.64.2"
+	implementation "com.facebook.react:react-native:0.63.4"
 	implementation 'androidx.appcompat:appcompat:1.0.0-rc01'
 	implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
 	implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
