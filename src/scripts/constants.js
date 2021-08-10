@@ -518,6 +518,25 @@ export const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 25,
   },
+  footerButtonStyle: {
+    marginTop:5,
+    paddingTop:7,
+    paddingBottom:7,
+    marginLeft:5,
+    marginRight:15,
+    marginBottom:5,
+    backgroundColor:'#444454', //with blue gray background ADD8E6, blue gray color #6699CC
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#444454', //#000
+    width: 120,
+  },
+  footerButtonText: {
+    fontFamily: 'sans-serif',
+    textAlign: 'center',
+    color: '#FFFFFF',
+    fontSize: 12,
+  },
   buttonStyle: {
     paddingTop:5,
     paddingBottom:5,
