@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import axios from 'axios';
 import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, TouchableHighlight, AsyncStorage} from 'react-native';
 import { styles, api_key } from '../scripts/constants.js'
-import LogoTitle from '../components/LogoTitle.js';
+//import LogoTitle from '../components/LogoTitle.js';
 import SearchArea from '../components/SearchArea';
 import ChannelCollectionOrg from "../components/ChannelCollectionOrg.js";
 //import RainbowChannel from "../components/RainbowChannel.js";
@@ -18,15 +18,15 @@ import AdjustableText from "../components/AdjustableText.js";
 
 function OrgScreen({ route, navigation }) {
 
-console.log(route.params.orgChannel);
+//console.log(route.params.orgChannel);
 //console.log(channelHardCode);
 
 var channel = route.params.orgChannel;
 //const index = route.params.index;
 //var orgIdx = index > orgChannels.length ? index % orgChannels.length : index;
 //channel= channel[orgIdx];
-console.log("FINALLY!!!");
-console.log(channel);
+//console.log("FINALLY!!!");
+//console.log(channel);
 const [isBusy, setBusy] = useState(true);
 	const [searchText, setSearchText] = useState("");
   	const [searchActive, setSearchActive] = useState(false);
@@ -89,8 +89,9 @@ const getChannel = useCallback(() =>{
     
   <View style = {{alignItems: 'center',justifyContent: 'center', padding: 15,}}>
    <Image
-        style={styles.logo_org}
-        source={channel.channelImage }  
+        style={[styles.sponsorLogo, {width: 150, height: 150 * 2/3}]}
+        source={channel.channelImage } 
+        resizeMode={"contain"} 
       />
     <View style={{ height: 10 }} />
     <AdjustableText
