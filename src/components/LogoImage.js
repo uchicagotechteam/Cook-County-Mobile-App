@@ -47,8 +47,6 @@ function LogoImage(props) {
   // const uri = "https://drive.google.com/thumbnail?id=" + image_id;
   const source = getPropRequired(props, "source", "LogoImage");
 
-  console.log("Logo source: ", source);
-
   // Get various props
   const resize_mode = getPropDefault(props, "resizeMode", "contain");
   const clickable   = getPropDefault(props, "clickable",  true);

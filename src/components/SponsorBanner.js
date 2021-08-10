@@ -56,10 +56,7 @@ function shuffleLogos(array) {
 //     //var uri = "https://drive.google.com/thumbnail?id=" + image_id;
 
 function renderLogo(image_ratio) {
-  console.log("Making render logo function...");
   return (channel, index, width) => {
-
-    console.log("Channel: ", channel);
 
     // Compute the dimensions of each icon using the width and the spacing between them
     var dim = width - SPONSOR_LOGO_SPACING;

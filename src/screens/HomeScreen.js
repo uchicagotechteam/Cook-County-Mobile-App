@@ -117,8 +117,8 @@ function HomeScreen({ navigation }) {
   useEffect(() => {
     // logic to fetch data from youtube api
     const fetchData = function(playlistId, index, localVideoArrays, pageToken) {
-      console.log(playlistId);
-      console.log(api_key);
+      // console.log(playlistId);
+      // console.log(api_key);
       var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
       //console.log(token_text);
       axios({
@@ -149,8 +149,8 @@ function HomeScreen({ navigation }) {
               description += lines[i] + "\n"
             }
           }
-          console.log("Link: " + link)
-          console.log("Description: " + description)
+          // console.log("Link: " + link)
+          // console.log("Description: " + description)
           
           return {
             videoId: video.contentDetails.videoId,
@@ -203,8 +203,8 @@ function HomeScreen({ navigation }) {
             // Once all the fetches have been accumulated, set the array of video arrays in state.
             // Note: I tried to do run the fetchdata requests in parallel for a bit, but it got pretty ugly and changed things so the next request would only start once the previous one finished. I might return and try parallel requests again later though
             setVideoArrays(newVideoArrays); 
-            console.log("VID arrays")
-            console.log(videoArrays);
+            // console.log("VID arrays")
+            // console.log(videoArrays);
             // console.log("New video array " + JSON.stringify(newVideoArrays));
           }
         })
@@ -391,7 +391,7 @@ function HomeScreen({ navigation }) {
           <View style={{height: 10}} />
 
           {/* Banner showing featured videos */}
-          <FeaturedBanner imageRatio={RATIOS.featured} /> 
+          <FeaturedBanner imageRatio={RATIOS.featured} navigation={navigation} /> 
 
         </View>
 
