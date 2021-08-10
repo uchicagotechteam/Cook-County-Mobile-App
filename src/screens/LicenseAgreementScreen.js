@@ -204,31 +204,13 @@ function LicenseAgreementScreen() {
         {`. This Agreement, Terms of Service, and our Privacy Policy constitute the entire agreement between you and Cook County with respect to the Application and supersede all prior or contemporaneous understandings and agreements, whether written or oral, with respect to the Application.
 
 
-        19. `}
-        </Text>
-
-        <Text style={{textDecorationLine: 'underline'}}>{"Waiver"}</Text>
-        <Text>
+19. `}
+        <Text style={{textDecorationLine: 'underline'}}>Waiver</Text>
         {`. No failure to exercise, and no delay in exercising, on the part of either party, any right or any power hereunder shall operate as a waiver thereof, nor shall any single or partial exercise of any right or power hereunder preclude further exercise of that or any other right hereunder. In the event of a conflict between this Agreement and any applicable purchase or other terms, the terms of this Agreement shall govern.`}
         </Text>
 
       </ScrollView>
     </View>
-  )
-}
-
-// Helper component to create an ordered list
-// props include:
-// - items : array of text items in the unordered list
-function OL(props) {
-  let out = ""
-  for(let i = 0; i < props.items.length; i++) {
-    let item = props.items[i]
-    out += ("\t" + i + ". " + item + "\n")
-  }
-  return (
-    <Text style="">{out}</Text>
-    <Text style="indent....">{out}</Text>
   )
 }
 

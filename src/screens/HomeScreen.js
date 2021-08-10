@@ -272,10 +272,10 @@ function HomeScreen({ navigation }) {
               </TouchableOpacity>
             </View>
             <RoundedButton
-              onPress={() => navigation.navigate('Privacy Screen')}
+              onPress={() => navigation.navigate('License Screen')}
               buttonStyle={styles.mainButtonStyle}
               textStyle={styles.mainButtonText}
-              text={"Privacy Policy"}
+              text={"License Screen"}
             />
           </View>
 
