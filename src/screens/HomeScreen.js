@@ -277,6 +277,12 @@ function HomeScreen({ navigation }) {
               textStyle={styles.mainButtonText}
               text={"License Screen"}
             />
+            <RoundedButton
+              onPress={() => navigation.navigate('Privacy Screen')}
+              buttonStyle={styles.mainButtonStyle}
+              textStyle={styles.mainButtonText}
+              text={"Privacy Screen"}
+            />
           </View>
 
           {/*<DividerLine color="blue" style={{ marginVertical: 0 }} />*/}

@@ -15,9 +15,8 @@ function PrivacyPolicyScreen() {
   return (
     <View style={{alignItems: 'center'}}>
       <ScrollView style={{height: '100%', width: '90%', textAlign: "center"}}>
+        <Text style={{textAlign: "center"}}>{"Mobile App Privacy Policy"}</Text>
         <Text>
-
-<Text style={{textAlign: "center"}}>Mobile App Privacy Policy</Text>
 
 {`
 
