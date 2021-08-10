@@ -111,17 +111,6 @@ class RainbowVideoIcon extends React.Component {
     //     this.setState({finished : true, progressFraction : 1.0})
     //   }
     // });
-
-    getYoutubeMeta(this.props.videoId).then(meta => {
-
-        // TODO: We would prefer to use maxresdefault, but there's no guarantee it exists
-        // console.log("Got meta!", meta);
-        thumbnail = meta.thumbnail_url.replace("/hqdefault.jpg", "/mqdefault.jpg");
-        // thumbnail = meta.thumbnail_url.replace("/hqdefault.jpg", "/maxresdefault.jpg");
-        // thumbnail = meta.thumbnail_url.replace("/vi/", "/vi_webp/").replace("/hqdefault.jpg", "/maxresdefault.jpg");
-
-        this.setState({thumbnail});
-    });
   }
   
   // If the video goes from active to inactive (the user has clicked on another thumbnail)
@@ -158,7 +147,7 @@ class RainbowVideoIcon extends React.Component {
         this.props.style
       ]}>
         <Image
-          source={{uri: this.state.thumbnail }}
+          source={{ uri: this.props.thumbnail.url }}
           style={{
             width: this.width, height: this.width / this.image_ratio,
             borderRadius: 20,

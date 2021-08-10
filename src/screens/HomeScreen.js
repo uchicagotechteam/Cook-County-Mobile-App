@@ -135,8 +135,8 @@ function HomeScreen({ navigation }) {
         // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
         let videoArray = response.data.items
         .filter(video => {
-          // Filter out videos marked as Private
-          return video.status.privacyStatus != "private";
+          // Filter out private and deleted videos
+          return video.status.privacyStatus != "private" && video.status.privacyStatus != "privacyStatusUnspecified";
         })
         .map(video => {
           let date = new Date(video.contentDetails.videoPublishedAt);
@@ -156,14 +156,26 @@ function HomeScreen({ navigation }) {
           }
           // console.log("Link: " + link)
           // console.log("Description: " + description)
-          
+
+          // Get info for highest available thumbnail
+          const res = ["maxres", "high", "standard", "medium", "default"];
+          let thumbnail = {};
+          for (let i = 0; i < res.length; i++) {
+            let item = video.snippet.thumbnails[res[i]];
+            if (item != undefined || i == res.length - 1) {
+              thumbnail = {...item, resolution: res[i]};
+              break;
+            }
+          }
+
           return {
             videoId: video.contentDetails.videoId,
             title: video.snippet.title,
             date : date,
             dateString : date.toLocaleDateString("en-US"),
             description : description,
-            link : link
+            link : link,
+            thumbnail: thumbnail,
           }
         })
 

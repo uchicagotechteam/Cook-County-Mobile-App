@@ -341,6 +341,7 @@ class RainbowChannelIcons extends React.Component {
           height={this.card_height}
           style={{ margin: this.card_spacing }}
           imageRatio={this.image_ratio}
+          thumbnail={videoInfo.thumbnail}
         />
       </TouchableOpacity>
     );
