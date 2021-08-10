@@ -1,6 +1,11 @@
 package com.projectrainbow;
 
-import MainActivity
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.Espresso.closeSoftKeyboard
+import androidx.test.espresso.Espresso.onView
 import androidx.test.filters.LargeTest
 
 import org.junit.Before
@@ -10,36 +15,90 @@ import org.junit.runner.RunWith
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.ActivityTestRule
 
+import com.projectrainbow.EspressoViewFinder
+import com.projectrainbow.EspressoViewFinder.waitForDisplayed
+import org.hamcrest.CoreMatchers.allOf
 
 @RunWith(AndroidJUnit4::class)
-@LargeTest
-class ChangeTextBehaviorTest {
+class MainActivityTest  {
 
-    private lateinit var stringToBetyped: String
-
-    @get:Rule
+    @Rule @JvmField
     var activityRule: ActivityScenarioRule<MainActivity>
             = ActivityScenarioRule(MainActivity::class.java)
 
-    @Before
-    fun initValidString() {
-        // Specify a valid string.
-        stringToBetyped = "Hello world~"
+    @Test
+    fun clickViewAllLogos() {
+        try {
+            Thread.sleep(150)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        // Finds the View All button element
+        onView(allOf(withContentDescription("home_viewAllLogosText"), isDisplayed()))
+                .check(matches(withText("View All \u00BB")))
+
+        // Finds the View All button element
+        onView(allOf(withContentDescription("home_viewAllLogos"), isDisplayed()))
+                .perform(click())
+
+        // Finds the Logos page and makes sure it's displayed
+        onView(allOf(withContentDescription("pageLogoScreen"), isDisplayed()))
+
     }
 
-    @Test
-    fun changeText_sameActivity() {
-        // Type text and then press the button.
-//        onView(withId(R.id.editTextUserInput))
-//                .perform(typeText(stringToBetyped), closeSoftKeyboard())
-//        onView(withId(R.id.changeTextBt)).perform(click())
+//    @Test
+//    fun clickSponsorBarLogo() {
 //
-//        // Check that the text was changed.
-//        onView(withId(R.id.textToBeChanged))
-//                .check(matches(withText(stringToBetyped)))
-    }
+//        // Finds and clicks one of the logos in the sponsor bar
+//        onView(allOf(withContentDescription("home_viewAllLogos"), isDisplayed()))
+//                .perform(click())
+//
+//        // Finds the Org page and makes sure it's displayed
+//        onView(allOf(withContentDescription("pageLogoScreen"), isDisplayed()))
+//    }
 }
+
+
+//@RunWith(AndroidJUnit4::class)
+//@LargeTest
+//class ChangeTextBehaviorTest {
+//
+//    private lateinit var stringToBetyped: String
+//
+//    @get:Rule
+//    var activityRule: ActivityScenarioRule<MainActivity>
+//            = ActivityScenarioRule(MainActivity::class.java)
+//
+////    @Before
+////    fun initValidString() {
+////        // Specify a valid string.
+////        stringToBetyped = "Hello world~"
+////    }
+//
+//    @Test
+//    fun changeText_sameActivity() {
+////        // Type text and then press the button.
+////        onView(withId(R.id.))
+////                .perform(typeText(stringToBetyped), closeSoftKeyboard())
+////        onView(withId(R.id.changeTextBt)).perform(click())
+////
+////        // Check that the text was changed.
+////        onView(withId(R.id.textToBeChanged))
+////                .check(matches(withText(stringToBetyped)))
+//    }
+//
+//    @Test
+//    fun clickViewAllLogos() {
+//        waitForDisplayed(withContentDescription("homeScreenViewAllLogos")){
+//            viewAll ->
+//            onView(viewAll).perform(click())
+////            check(matches(isDisplayed()))
+//        }
+//    }
+//}
 
 
 ///**

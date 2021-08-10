@@ -15,6 +15,8 @@ import { SearchBar } from 'react-native-elements';
 import ChannelCollection from "../components/ChannelCollection.js";
 import DividerLine from "../components/DividerLine.js";
 
+import { setTestID } from '../utils/testUtils.js';
+
 function HomeScreen({ navigation }) {
 
   // Logic to maintain state of search text
@@ -282,8 +284,12 @@ function HomeScreen({ navigation }) {
               <TouchableOpacity
                 activeOpacity = {0.5}
                 onPress={() => navigation.navigate('Logo Screen', { channels })}
+                {...setTestID("home_viewAllLogos")}
               >
-                <Text style={[styles.body_text, { width: "100%", textAlign: "right" }]} >
+                <Text
+                  style={[styles.body_text, { width: "100%", textAlign: "right" }]}
+                  {...setTestID("home_viewAllLogosText")}
+                >
                   View All {"\u00BB"}
                 </Text>
               </TouchableOpacity>

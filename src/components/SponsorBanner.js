@@ -8,6 +8,8 @@ import LogoImage from '../components/LogoImage.js';
 // Import functions to retrieve props
 import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
 
+import { setTestID } from '../utils/testUtils.js';
+
 
 // Function to shuffle the array of logos, if required
 // Returns a shallow copy of the original array, with the elements in a random order
@@ -31,7 +33,9 @@ function renderLogo(image_ratio) {
 
     // Return an image with the appropriate dimensions and source URL
     return (
-      <View key={`sponsor_banner_item_${index}`}>
+      <View key={`sponsor_banner_item_${index}`}
+        {...setTestID(`sponsorBannerItem${index}`)}
+      >
         <LogoImage
           imageId={channel.image_id} navParams={{channel}}
           width={dim} imageRatio={image_ratio} style={styles.sponsorLogo}
