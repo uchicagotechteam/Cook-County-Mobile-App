@@ -1,5 +1,11 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
+import AdjustableText from "../components/AdjustableText.js";
+import LogoImage from '../components/LogoImage.js';
+
+// Import functions to retrieve props
+import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
+
 
 //mini org logo and org name
 //line 20 {props.channel.channelTitle}
@@ -8,23 +14,68 @@ import { Text, View, StyleSheet, Image } from 'react-native';
 
 
 export default function LogoTitle(props) {
+
+  // Retrieve required channel prop
+  const channel = getPropRequired(props, "channel", "LogoTitle");
+
+  // Retrieve information from channel
+  const title = channel.channelTitle;
+  const image_id = channel.image_id;
+
+  const style = getPropDefault(props, "style", {});
+
   return (
-    <View style={styles.container}>
-    <View style={styles.row}>
-    <View style={styles.column1}>
-      <Image
+    <View style={[{alignItems: "center", width: "100%"}, style]}>
+      <LogoImage source={props.channel.channelImage} width={175} clickable={false} />
+      {/*<Image
         style={styles.logo}
-        source={{uri: "https://drive.google.com/thumbnail?id=" + props.channel.image_id }}
-      />
-      </View>
-      <View style={styles.column2}>
-      <Text style={styles.paragraph}>
+        source={props.channel.channelImage }  
+      />*/}
+      <Text style={styles.header_text}>
            {props.channel.channelTitle}                              
       </Text>
-       </View>
-    </View>
     </View>
   );
+
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.row}>
+      <View style={styles.column1}>
+        <Image
+          style={styles.logo}
+          source={props.channel.channelImage }  
+        />
+        </View>
+        <View style={styles.column2}>
+        <Text style={styles.header_text}>
+             {props.channel.channelTitle}                              
+        </Text>
+         </View>
+      </View>
+    </View>
+  );
+
+  // return (
+  //   <View style={styles.container}>
+  //     <View style={styles.row}>
+  //       <View style={styles.column1}>
+  //         <Image
+  //           style={styles.logo}
+  //           source={{uri: "https://drive.google.com/thumbnail?id=" + image_id }}
+  //         />
+  //       </View>
+  //       <View style={styles.column2}>
+  //           <AdjustableText
+  //             fontSize={30}
+  //             text=<Text>{title}</Text>
+  //             style={styles.column2}
+  //             maxHeight={60}
+  //           />
+  //       </View>
+  //     </View>
+  //   </View>
+  // );
 }
 
 const styles = StyleSheet.create({

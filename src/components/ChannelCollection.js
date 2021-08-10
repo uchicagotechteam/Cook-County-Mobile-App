@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from 'axios';
+import RainbowChannel from "../components/RainbowChannel.js";
 import RainbowChannelIcons from "../components/RainbowChannelIcons.js";
 import RoundedButton from '../components/RoundedButton.js'
 import { styles, api_key } from '../scripts/constants.js'
@@ -18,11 +19,11 @@ function ChannelCollection(props) {
   const [videoArrays, setVideoArrays] = useState([]);
 
   // logic to maintain state of request to youtube API
-  let [responseData, setResponseData] = useState('');
+  //let [responseData, setResponseData] = useState('');
   
   let [channelNum, setChannelNum] = useState(0);
 
-  const getVideoArrayByIndex = useCallback((channel, index) =>{
+  const getVideoArrayByIndex = useCallback((index) =>{
     let arrayMatches = videoArrays.filter(videoObject => videoObject.index == index)
     if(arrayMatches.length > 0){
       let match = arrayMatches[0];
@@ -40,14 +41,22 @@ function ChannelCollection(props) {
   // Width to Height -> divide
   const image_ratio = getPropDefault(props, "imageRatio", 5 / 4);
 
+  const use_icons = getPropDefault(props, "useIcons", true);
+
   // useEffect function runs when function initially loads
   // and runs again whenever there is a change to data in second argument array (fetchData)
   // beware of infinite loops
+  
+useEffect(() => {
+  setVideoArrays(props.videoArrays);
+}, [props.videoArrays])
+
+/*
   useEffect(() => {
-    // logic to fetch data from youtube api
     const fetchData = function(playlistId, index, localVideoArrays, pageToken) {
       console.log(playlistId);
       console.log(api_key);
+      console.log("IN COLLECTION USE EFFECT")
       var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
       console.log(token_text);
       axios({
@@ -56,8 +65,10 @@ function ChannelCollection(props) {
       })
       .then((response) => {
         setResponseData(response.data)
+        console.log("*****ITEMS*****")
+        console.log(response.data.items)
         var nextPageToken = null;
-        if(response.data.nextPageToken != undefined && response.data.nextPageToken != null){
+        if(response.data.nextPageToken != undefined && response.data.nextPageToken != null){ 
           nextPageToken = response.data.nextPageToken;
         }
 
@@ -73,14 +84,18 @@ function ChannelCollection(props) {
           for (var i = 0; i < lines.length; i++){
             var words = lines[i].split(" ");
             if(words.length > 0 && words[0] == "LINK:"){
-              link = lines[i].substring(lines[i].indexOf(' ')+1)
+              link = lines[i].substring(lines[i].indexOf(' ')+1) 
             } else {
               description += lines[i] + "\n"
             }
           }
+
           console.log("Link: " + link)
           console.log("Description: " + description)
-          
+
+          // let re = /(http(?:s?):\/\/(?:www\.))?(drive.google.com?(.*))/
+          // let google_drive_link = video.snippet.description.match(re)
+
           return {
             videoId: video.contentDetails.videoId,
             title: video.snippet.title,
@@ -147,14 +162,54 @@ function ChannelCollection(props) {
     if(props.channels.length > 0){
       fetchData(props.channels[0].playlistId, 0, [], null);
     }
-  }, [props.channels])
+  }, [props.channels]) */
+
+
+  const render_channel = (channel, index) => {
+    if (use_icons) {
+      return (
+        <RainbowChannelIcons
+          channel={channel}
+          videoArray={getVideoArrayByIndex(channel, index)}
+          channelTitle={channel.channelTitle}
+          channelImage={channel.channelImage}
+          currentSearch={props.searchText}
+          dateInfo={
+            {
+              restriction : "",
+              afterDate : null,
+              beforeDate : null
+            }
+          }
+          activeId={""}
+          navigation={navigation}
+          itemsPerInterval={itemsPerInterval}
+          imageRatio={image_ratio}
+        />
+      );
+    }
+    else {
+      return (
+        <RainbowChannel
+          videoArray={getVideoArrayByIndex(channel, index)}
+          channelTitle={channel.channelTitle}
+          channelImage={channel.channelImage}
+          currentSearch={props.searchText}
+          dateInfo={props.dateInfo}
+          isAdult={props.isAdult}
+          // activeId={activeId}
+          activeId={""}
+        />
+      );
+    }
+  }
 
   return (
     props.channels.map((channel, index) =>
       <View key={`${channel.playlistId} ${index}`}>
         {/*<RoundedButton
           onPress={() => props.navigation.navigate('Base Screen', {
-            videoArray : getVideoArrayByIndex(channel, index),
+            videoArray : getVideoArrayByIndex(index),
             channelTitle: channel.channelTitle,
             channelImage: channel.channelImage,
           })}
@@ -165,8 +220,11 @@ function ChannelCollection(props) {
 
         <DividerLine color="green" />
 
+        {/*{ render_channel(channel, index) }*/}
+
         <RainbowChannelIcons
-          videoArray={getVideoArrayByIndex(channel, index)}
+          // videoArray={getVideoArrayByIndex(channel, index)}
+          videoArray={getVideoArrayByIndex(index)}
           channel={channel}
           channelTitle={channel.channelTitle}
           channelImage={channel.channelImage}
@@ -179,48 +237,14 @@ function ChannelCollection(props) {
             }
           }
           activeId={""}
-          // dateInfo={props.dateInfo}
-          // activeId={activeId}
           navigation={navigation}
           itemsPerInterval={itemsPerInterval}
           imageRatio={image_ratio}
         />
+        {/*<View style={{height: 160}} />*/}
       </View>
     ));
 }
 
-/*
-Old horizontal return
-
-<View>
-  <View style={{ flexDirection : "row", justifyContent: 'space-evenly', }}>
-    { channelNum > 0 ? <RoundedButton
-      onPress={() => setChannelNum(Math.max(channelNum - 1, 0))}
-      buttonStyle={styles.buttonStyle}
-      textStyle={styles.baseText}
-      text={"Last Channel"}
-    /> : null }
-    { channelNum < videoArrays.length - 1 ? <RoundedButton
-      onPress={() => setChannelNum(Math.min(channelNum + 1, videoArrays.length - 1))}
-      buttonStyle={styles.buttonStyle}
-      textStyle={styles.baseText}
-      text={"Next channel"}
-    /> : null }
-  </View>
-  <View style={{height: 20}} />
-  { videoArrays.length > 0 ?
-    <RainbowChannel
-      videoArray={getVideoArrayByIndex(props.channels[channelNum], channelNum)}
-      channelTitle={props.channels[channelNum].channelTitle}
-      channelImage={props.channels[channelNum].channelImage}
-      currentSearch={props.searchText}
-      dateInfo={props.dateInfo}
-      isAdult={props.isAdult}
-      broadcastActiveVideo={broadcastActiveVideo}
-      activeId={activeId}
-    />
-    : null}
-  </View>
-*/
 
 export default ChannelCollection;

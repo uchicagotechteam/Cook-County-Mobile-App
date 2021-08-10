@@ -44,6 +44,7 @@ function ChannelCollection(props) {
       var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
       console.log(token_text);
       console.log("API CALL cHannel collection")
+      console.log("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text)
       axios({
         "method": "GET",
         "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text
@@ -128,12 +129,12 @@ function ChannelCollection(props) {
             // Once all the fetches have been accumulated, set the array of video arrays in state.
             // Note: I tried to do run the fetchdata requests in parallel for a bit, but it got pretty ugly and changed things so the next request would only start once the previous one finished. I might return and try parallel requests again later though
             setVideoArrays(newVideoArrays);
-            console.log("vid arrays");
+            console.log("vid arrays org channel collection");
             console.log(videoArrays);
             // console.log("New video array " + JSON.stringify(newVideoArrays));
           }
         })
-        .catch((error) => {
+        .catch((error) => { 
         console.log(error)
         })
       })
@@ -151,12 +152,11 @@ function ChannelCollection(props) {
  
 
   return (
-    props.channels.map((channel, index) =>
-      <View key={channel.playlistId}>
+      <View key={props.channels.playlistId}>
         <RainbowChannelOrg
-          videoArray={getVideoArrayByIndex(channel, index)}
-          channelTitle={channel.channelTitle}
-          channelImage={channel.channelImage}
+          videoArray={getVideoArrayByIndex(props.channels, 0)}
+          channelTitle={props.channels.channelTitle}
+          channelImage={props.channels.channelImage}
           currentSearch={props.searchText}
           //dateInfo={props.dateInfo}
           dateInfo={
@@ -172,7 +172,7 @@ function ChannelCollection(props) {
         />
         <View style={{height: 160}} />
       </View>
-  ));
+  );
 }
 
 

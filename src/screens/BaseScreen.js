@@ -18,7 +18,7 @@ function BaseScreen({ route, navigation }) {
   }, [])
    
   const getRainbowTheatre = useCallback(() =>{
-    console.log("Getting the child screen with channel length: " + channels.length);
+    // console.log("Getting the child screen with channel length: " + channels.length);
     return (
       <RainbowTheater
         videoArray={videoArray}

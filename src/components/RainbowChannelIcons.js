@@ -28,11 +28,14 @@ class RainbowChannelIcons extends React.Component {
     // Get the dimensions of the screen
     const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen')
 
+    // Get the channel this component should be displaying
+    this.channel = getPropDefault(props, "channel", {});
+
     // Get the width of this component, defaulting to the full width of the screen
     this.width = getPropDefault(props, "width", SCREEN_WIDTH);
 
     // Get the navigation item from the props
-    this.navigation = getPropDefault(props, "navigation", "RainbowChannel");
+    this.navigation = getPropRequired(props, "navigation", "RainbowChannelIcons");
 
     // Get whether there should be a "view all" option
     this.show_view_all = getPropDefault(props, "showViewAll", true);
@@ -66,7 +69,7 @@ class RainbowChannelIcons extends React.Component {
     // Set the card dimensions
     // TODO: Experimentally, the text below the video image is about 80 in height,
     //       but this is a bad long-term solution!
-    this.card_height = getPropDefault(props, "cardHeight", dim / this.image_ratio + 80);
+    this.card_height = getPropDefault(props, "cardHeight", dim / this.image_ratio + 90);
     this.card_width  = getPropDefault(props, "cardWidth",  dim);
 
     // Constant hardcoding the keys in each video's object which will be targetted by the search
@@ -293,7 +296,11 @@ class RainbowChannelIcons extends React.Component {
 
     // If no videos passed all filters, return a filler text component
     if (options.length <= 0) {
-      return (<Text style={styles.emptySearch}>No videos match your search</Text>)
+      return (
+        <Text style={[styles.emptySearch, { width: this.width - 2*this.padding }]}>
+          No videos match your search
+        </Text>
+      );
     }
 
     // Save the display results into the options array
@@ -305,30 +312,6 @@ class RainbowChannelIcons extends React.Component {
 
     // Map the rendering function over all the passing videos
     return options.map(this.renderVideo)
-  }
-
-  testVideoArray() {
-    var options = [
-    { videoId: "181Nj060xMQ",
-      title: "Test video 1",
-      date: 1,
-      duration: "1:00",
-      description: "This is a test video"
-    },
-    { videoId: "oQLJqMquGEw",
-      title: "Test video 2",
-      date: 1,
-      duration: "1:00",
-      description: "This is another test video"
-    },
-    { videoId: "vgYQglmYU-8",
-      title: "Test video 3",
-      date: 1,
-      duration: "1:00",
-      description: "This is yet another test video"
-    }];
-
-    return options.map(this.renderVideo);
   }
 
   renderVideo(videoInfo, index) {
@@ -358,6 +341,7 @@ class RainbowChannelIcons extends React.Component {
           height={this.card_height}
           style={{ margin: this.card_spacing }}
           imageRatio={this.image_ratio}
+          thumbnail={videoInfo.thumbnail}
         />
       </TouchableOpacity>
     );
@@ -385,6 +369,9 @@ class RainbowChannelIcons extends React.Component {
 
     const orgChannel = this.props.channel;
 
+    // Create the navigation function that both View All elements use
+    const view_all_nav = () => this.navigation.navigate('Org', {channel: this.channel});
+
     return (
       <View>
 
@@ -403,8 +390,7 @@ class RainbowChannelIcons extends React.Component {
           opacity: view_all_opacity, 
         }}>
           <TouchableOpacity
-            style={{width: "100%"}} activeOpacity = { .5 }
-            onPress={ () => this.navigation.navigate('Org', {orgChannel}) }
+            style={{width: "100%"}} activeOpacity = { .5 } onPress={ view_all_nav }
           >
             <Text style={[styles.subheader_text, {textAlign: "right", width: "100%"}]} >
               View All {"\u00BB"}
@@ -445,7 +431,7 @@ class RainbowChannelIcons extends React.Component {
             borderRadius: 15,
           }}>
             <TouchableOpacity
-              activeOpacity = { .5 } onPress={ () => this.navigation.navigate('Org') }
+              activeOpacity = { .5 } onPress={ view_all_nav }
               style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}
             >
               <Text style={styles.header_text}>View All</Text>

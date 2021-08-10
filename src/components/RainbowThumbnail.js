@@ -4,6 +4,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import {getYoutubeMeta} from 'react-native-youtube-iframe';
 import { Dimensions } from 'react-native';
 import { AsyncStorage } from 'react-native';
+// import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import { useState } from "react";
 import ProgressBar from 'react-native-progress/Bar';
 import AdjustableText from "../components/AdjustableText.js";
@@ -55,12 +56,6 @@ class RainbowThumbnail extends React.Component {
   getPauseImage(){
     if(this.state.finished){
       return require('../assets/images/check.png');
-    } else {
-      if (this.state.inProgress){
-        return require('../assets/images/green-play.png');
-      } else {
-        return require('../assets/images/white-play.png');
-      }
     }
   }
   
@@ -72,7 +67,7 @@ class RainbowThumbnail extends React.Component {
   // Checks if the video was published within the last day and, if so, gives it a special "New" tag
   isRecent(){
     let yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 10);
+    yesterday.setDate(yesterday.getDate() - 3);
     if(this.props.date > yesterday){
       return (<Text style={styles.new_highlight}>New:&nbsp;</Text>)
     } else {
@@ -88,18 +83,13 @@ class RainbowThumbnail extends React.Component {
         width: 10,
         height: -10
       },
+      height: (this.width * 4 / 5) + 60,
       shadowOpacity: 5,
       shadowRadius:  10,
       elevation: 5,};
     } else {
-      return {width: this.width + 20, backgroundColor : PALETTE.purple.light, borderRadius:10, margin: 10,
-        shadowOffset: {
-          width: 10,
-          height: -10
-        },
-        shadowOpacity: 5,
-        shadowRadius:  10,
-        elevation: 5,}
+      return {width: this.width + 20, borderRadius:10, margin: 10,
+        height: (this.width * 4 / 5) + 60}
     }
   }
 
@@ -117,6 +107,33 @@ class RainbowThumbnail extends React.Component {
         this.setState({finished : true, progressFraction : 1.0})
       }
     });
+
+    // // Load async playtime data
+    // const getData = async() => {
+
+    //   // Try and load the play time from async storage
+    //   try {
+    //     const storedTime = await AsyncStorage.getItem(storageTime);
+    //     if(storedTime == null || (storedTime != "atEnd" && parseInt(storedTime) == 0)){
+    //       this.setState({inProgress : false});
+    //     }
+    //     else if(storedTime != "atEnd"){
+    //       let curTime = parseInt(storedTime);
+    //       var progressFraction =  curTime / this.parseDuration();
+    //       this.setState({inProgress : true, progressFraction : progressFraction});
+    //     }
+    //     else if(storedTime == "atEnd"){
+    //       this.setState({finished : true, progressFraction : 1.0})
+    //     }
+
+    //   }
+
+    //   // If it fails, just assume no progress
+    //   catch (e) {
+    //     this.setState({inProgress : false});
+    //   }
+    // }
+    
     getYoutubeMeta(this.props.videoId).then(meta => {
         this.setState({thumbnail : meta.thumbnail_url});
     });
@@ -139,6 +156,27 @@ class RainbowThumbnail extends React.Component {
           this.setState({finished : true, progressFraction : 1.0})
         }
       });
+
+      // // Load async playtime data
+      // const getData = async() => {
+      //   try {
+      //     const storedTime = await AsyncStorage.getItem(storageTime);
+      //     if (storedTime == null || (storedTime != "atEnd" && parseInt(storedTime) == 0)) {
+      //       this.setState({inProgress : false});
+      //     }
+      //     else if (storedTime != "atEnd") {
+      //       let curTime = parseInt(storedTime);
+      //       var progressFraction =  curTime / this.parseDuration();
+      //       this.setState({inProgress : true, progressFraction : progressFraction});
+      //     }
+      //     else if (storedTime == "atEnd") {
+      //       this.setState({finished : true, progressFraction : 1.0})
+      //     }
+      //   }
+      //   catch (e) {
+      //     this.setState({inProgress : false});
+      //   }
+      // }
     }
   }
 
@@ -150,37 +188,40 @@ class RainbowThumbnail extends React.Component {
         onPress={ () => this.thumbnailClicked() }
         style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}
       >
-        <View style={{height: 40}}>
-          <AdjustableText
-            fontSize={18}
-            text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map((s, index) =>
-                    s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
-                  : this.props.title}
-                  &nbsp;-&nbsp;
-                  {this.props.display !== undefined ? this.props.display["dateString"].map((s, index) =>
-                    s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
-                  : this.props.title}
-                  </Text>
+        <View style={{height: 60, width: "100%", justifyContent:'center'}}>
+          {/*<AdjustableText
+            fontSize={30}
+            // text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map((s, index) =>
+            //         s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
+            //       : this.props.title}
+            //       &nbsp;-&nbsp;
+            //       {this.props.display !== undefined ? this.props.display["dateString"].map((s, index) =>
+            //         s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
+            //       : this.props.title}
+            //       </Text>
+            text=<Text>{this.isRecent()} {this.props.title}</Text>
             style={styles.videoTitleText}
             maxHeight={40}
-          />
+          />*/}
+          <Text style={styles.subheader_text}>{this.isRecent()} {this.props.title}</Text>
         </View>
-        <View style={{flexGrow: 1, alignItems: 'center'}} >
+        <View style={{flexGrow: 1, alignItems: 'center', justifyContent:'center'}} >
             <View style={{
+                height: 240,
                 top: 0,
                 width: this.width,
                 height: this.width * 4 / 5,
                 alignItems: 'center'}}>
-              {this.state.thumbnail === null ? (<View style={{height: "67%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "67%", width: '100%'}} source={{uri : this.state.thumbnail}}/>)
+              {this.state.thumbnail === null ? (<View style={{height: "67%", width: '100%', backgroundColor: 'black'}} />) : (<Image style={{height: "67%", width: '100%', borderRadius: 20}} source={{uri : this.state.thumbnail}}/>)
               }
               <View style={{height: "45%",
                           bottom: "58%",
                           width: "36%",
                           alignItems: 'center'}}>
-                  <Image
+                  { this.state.finished ? <Image
                     style={{width: "100%", height: "100%"}}
                     source={this.getPauseImage()}
-                  />
+                  /> : null }
               </View>
               <View style={{bottom: "55%", elevation:1, backgroundColor : "#FFFFFF"}}>
                 <ProgressBar

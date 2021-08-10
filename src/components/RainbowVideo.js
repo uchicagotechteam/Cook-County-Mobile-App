@@ -273,16 +273,16 @@ class RainbowVideo extends React.Component {
             <View style={{height: 240 * 0.67, width: 288, position: "absolute"}}>
               { this.state.isBuffering ? <LoadingThumbnail /> : null}
             </View>
-            { this.props.link != null ? <View style={{height: 40, position: "absolute", bottom:160}}>
+            {/*{ this.props.link != null ? <View style={{height: 40, position: "absolute", bottom:160}}>
               <RoundedButton
                   onPress={() => Linking.openURL(this.props.link)}
                   buttonStyle={styles.buttonStyle}
                   textStyle={styles.baseText}
                   text= "See video worksheet"                       
                 />
-            </View> : null }
+            </View> : null }*/}
             <View style={{height: 20}} />
-            <ShowMoreText text={this.props.description} />
+            <ShowMoreText text={this.props.description} textStyle={styles.body_text} />
         </View>
       </View>);
   }
