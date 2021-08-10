@@ -116,12 +116,23 @@ export default class LoopCarousel extends React.Component {
 	// Set a js interval for the autoscroll
 	start_autoscroll_timer() {
 
+		// Don't do anything if another interval has already been set
+		if (this.state.autoscroll_timer != null) {
+			return;
+		}
+
 		// Assign as local variable so we can reference it in the interval function itself
 		// even if the parent object no longer exists
 		var autoscroll_timer = setInterval(() => {
 
 			// Make sure the object still exists before trying to scroll it
 			if (this == undefined) {
+				clearInterval(autoscroll_timer);
+				return;
+			}
+
+			// If this interval isn't the one being tracked by the state, have it delete itself
+			if (this.state.autoscroll_timer != autoscroll_timer) {
 				clearInterval(autoscroll_timer);
 				return;
 			}

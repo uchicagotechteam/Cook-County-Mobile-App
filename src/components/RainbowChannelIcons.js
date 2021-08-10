@@ -28,6 +28,9 @@ class RainbowChannelIcons extends React.Component {
     // Get the dimensions of the screen
     const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen')
 
+    // Get the channel this component should be displaying
+    this.channel = getPropDefault(props, "channel", {});
+
     // Get the width of this component, defaulting to the full width of the screen
     this.width = getPropDefault(props, "width", SCREEN_WIDTH);
 
@@ -385,6 +388,9 @@ class RainbowChannelIcons extends React.Component {
 
     const orgChannel = this.props.channel;
 
+    // Create the navigation function that both View All elements use
+    const view_all_nav = () => this.navigation.navigate('Org', {channel: this.channel});
+
     return (
       <View>
 
@@ -403,8 +409,7 @@ class RainbowChannelIcons extends React.Component {
           opacity: view_all_opacity, 
         }}>
           <TouchableOpacity
-            style={{width: "100%"}} activeOpacity = { .5 }
-            onPress={ () => this.navigation.navigate('Org', {orgChannel}) }
+            style={{width: "100%"}} activeOpacity = { .5 } onPress={ view_all_nav }
           >
             <Text style={[styles.subheader_text, {textAlign: "right", width: "100%"}]} >
               View All {"\u00BB"}
@@ -445,7 +450,7 @@ class RainbowChannelIcons extends React.Component {
             borderRadius: 15,
           }}>
             <TouchableOpacity
-              activeOpacity = { .5 } onPress={ () => this.navigation.navigate('Org') }
+              activeOpacity = { .5 } onPress={ view_all_nav }
               style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}
             >
               <Text style={styles.header_text}>View All</Text>

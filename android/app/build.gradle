@@ -7,22 +7,72 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
-	compileSdkVersion 29
+	compileSdkVersion 30
 	buildToolsVersion "29.0.2"
 
-//	defaultConfig {
-//		applicationId "com.soumya.sethy.reactnativesetupandroid"
-//	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+
 	defaultConfig {
 		applicationId "com.projectrainbow"
-		minSdkVersion 16
-		targetSdkVersion 29
+		minSdkVersion 30
+		targetSdkVersion 30
 		resConfigs "en"
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+		versionCode 2
+		versionName "2.0"
+	}
+
+	sourceSets {
+		main.java.srcDirs += 'src/main/java/com/projectrainbow'
+	}
+
+	packagingOptions {
+		pickFirst '**/armeabi-v7a/libc++_shared.so'
+	    pickFirst '**/x86/libc++_shared.so'
+	    pickFirst '**/x86_64/libc++_shared.so'
+	    pickFirst '**/arm64-v8a/libc++_shared.so'
+	    pickFirst '**/libjsc.so'
 	}
 }
 
 dependencies {
-	implementation "com.facebook.react:react-native:+"
+	// Make sure to put android-jsc at the top
+	implementation 'org.webkit:android-jsc:+'
+	implementation "com.facebook.react:react-native:0.64.2"
+	implementation 'androidx.appcompat:appcompat:1.0.0-rc01'
+	implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
+	implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+	implementation project(':react-native-gesture-handler')
+//	implementation project(':react-native-screens')
+	androidTestImplementation 'com.microsoft.appcenter:espresso-test-extension:1.4'
+	androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+	androidTestImplementation 'androidx.test:runner:1.1.0'
+	androidTestImplementation 'androidx.test:rules:1.1.0'
+	androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+	androidTestImplementation 'androidx.test:core-ktx:1.1.0'
+	testImplementation("junit:junit:4.12")
+	implementation project(':appcenter-crashes')
+	implementation project(':appcenter-analytics')
+	implementation project(':appcenter')
 }
+
+repositories {
+	mavenCentral()
+}
+
+project.ext.react = [
+        bundleInDebug: true,
+		bundleInRelease: true,
+		root: "../..",
+		resourcesDirRelease   : 'src/release/res',
+]
+
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+//apply from: "../../node_modules/react-native/react.gradle"; applyNativeModulesAppBuildGradle(project)

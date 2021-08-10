@@ -9,6 +9,7 @@ import ChannelCollectionOrg from "../components/ChannelCollectionOrg.js";
 //import RainbowChannel from "../components/RainbowChannel.js";
 import ToggleSearch from "../components/ToggleSearch.js";
 import RoundedButton from "../components/RoundedButton.js";
+
 //import { DataContext } from '../App';
 
 
@@ -82,7 +83,7 @@ const [isBusy, setBusy] = useState(true);
   let [bannerDescription, setBannerDescription] = useState('');
 
   // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
-  const ccbChannel = "UCLcTO4BeO0tlZFeMS8SKLSg";
+  const ccbChannel = "UC9SjusI9nKPmLefg3Sz6w9A";
 
 
   // Function to update the text search results
@@ -118,13 +119,14 @@ useEffect(() => {
 
         // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
         let playlistArray = response.data.items.filter(playlist => {
-  if (playlist.id.localeCompare(channel.playlistId) == 0) {
-    return true; 
-  }
-  return false;
-}).map(playlist => { 
-        //console.log(playlist.id)
-        //console.log(channel.playlistId)
+          if (playlist.id.localeCompare(channel.playlistId) == 0) {
+            return true; 
+          }
+          return false;
+        })
+        .map(playlist => {
+          // console.log(playlist.id)
+          // console.log(channel.playlistId)
           return {
             playlistId: playlist.id,
             channelTitle: playlist.snippet.title,
@@ -152,7 +154,7 @@ useEffect(() => {
     return (
       <ChannelCollectionOrg
         channels={channels}
-        navigation={navigation} 
+        navigation={navigation}
       />
     )
   }, [channels]);
@@ -186,7 +188,6 @@ useEffect(() => {
       
 
     </ScrollView>
-      
 
     </View>
   );

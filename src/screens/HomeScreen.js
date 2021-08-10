@@ -8,11 +8,14 @@ import { styles, theme, PALETTE, RATIOS, api_key } from '../scripts/constants.js
 import RoundedButton from '../components/RoundedButton.js'
 
 // The components used in the Homescreen
+import HeaderLogo from  '../components/HeaderLogo.js';
 import SponsorBanner  from '../components/SponsorBanner.js'
 import FeaturedBanner from '../components/FeaturedBanner.js'
 import { SearchBar } from 'react-native-elements';
 import ChannelCollection from "../components/ChannelCollection.js";
 import DividerLine from "../components/DividerLine.js";
+
+import { setTestID } from '../utils/testUtils.js';
 
 function HomeScreen({ navigation }) {
 
@@ -154,22 +157,49 @@ function HomeScreen({ navigation }) {
     setScrolling(false);
   }
 
-  const image_ids = [
-    "190NCHKJNKfsIkVJjwStxLOhSjRodwTXY",
-    "1uO5JM4dFdrG_da6WWIV_zAKpj-Oq9OHI",
-    "14CI6-BLCK8rN88q1E8_HzAJX2O4N8liH",
-    "13MR-zF0RgRApeAD-RNY-nTZATzrhUoH0",
-    "18or-3ae4GWE1t8L8V0HrwQ2TsEuTYmM5",
-    "1EROOFcwtSbzt9OixaLV8fbWJYsqygSa5",
-    "1Zzpn53KafJ-vjRpqOB-1rKM_BFtagiOt",
-    "1Y36qzXx2QIggHufzDWr_7sWWKGLfYmkD",
-    "1yFKx0qh7f6BUPirSOfrWLl6MOiMS76Si",
-    "1gILEl3TfYAHRyzWsXqDTso5_rk7wNMk6",
-    "1bKjY7EvQaR893QnZ8VsOn3AFSB0lsK5F",
-    "1BBuvgZG6lzSkOhUk3Jg8OJPtnKxhIr_F",
-    "1uJaJWP6ZL24ABLvz-jc7hbbUibfuH03V",
-    "1ew7_49xa4m_HkaccuoFFtz3Nd533NqTs",
-    "1AIwIhSw68x7HFd7M7uTXmhSjN1t3UvJ1",
+  // const image_ids = [
+  //   "190NCHKJNKfsIkVJjwStxLOhSjRodwTXY",
+  //   "1uO5JM4dFdrG_da6WWIV_zAKpj-Oq9OHI",
+  //   "14CI6-BLCK8rN88q1E8_HzAJX2O4N8liH",
+  //   "13MR-zF0RgRApeAD-RNY-nTZATzrhUoH0",
+  //   "18or-3ae4GWE1t8L8V0HrwQ2TsEuTYmM5",
+  //   "1EROOFcwtSbzt9OixaLV8fbWJYsqygSa5",
+  //   "1Zzpn53KafJ-vjRpqOB-1rKM_BFtagiOt",
+  //   "1Y36qzXx2QIggHufzDWr_7sWWKGLfYmkD",
+  //   "1yFKx0qh7f6BUPirSOfrWLl6MOiMS76Si",
+  //   "1gILEl3TfYAHRyzWsXqDTso5_rk7wNMk6",
+  //   "1bKjY7EvQaR893QnZ8VsOn3AFSB0lsK5F",
+  //   "1BBuvgZG6lzSkOhUk3Jg8OJPtnKxhIr_F",
+  //   "1uJaJWP6ZL24ABLvz-jc7hbbUibfuH03V",
+  //   "1ew7_49xa4m_HkaccuoFFtz3Nd533NqTs",
+  //   "1AIwIhSw68x7HFd7M7uTXmhSjN1t3UvJ1",
+  // ];
+
+  channels = [
+    { channelTitle : "Adler Planetarium",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "190NCHKJNKfsIkVJjwStxLOhSjRodwTXY",
+    },
+    { channelTitle : "Ariel Investments",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "1uO5JM4dFdrG_da6WWIV_zAKpj-Oq9OHI",
+    },
+    { channelTitle : "Art Institute Chicago",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "14CI6-BLCK8rN88q1E8_HzAJX2O4N8liH",
+    },
+    { channelTitle : "Chicago Botanic Garden",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "13MR-zF0RgRApeAD-RNY-nTZATzrhUoH0",
+    },
+    { channelTitle : "Brookfield Zoo",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "18or-3ae4GWE1t8L8V0HrwQ2TsEuTYmM5",
+    },
+    { channelTitle : "Golden Apples",
+      playlistId : "PL8jD_SDw-fZqzl-nvDm_j-rkgftFwsy0V",
+      image_id: "1EROOFcwtSbzt9OixaLV8fbWJYsqygSa5",
+    },
   ];
 
 
@@ -197,11 +227,7 @@ function HomeScreen({ navigation }) {
           flex: 1, alignItems: 'center', justifyContent: 'center',
         }}>
           <View style={[styles.centerColumn, {width: SCREEN_WIDTH}]}>
-            <Image
-              source={require("../assets/images/PR_logo.png")}
-              style={{width: 35, height: 35}}
-              resizeMode={"contain"}
-            />
+            <HeaderLogo />
           </View>
         </Animated.View>
 
@@ -248,10 +274,10 @@ function HomeScreen({ navigation }) {
 
           {/* Banner showing the logo for each sponsor */}
           <View>
-            <Text style={[styles.subheader_text, {textAlign: 'center'}]}>in collaboration with</Text>
+            <Text style={[styles.subheader_text, {textAlign: 'center'}]}>Partners:</Text>
             {isBusy ? (<View/>) : (
             <SponsorBanner
-              image_ids={image_ids}
+              // image_ids={image_ids}
               channels={channels}
               navigation={navigation}
               shuffle={true}
@@ -264,9 +290,13 @@ function HomeScreen({ navigation }) {
             <View style={{ paddingRight: 25, width: "100%" }}>
               <TouchableOpacity
                 activeOpacity = {0.5}
-                onPress={() => navigation.navigate('Logo Screen', { image_ids, channels })}
+                onPress={() => navigation.navigate('Logo Screen', { /*image_ids,*/ channels })}
+                {...setTestID("home_viewAllLogos")}
               >
-                <Text style={[styles.body_text, { width: "100%", textAlign: "right" }]} >
+                <Text
+                  style={[styles.body_text, { width: "100%", textAlign: "right" }]}
+                  {...setTestID("home_viewAllLogosText")}
+                >
                   View All {"\u00BB"}
                 </Text>
               </TouchableOpacity>

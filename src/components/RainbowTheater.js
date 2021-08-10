@@ -57,6 +57,7 @@ function RainbowTheater(props) {
         <View style={{alignItems: 'center'}}>
           { activeProps == null ?
             <View style={{height: 260, width: 340}}>
+              {/*<Image"../components/RainbowTheater.js";*/}
               <Image
                 style={styles.regLogo}
                 source={require('../assets/images/rainbow.jpg')}

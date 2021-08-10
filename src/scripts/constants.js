@@ -6,6 +6,7 @@ import { StyleSheet } from 'react-native';
 // more info here: https://docs.expo.io/guides/environment-variables/
 // const API_KEY = process.env.EXPO_CCMA_YT_API_KEY;
 export const api_key = "AIzaSyC-x97X1_c0_zTo2LbfgqNXRemFoDRJ404"; // dummy value to build
+// export const api_key = "AIzaSyAvJKBDG3iziQ-oyIG5gch4P6qPfDj69tg";  // dummy value to build
 
 // The spacing between two icons in the sponsor bar
 export const SPONSOR_LOGO_SPACING = 10;
@@ -449,6 +450,10 @@ export const styles = StyleSheet.create({
     width: 320,
     height: 150,
   },
+  headerLogo: {
+    width: 35,
+    height: 35,
+  },
   sponsorLogo: {
     margin: SPONSOR_LOGO_SPACING / 2,
   },
@@ -461,6 +466,7 @@ export const styles = StyleSheet.create({
   regLogo2: {
     width: 340,
     height: 270,
+    borderRadius:20,
     marginRight: 10,
     marginLeft: 10
   },
@@ -524,14 +530,15 @@ export const styles = StyleSheet.create({
     marginLeft:10,
     marginRight:10,
     backgroundColor: PALETTE.red.light,
+    // backgroundColor: PALETTE.blue.light,
     borderRadius:20,
-    borderWidth: 1,
-    borderColor: '#000',
+    borderWidth: 0,
+    borderColor: PALETTE.black.normal,
     paddingLeft:10,
     paddingRight:10,
   },
   icon : {
-    color: "#000000"
+    color: PALETTE.black.normal
   },
   searchColor: {
     backgroundColor: PALETTE.back.light, //#ADD8E6
