@@ -35,7 +35,7 @@ function FeaturedBanner(props) {
     var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
     axios({
       "method": "GET",
-      "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text
+      "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,status%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text
     })
     .then((response) => {
 
@@ -45,7 +45,12 @@ function FeaturedBanner(props) {
       }
 
       // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
-      let videoArray = response.data.items.map(video => {
+      let videoArray = response.data.items
+      .filter(video => {
+        // Filter out videos marked as Private
+        return video.status.privacyStatus != "private";
+      })
+      .map(video => {
         let date = new Date(video.contentDetails.videoPublishedAt);
 
         // Store the description because that could help with the curriculum
