@@ -20,7 +20,7 @@ import { setTestID } from '../utils/testUtils.js';
 function HomeScreen({ navigation }) {
 
   // Logic to maintain state of search text
-  const [isBusy, setBusy] = useState(true);
+  // const [isBusy, setBusy] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [dateInfo, setDateInfo] = useState({
     dateRestriction : "Anytime",
@@ -50,26 +50,26 @@ function HomeScreen({ navigation }) {
     { channelTitle : "Brookfield Zoo",
        channelImage : require('../assets/images/BrookfieldZoo.png'),
        playlistId : "PL8GKxgb3LyNcB01ujLEDS1NH27YqYsOmD",
-     },
-     { channelTitle : "National Museum of Mexican Art",
-       channelImage : require('../assets/images/MuseumofMexicanArt.png'),
-      playlistId : "PL8GKxgb3LyNfBnnwR6pc6JHZUIFLlg-rK",
-     },
-     { channelTitle : "Forest Preserves of Cook County",
-       channelImage : require('../assets/images/ForestPreserves.png'),
-       playlistId : "PL8GKxgb3LyNc82LsEdPhrK96Kj704RQ8k",
-     },
-     { channelTitle : "Chicago Children's Museum",
+    },
+    {  channelTitle : "Chicago Children's Museum",
        channelImage : require('../assets/images/ChildrensMuseum.png'),
        playlistId : "PL8GKxgb3LyNfoqt77eaW6N6smu75evr5Q",
-     },
-   ];
+    },
+    {  channelTitle : "Forest Preserves of Cook County",
+       channelImage : require('../assets/images/ForestPreserves.png'),
+       playlistId : "PL8GKxgb3LyNc82LsEdPhrK96Kj704RQ8k",
+    },
+    {  channelTitle : "National Museum of Mexican Art",
+       channelImage : require('../assets/images/MuseumofMexicanArt.png'),
+       playlistId : "PL8GKxgb3LyNfBnnwR6pc6JHZUIFLlg-rK",
+    },
+  ];
 
-   const image_ids = [
+  const image_ids = [
     require('../assets/images/BrookfieldZoo.png'),
-    require('../assets/images/MuseumofMexicanArt.png'),
-    require('../assets/images/ForestPreserves.png'),
     require('../assets/images/ChildrensMuseum.png'),
+    require('../assets/images/ForestPreserves.png'),
+    require('../assets/images/MuseumofMexicanArt.png'),
   ];
   
   // Channel id for the CCB user's channel 
@@ -358,7 +358,7 @@ function HomeScreen({ navigation }) {
           {/* Banner showing the logo for each sponsor */}
           <View>
             <Text style={[styles.subheader_text, {textAlign: 'center'}]}>Partners:</Text>
-            {isBusy ? (<View/>) : (
+            {/*{isBusy ? (<View/>) : (*/}
             <SponsorBanner
               image_ids={image_ids}
               channels={channelArray}
@@ -369,7 +369,8 @@ function HomeScreen({ navigation }) {
               onRelease={onRelease}
               parentScrolling={isScrolling}
               imageRatio={RATIOS.sponsors}
-            /> )}
+            />
+            {/*)}*/}
             <View style={{ paddingRight: 25, width: "100%" }}>
               <TouchableOpacity
                 activeOpacity = {0.5}
