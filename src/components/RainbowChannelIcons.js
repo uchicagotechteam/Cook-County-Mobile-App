@@ -310,30 +310,6 @@ class RainbowChannelIcons extends React.Component {
     return options.map(this.renderVideo)
   }
 
-  testVideoArray() {
-    var options = [
-    { videoId: "181Nj060xMQ",
-      title: "Test video 1",
-      date: 1,
-      duration: "1:00",
-      description: "This is a test video"
-    },
-    { videoId: "oQLJqMquGEw",
-      title: "Test video 2",
-      date: 1,
-      duration: "1:00",
-      description: "This is another test video"
-    },
-    { videoId: "vgYQglmYU-8",
-      title: "Test video 3",
-      date: 1,
-      duration: "1:00",
-      description: "This is yet another test video"
-    }];
-
-    return options.map(this.renderVideo);
-  }
-
   renderVideo(videoInfo, index) {
 
     return (
