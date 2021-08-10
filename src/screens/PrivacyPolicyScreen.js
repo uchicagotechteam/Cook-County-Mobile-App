@@ -1,49 +1,184 @@
 import * as React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useState, useCallback } from "react";
 import { styles } from '../scripts/constants.js';
 
 function PrivacyPolicyScreen() {
   return (
-    <ScrollView style={{height: '100%', width: '90%'}}>
-      <Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <View style={{alignItems: 'center'}}>
+      <ScrollView style={{height: '100%', width: '90%', textAlign: "center"}}>
+        <Text>
+        {`Last modified: August 9, 2021
+        
+Introduction
 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+County of Cook, Illinois, a body politic and corporate of the State of Illinois, by and through the
+Office of the Cook County Board President ("Cook County" or "We") respect your privacy and
+are committed to protecting it through our compliance with this policy. This policy describes:
 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+`}
 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<View style={{flexDirection: 'row'}}>
+    <Text>{'\u2022'}</Text>
+    <Text style={{flex: 1, paddingLeft: 5}}>{`The types of information we may collect or that you may provide when you download,
+    install, access, or use the Project Rainbow App (the "App").`}</Text>
+</View>
+{`\t• Our practices for collecting, using, maintaining, protecting, and disclosing that
+information.
+This policy applies only to information we collect in this App, and in email, text, and other
+electronic communications sent through or in connection with this App.
+This policy DOES NOT apply to information that:
+\t• We collect offline or on any other Cook County apps or websites, including websites you
+may access through this App.
+\t• You provide to or is collected by any third party (see Third-Party Information
+Collection).
+Our websites and apps, and these other third parties, have their own privacy policies, which we
+encourage you to read before providing information on or through them.
+Please read this policy carefully to understand our policies and practices regarding your
+information and how we will treat it. If you do not agree with our policies and practices, do not
+download, register with, or use this App. By downloading, registering with, or using this App,
+you agree to this privacy policy. This policy may change from time to time (see Changes to Our
+Privacy Policy). Your continued use of this App after we revise this policy means you accept
+those changes, so please check the policy periodically for updates.`}
+</Text>
+<Text style={{textDecorationLine: 'underline'}}>
+Children Under the Age of 16
+</Text>
+<Text>
+{`The App is not intended for children under 16 years of age except under parental supervision,
+and we do not knowingly collect personal information from children under 16. If we learn we
+have collected or received personal information from a child under 16 without verification of
+parental consent, we will delete that information. If you believe we might have any information
+from or about a child under 16, please contact us at rainbow@cookcountyil.gov.
+Information We Collect and How We Collect It
+We collect information from and about users of our App:
+ Automatically when you use the App.
+Information You Provide to Us
+When you download, register with, or use this App, we may collect information about you but
+individually does not identify you such as information gathered for data analytics purposes, or
+information that you provide to us such as through email to rainbow@cookcountyil.gov.
+This information includes:
 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+ Information that you provide by filling in forms in the App. This includes information
+provided at the time of registering to use the App. We may also ask you for information
+when you report a problem with the App.
+ Records and copies of your correspondence (including email addresses and phone
+numbers), if you contact us.
+ Your search queries on the App.
+Automatic Information Collection and Tracking
+When you download, access, and use the App, it may use technology to automatically collect:
+ Usage Details. When you access and use the App, we may automatically collect certain
+details of your access to and use of the App, including traffic data, location data, logs,
+and other communication data and the resources that you access and use on or through
+the App.
+ Device Information. We may collect information about your mobile device and internet
+connection, including the device&#39;s unique device identifier, IP address, operating system,
+browser type, mobile network information, and the device&#39;s telephone number.
+ Stored Information and Files. The App also may access metadata and other information
+associated with other files stored on your device.
+ Location Information. This App does not collect real-time information about the location
+of your device.
+If you do not want us to collect this information do not download the App or delete it from your
+device.
+Information Collection and Tracking Technologies
+The technologies we use for automatic information collection may include:
+ Cookies (or mobile cookies). A cookie is a small file placed on your smartphone or other
+mobile device. It may be possible to refuse to accept mobile cookies by activating the
+appropriate setting on your smartphone. However, if you select this setting you may be
+unable to access certain parts of our App.
+ Web Beacons. Pages of the App and our emails may contain small electronic files known
+as web beacons (also referred to as clear gifs, pixel tags, and single-pixel gifs) that permit
+Cook County, for example, to count users who have visited those pages and for other
+related app statistics (for example, recording the popularity of certain app content and
+verifying system and server integrity).
+Third-Party Information Collection
+When you use the App or its content, certain third parties may use automatic information
+collection technologies to collect information about you or your device. These third parties may
+include:
+ Advertisers, ad networks, and ad servers.
+ Analytics companies.
+ Your mobile device manufacturer.
+ Your mobile service provider.
+These third parties may use tracking technologies to collect information about you when you use
+this app. The information they collect may be associated with your personal information or they
 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </Text>
-    </ScrollView>
+may collect information, including personal information, about your online activities over time
+and across different websites, apps, and other online services websites. They may use this
+information to provide you with interest-based (behavioral) advertising or other targeted content.
+We do not control these third parties&#39; tracking technologies or how they may be used. If you have
+any questions about an advertisement or other targeted content, you should contact the
+responsible provider directly.
+How We Use Your Information
+We use information that we collect about you or that you provide to us, including any personal
+information, to:
+ Provide you with the App and its contents.
+ Fulfill any other purpose for which you provide it.
+The usage information we collect helps us to improve our App and to deliver a better and more
+personalized experience by enabling us to:
+ Estimate our audience size and usage patterns.
+ Store information about your preferences, allowing us to customize our App according to
+your individual interests.
+ Speed up your searches.
+ Recognize you when you use the App.
+For more information, see Your Choices About Our Collection, Use, and Disclosure of Your
+Information.
+Disclosure of Your Information
+We may disclose aggregated information about our users, and information that does not identify
+any individual or device, without restriction.
+In addition, we may disclose personal information that we collect or you provide:
+ To contractors, service providers, and other third parties we use to support our website
+and app.
+ To fulfill the purpose for which you provide it. For example, if you gave us an email
+address to use an "email a friend" feature on our Website or App, we would transmit the
+contents of that email and your email address to the recipients.
+ For any other purpose disclosed by us when you provide the information.
+ With your consent.
+ To comply with any court order, law, or legal process, including to respond to any
+government or regulatory request.
+ To enforce our rights arising from any contracts entered into between you and us,
+including the App EULA, and for billing and collection.
+ If we believe disclosure is necessary or appropriate to protect the rights, property, or
+safety of Cook County, or others.
+Your Choices About Our Collection, Use, and Disclosure of Your Information
+We strive to provide you with choices regarding the personal information you provide to us. This
+section describes mechanisms we provide for you to control certain uses and disclosures of your
+information.
+
+ Tracking Technologies. You can set your browser to refuse all or some browser cookies,
+or to alert you when cookies are being sent. If you disable or refuse cookies or block the
+use of other tracking technologies, some parts of the App may then be inaccessible or not
+function properly.
+We do not control third parties&#39; collection or use of your information to serve interest-based
+advertising. However, these third parties may provide you with ways to choose not to have your
+information collected or used in this way. You can opt out of receiving targeted ads from
+members of the Network Advertising Initiative ("NAI") on the NAI&#39;s website.
+Accessing and Correcting Your Personal Information
+You may also send us an email at rainbow@cookcountyil.gov to request access to, correct, or
+delete any personal information that you have provided to us. We may not accommodate a
+request to change information if we believe the change would violate any law or legal
+requirement or cause the information to be incorrect.
+Data Security
+We have implemented measures designed to secure your personal information from accidental
+loss and from unauthorized access, use, alteration, and disclosure. The safety and security of
+your information also depends on you. Where we have given you (or where you have chosen) a
+password for access to certain parts of our App, you are responsible for keeping this password
+confidential. We ask you not to share your password with anyone. Unfortunately, the
+transmission of information via the internet and mobile platforms is not completely secure.
+Although we do our best to protect your personal information, we cannot guarantee the security
+of your personal information transmitted through our App. Any transmission of personal
+information is at your own risk. We are not responsible for circumvention of any privacy settings
+or security measures we provide.
+Changes to Our Privacy Policy
+We may update our privacy policy from time to time. If we make material changes to how we
+treat our users&#39; personal information, we will post the new privacy policy on this page with a
+notice that the privacy policy has been updated. The date the privacy policy was last revised is
+identified at the top of the page.
+Contact Information
+To ask questions or comment about this privacy policy and our privacy practices, contact us at:
+rainbow@cookcountyil.gov.`}
+        </Text>
+      </ScrollView>
+    </View>
   )
 }
 

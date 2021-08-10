@@ -271,6 +271,12 @@ function HomeScreen({ navigation }) {
                 </Text>
               </TouchableOpacity>
             </View>
+            <RoundedButton
+              onPress={() => navigation.navigate('Privacy Screen')}
+              buttonStyle={styles.mainButtonStyle}
+              textStyle={styles.mainButtonText}
+              text={"Privacy Policy"}
+            />
           </View>
 
           {/*<DividerLine color="blue" style={{ marginVertical: 0 }} />*/}
