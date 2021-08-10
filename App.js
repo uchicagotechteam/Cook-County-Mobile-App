@@ -7,6 +7,7 @@ import BaseScreen from "./src/screens/BaseScreen.js";
 import HomeScreen from "./src/screens/HomeScreen.js";
 import OrgScreen  from "./src/screens/OrgScreen.js";
 import LogoScreen from "./src/screens/LogoScreen.js";
+import PrivacyPolicyScreen from "./src/screens/PrivacyPolicyScreen.js";
 
 import { theme, styles } from './src/scripts/constants.js'
 import withSplashScreen from './src/components/withSplashScreen';
@@ -42,6 +43,13 @@ function App() {
               source={require('./src/assets/images/PR_logo.png')} 
         />
         </View>, headerStyle: styles.searchColor, cardStyle: styles.backColor}} 
+        />
+        <Stack.Screen name="Privacy Screen" component={PrivacyPolicyScreen} options={{ headerTitleAlign: 'center', headerTitle: () => <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+          <Image
+              style={{ width: 22, height: 30}}
+              source={require('./src/assets/images/PR_logo.png')}
+        />
+        </View>, headerStyle: styles.searchColor, cardStyle: styles.backColor}}
         />
       </Stack.Navigator>
     </NavigationContainer>
