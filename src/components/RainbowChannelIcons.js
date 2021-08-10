@@ -296,7 +296,11 @@ class RainbowChannelIcons extends React.Component {
 
     // If no videos passed all filters, return a filler text component
     if (options.length <= 0) {
-      return (<Text style={styles.emptySearch}>No videos match your search</Text>)
+      return (
+        <Text style={[styles.emptySearch, { width: this.width - 2*this.padding }]}>
+          No videos match your search
+        </Text>
+      );
     }
 
     // Save the display results into the options array
