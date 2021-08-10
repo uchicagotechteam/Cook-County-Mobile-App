@@ -7,9 +7,9 @@ function LicenseAgreementScreen() {
   return (
     <View style={{alignItems: 'center'}}>
       <ScrollView style={{height: '100%', width: '90%', textAlign: "center"}}>
-        <Text>
-        {`Mobile Application End User License Agreement
+        <Text style={{textAlign: "center"}}>{"Mobile Application End User License Agreement"}</Text>
 
+        <Text>{`
           This Mobile Application End User License Agreement ("Agreement") is a binding agreement between you ("End User" or "you") and the County of Cook, Illinois, a body politic and corporate of the State of Illinois, by and through the Office of the Cook County Board President ("Cook County"). This Agreement governs your use of the Project Rainbow App on the GOOGLE PLAY STORE, (including all related documentation, the "Application"). The Application is licensed, not sold, to you.
 
           BY CLICKING THE "AGREE" BUTTON BELOW OR DOWNLOADING/ INSTALLING/ USING THE APPLICATION, YOU (A) ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTAND THIS AGREEMENT; (B) REPRESENT THAT YOU ARE 18 YEARS OF AGE OR OLDER; AND (C) ACCEPT THIS AGREEMENT AND AGREE THAT YOU ARE LEGALLY BOUND BY ITS TERMS. IF YOU DO NOT AGREE TO THESE TERMS, DO NOT DOWNLOAD/ INSTALL/USE THE APPLICATION AND DELETE IT FROM YOUR MOBILE DEVICE IF ALREADY DOWNLOADED.
@@ -211,7 +211,7 @@ function LicenseAgreementScreen() {
         <Text>
         {`. No failure to exercise, and no delay in exercising, on the part of either party, any right or any power hereunder shall operate as a waiver thereof, nor shall any single or partial exercise of any right or power hereunder preclude further exercise of that or any other right hereunder. In the event of a conflict between this Agreement and any applicable purchase or other terms, the terms of this Agreement shall govern.`}
         </Text>
-        
+
       </ScrollView>
     </View>
   )
