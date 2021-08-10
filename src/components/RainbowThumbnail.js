@@ -4,6 +4,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import {getYoutubeMeta} from 'react-native-youtube-iframe';
 import { Dimensions } from 'react-native';
 import { AsyncStorage } from 'react-native';
+// import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import { useState } from "react";
 import ProgressBar from 'react-native-progress/Bar';
 import AdjustableText from "../components/AdjustableText.js";
@@ -106,6 +107,33 @@ class RainbowThumbnail extends React.Component {
         this.setState({finished : true, progressFraction : 1.0})
       }
     });
+
+    // // Load async playtime data
+    // const getData = async() => {
+
+    //   // Try and load the play time from async storage
+    //   try {
+    //     const storedTime = await AsyncStorage.getItem(storageTime);
+    //     if(storedTime == null || (storedTime != "atEnd" && parseInt(storedTime) == 0)){
+    //       this.setState({inProgress : false});
+    //     }
+    //     else if(storedTime != "atEnd"){
+    //       let curTime = parseInt(storedTime);
+    //       var progressFraction =  curTime / this.parseDuration();
+    //       this.setState({inProgress : true, progressFraction : progressFraction});
+    //     }
+    //     else if(storedTime == "atEnd"){
+    //       this.setState({finished : true, progressFraction : 1.0})
+    //     }
+
+    //   }
+
+    //   // If it fails, just assume no progress
+    //   catch (e) {
+    //     this.setState({inProgress : false});
+    //   }
+    // }
+    
     getYoutubeMeta(this.props.videoId).then(meta => {
         this.setState({thumbnail : meta.thumbnail_url});
     });
@@ -128,6 +156,27 @@ class RainbowThumbnail extends React.Component {
           this.setState({finished : true, progressFraction : 1.0})
         }
       });
+
+      // // Load async playtime data
+      // const getData = async() => {
+      //   try {
+      //     const storedTime = await AsyncStorage.getItem(storageTime);
+      //     if (storedTime == null || (storedTime != "atEnd" && parseInt(storedTime) == 0)) {
+      //       this.setState({inProgress : false});
+      //     }
+      //     else if (storedTime != "atEnd") {
+      //       let curTime = parseInt(storedTime);
+      //       var progressFraction =  curTime / this.parseDuration();
+      //       this.setState({inProgress : true, progressFraction : progressFraction});
+      //     }
+      //     else if (storedTime == "atEnd") {
+      //       this.setState({finished : true, progressFraction : 1.0})
+      //     }
+      //   }
+      //   catch (e) {
+      //     this.setState({inProgress : false});
+      //   }
+      // }
     }
   }
 
