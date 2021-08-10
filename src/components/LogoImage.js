@@ -43,8 +43,11 @@ function get_dimensions(props) {
 function LogoImage(props) {
 
   // Get the link to the image
-  const image_id = getPropRequired(props, "imageId", "LogoImage");
-  const uri = "https://drive.google.com/thumbnail?id=" + image_id;
+  // const image_id = getPropRequired(props, "imageId", "LogoImage");
+  // const uri = "https://drive.google.com/thumbnail?id=" + image_id;
+  const source = getPropRequired(props, "source", "LogoImage");
+
+  console.log("Logo source: ", source);
 
   // Get various props
   const resize_mode = getPropDefault(props, "resizeMode", "contain");
@@ -66,14 +69,14 @@ function LogoImage(props) {
       <TouchableOpacity
         activeOpacity = { .5 } onPress={ () => navigation.navigate('Org', nav_params) }
       >
-        <Image style={ [style, dimensions] } source={{ uri }} resizeMode={ resize_mode } />
+        <Image style={ [style, dimensions] } source={ source } resizeMode={ resize_mode } />
       </TouchableOpacity>
     );
   }
 
   // Otherwise, just return the Image component itself
   return (
-    <Image style={ [style, dimensions] } source={{ uri }} resizeMode={ resize_mode } />
+    <Image style={ [style, dimensions] } source={ source } resizeMode={ resize_mode } />
   );
 }
 

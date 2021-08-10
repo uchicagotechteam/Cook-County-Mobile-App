@@ -378,6 +378,21 @@ export const styles = StyleSheet.create({
 
 export const styles = StyleSheet.create({
 
+  org_title: {
+    // fontFamily: 'Montserrat, sans-serif',
+    // fontFamily: 'Montserrat_700Regular, sans-serif',
+    fontWeight: 'bold',
+    fontSize: 28,
+    color: PALETTE.text.dark,
+    textAlign: 'center',
+  },
+
+  logo_org: {
+    height: 100,
+    width: 150,
+    padding: 2,
+  },
+
   header_text: {
     // fontFamily: 'Montserrat, sans-serif',
     // fontFamily: 'Montserrat_700Regular, sans-serif',

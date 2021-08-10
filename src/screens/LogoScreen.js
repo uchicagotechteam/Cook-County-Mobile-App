@@ -33,6 +33,29 @@ const MARGIN = 6;
 // 	};
 // }
 
+// function renderLogo(navigation, route, width) {
+// 	return (image_id, index) => {
+
+// 	  // Get the URI
+// 	  //var uri = "https://drive.google.com/thumbnail?id=" + image_id;
+// 	  const orgChannels = route.params.channels;
+// 	  var orgIdx = index > orgChannels.length ? index % orgChannels.length : index;
+// 	  const orgChannel = orgChannels[orgIdx];
+// 	  // Return an image with the appropriate dimensions and source URL
+// 	  return (
+// 	    <View key={`grid_item_${image_id}_${index}`} style={{marginVertical: MARGIN/2}}>
+// 	      <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org', {orgChannel},) }>
+// 	        <Image
+// 	          style={{width: width, height: width / RATIOS.sponsors}}
+// 	          source={image_id}
+// 	          resizeMode={"contain"}
+// 	        />
+// 	      </TouchableOpacity>
+// 	    </View>
+// 	  );
+// 	};
+// }
+
 // Produces a mappable function that will render an image from its ID
 function renderLogo(width) {
 	return (channel, index) => {
@@ -43,7 +66,7 @@ function renderLogo(width) {
 				style={{marginVertical: MARGIN/2}}
 				{ ...setTestID(`logo_gridItem_${index}`) }
 	    >
-	      <LogoImage imageId={channel.image_id} width={width} navParams={{channel}} />
+	      <LogoImage source={channel.channelImage} width={width} navParams={{channel}} />
 	    </View>
 	  );
 	};
@@ -66,7 +89,6 @@ function LogoScreen({ route, navigation }) {
 			{ ...setTestID("pageLogoScreen") }
 		>
 			<View style={styles.logoScreenContainer}>
-				{ route.params.image_ids.map(renderLogo(navigation, route, item_width)) }
 				{ route.params.channels.map( renderLogo(item_width) ) }
 			</View>
 		</ScrollView>

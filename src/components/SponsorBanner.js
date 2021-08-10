@@ -22,7 +22,7 @@ function shuffleLogos(array) {
     array_copy[j] = temp;
   }
   return array_copy;
-}
+}     
 
 // Given the navigation item, create a function that will render an individual logo
 
@@ -40,8 +40,26 @@ function shuffleLogos(array) {
 // =======
 // >>>>>>> merge_main_and_sponsor_page
 
+
+// function renderLogo(navigation, image_ratio, props) {
+//   //const orgChannels = getPropRequired(props, "channels", "SponsorBanner");
+//   //const orgChannels = props.channels;
+//   //var orgChannel = orgChannels[1];
+//   return (image_id, index, width) => {
+//     const orgChannels = props.channels;
+//     var orgIdx = index > orgChannels.length ? index % orgChannels.length : index;
+//     //const orgChannel = orgChannels[orgIdx];
+//     const orgMatch = orgChannels.filter(videoObject => videoObject.channelImage.toString() == image_id.toString());
+//     const orgChannel = orgMatch[0];
+    
+//     // Get the URI
+//     //var uri = "https://drive.google.com/thumbnail?id=" + image_id;
+
 function renderLogo(image_ratio) {
+  console.log("Making render logo function...");
   return (channel, index, width) => {
+
+    console.log("Channel: ", channel);
 
     // Compute the dimensions of each icon using the width and the spacing between them
     var dim = width - SPONSOR_LOGO_SPACING;
@@ -54,13 +72,43 @@ function renderLogo(image_ratio) {
         {...setTestID(`sponsorBannerItem${index}`)}
       >
         <LogoImage
-          imageId={channel.image_id} navParams={{channel}}
+          source={channel.channelImage} navParams={{channel}}
           width={dim} imageRatio={image_ratio} style={styles.sponsorLogo}
         />
       </View>
     );
   }
 }
+
+// // Given the navigation item, create a function that will render an individual logo
+// function renderLogo(navigation, image_ratio, props) {
+//   const orgChannels = getPropRequired(props, "channels", "SponsorBanner");
+//   const orgChannel = orgChannels[1];
+//   return (image_id, index, width) => {
+//     console.log(index)
+//     //var orgChannel = orgChannels[index];
+//     //console.log("render")
+//   //console.log(orgChannel);
+//     // Get the URI
+//     var uri = "https://drive.google.com/thumbnail?id=" + image_id;
+
+//     // Compute the dimensions of each icon using the width and the spacing between them
+//     var dim = width - SPONSOR_LOGO_SPACING;
+
+//     // Return an image with the appropriate dimensions and source URL
+//     return (
+//       <View key={`${image_id} - ${index}`}>
+//         <TouchableOpacity activeOpacity = { .5 } onPress={ () => navigation.navigate('Org', {orgChannel,}) }>
+//           <Image
+//             style={[styles.sponsorLogo, {width: dim, height: dim / image_ratio}]}
+//             source={{ uri }}
+//             resizeMode={"contain"}
+//           />
+//         </TouchableOpacity>
+//       </View>
+//     );
+//   }
+// }
 
 
 // Wrapper component for a rounded button 

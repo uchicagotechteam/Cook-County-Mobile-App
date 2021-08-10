@@ -26,11 +26,33 @@ export default function LogoTitle(props) {
 
   return (
     <View style={[{alignItems: "center", width: "100%"}, style]}>
-      <LogoImage imageId={image_id} width={175} clickable={false} />
-      <AdjustableText
-        text=<Text>{title}</Text>
-        fontSize={30} maxHeight={60}
-      />
+      <LogoImage source={props.channel.channelImage} width={175} clickable={false} />
+      {/*<Image
+        style={styles.logo}
+        source={props.channel.channelImage }  
+      />*/}
+      <Text style={styles.header_text}>
+           {props.channel.channelTitle}                              
+      </Text>
+    </View>
+  );
+
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.row}>
+      <View style={styles.column1}>
+        <Image
+          style={styles.logo}
+          source={props.channel.channelImage }  
+        />
+        </View>
+        <View style={styles.column2}>
+        <Text style={styles.header_text}>
+             {props.channel.channelTitle}                              
+        </Text>
+         </View>
+      </View>
     </View>
   );
 
