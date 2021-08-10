@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import axios from 'axios';
 import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, TouchableHighlight, AsyncStorage} from 'react-native';
 import { styles, api_key } from '../scripts/constants.js'
-import LogoTitle from '../components/LogoTitle.js';
+// import LogoTitle from '../components/LogoTitle.js';
 import LogoImage from '../components/LogoImage.js';
 import SearchArea from '../components/SearchArea';
 import ChannelCollectionOrg from "../components/ChannelCollectionOrg.js";
@@ -25,8 +25,9 @@ var channel = route.params.channel;
 //const index = route.params.index;
 //var orgIdx = index > orgChannels.length ? index % orgChannels.length : index;
 //channel= channel[orgIdx];
-// console.log("FINALLY!!!");
-// console.log(channel);
+
+  // console.log("FINALLY!!!");
+  // console.log(channel);
   const [isBusy, setBusy] = useState(true);
 	const [searchText, setSearchText] = useState("");
   const [searchActive, setSearchActive] = useState(false);
