@@ -27,6 +27,9 @@ function FeaturedBanner(props) {
     playlistId : "PL8GKxgb3LyNfMyc2RdPDseNYZeyHF3CN8",
   };
 
+  // Get the navigation item from the props
+  const navigation = getPropRequired(props, "navigation", "FeaturedBanner");
+
   // logic to fetch data from youtube api
   const fetchData = function(playlistId, index, localVideoArrays, pageToken) {
     var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
@@ -35,6 +38,7 @@ function FeaturedBanner(props) {
       "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text
     })
     .then((response) => {
+
       var nextPageToken = null;
       if(response.data.nextPageToken != undefined && response.data.nextPageToken != null){
         nextPageToken = response.data.nextPageToken;
@@ -76,7 +80,9 @@ function FeaturedBanner(props) {
     })
   }
 
-  fetchData(channel.playlistId, 0, [], null);
+  useEffect(() => {
+    fetchData(channel.playlistId, 0, [], null);
+  }, []);
 
   // Return the object
   return (
@@ -87,6 +93,7 @@ function FeaturedBanner(props) {
       showViewAll={false}
       videoArray={videoArray}
       imageRatio={image_ratio}
+      navigation={navigation}
     />
   );
 }

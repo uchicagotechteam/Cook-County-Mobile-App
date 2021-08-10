@@ -35,7 +35,7 @@ class RainbowChannelIcons extends React.Component {
     this.width = getPropDefault(props, "width", SCREEN_WIDTH);
 
     // Get the navigation item from the props
-    this.navigation = getPropDefault(props, "navigation", "RainbowChannel");
+    this.navigation = getPropRequired(props, "navigation", "RainbowChannelIcons");
 
     // Get whether there should be a "view all" option
     this.show_view_all = getPropDefault(props, "showViewAll", true);
