@@ -271,18 +271,6 @@ function HomeScreen({ navigation }) {
                 </Text>
               </TouchableOpacity>
             </View>
-            <RoundedButton
-              onPress={() => navigation.navigate('License Screen')}
-              buttonStyle={styles.mainButtonStyle}
-              textStyle={styles.mainButtonText}
-              text={"License Screen"}
-            />
-            <RoundedButton
-              onPress={() => navigation.navigate('Privacy Screen')}
-              buttonStyle={styles.mainButtonStyle}
-              textStyle={styles.mainButtonText}
-              text={"Privacy Screen"}
-            />
           </View>
 
           {/*<DividerLine color="blue" style={{ marginVertical: 0 }} />*/}
@@ -317,6 +305,18 @@ function HomeScreen({ navigation }) {
           imageRatio={RATIOS.channels}
         />
       </ScrollView>
+      <RoundedButton
+        onPress={() => navigation.navigate('License Screen')}
+        buttonStyle={styles.mainButtonStyle}
+        textStyle={styles.mainButtonText}
+        text={"License Screen"}
+      />
+      <RoundedButton
+        onPress={() => navigation.navigate('Privacy Screen')}
+        buttonStyle={styles.mainButtonStyle}
+        textStyle={styles.mainButtonText}
+        text={"Privacy Screen"}
+      />
     </View>
   );
 }
