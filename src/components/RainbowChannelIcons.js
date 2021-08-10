@@ -69,7 +69,7 @@ class RainbowChannelIcons extends React.Component {
     // Set the card dimensions
     // TODO: Experimentally, the text below the video image is about 80 in height,
     //       but this is a bad long-term solution!
-    this.card_height = getPropDefault(props, "cardHeight", dim / this.image_ratio + 80);
+    this.card_height = getPropDefault(props, "cardHeight", dim / this.image_ratio + 90);
     this.card_width  = getPropDefault(props, "cardWidth",  dim);
 
     // Constant hardcoding the keys in each video's object which will be targetted by the search

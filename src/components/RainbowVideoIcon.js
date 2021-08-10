@@ -184,7 +184,7 @@ class RainbowVideoIcon extends React.Component {
                 : this.props.title
             }
           </Text>
-          <Text style={styles.body_text}>{this.props.duration}</Text>
+          {/*<Text style={styles.body_text}>{this.props.duration}</Text>*/}
         </View>
       </View>
     );
