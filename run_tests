@@ -4,12 +4,12 @@ while getopts d:s: flag
 do
     case "${flag}" in
         d) devices=${OPTARG};;
-	t) series=${OPTARG};;
+	s) series=${OPTARG};;
     esac
 done
 
 echo "Devices: $devices";
-echo "Test Series: $test-series";
+echo "Test Series: $series";
 
-appcenter test run espresso --app "project-rainbow/Project-Rainbow" --devices $devices --app-path android/app/build/outputs/apk/debug/app-debug.apk --test-series "$series" --locale "en_US" --build-dir android/app/build/outputs/apk/androidTest/debug/
+appcenter test run espresso --app "project-rainbow/Project-Rainbow" --devices $devices --app-path android/app/build/outputs/apk/debug/app-debug.apk --test-series $series --locale "en_US" --build-dir android/app/build/outputs/apk/androidTest/debug/
 
