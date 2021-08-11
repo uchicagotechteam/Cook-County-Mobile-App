@@ -77,7 +77,7 @@ function HomeScreen({ navigation }) {
        playlistId : "PL8GKxgb3LyNcBU5mOtyhyhpWlXkP-iHxI",
     },
     {  channelTitle : "Museum of Contemporary Art Chicago",
-       channelImage : require('../assets/images/mca.png'),  
+       channelImage : require('../assets/images/mca.jpg'),
        playlistId : "PL8GKxgb3LyNfQ8wz4GaXKXc8qhn0qthx_",
     }
   ];
@@ -90,7 +90,7 @@ function HomeScreen({ navigation }) {
     require('../assets/images/PR_logo_name.png'),
     require('../assets/images/ChicagoSymphony.png'),
     require('../assets/images/BotanicGarden.png'),
-    require('../assets/images/mca.png')
+    require('../assets/images/mca.jpg')
   ];
   
   // Channel id for the CCB user's channel 
