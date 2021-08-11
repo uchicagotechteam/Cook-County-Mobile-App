@@ -27,14 +27,14 @@ function RainbowTheater(props) {
     setDateInfo({dateRestriction, afterDate, beforeDate});
   }, []);
 
-  React.useLayoutEffect(() => {
-    props.navigation.setOptions({
-      headerRight: () => (
-        <ToggleSearch onPress={active => {setSearchActive(active);}} />
-      ),
-      title: props.channelTitle,
-    });
-  }, [props.navigation]);
+  // React.useLayoutEffect(() => {
+  //   props.navigation.setOptions({
+  //     headerRight: () => (
+  //       <ToggleSearch onPress={active => {setSearchActive(active);}} />
+  //     ),
+  //     title: props.channelTitle,
+  //   });
+  // }, [props.navigation]);
 
   const broadcastActiveVideo = useCallback((videoProps)=> {
     props.addRecentVideo(videoProps)
@@ -47,13 +47,12 @@ function RainbowTheater(props) {
 
   return (
     <View>
-      <SearchArea
+      {/* <SearchArea
         updateSearch={updateSearch}
         updateDates={updateDates}
         searchText={searchText}
         active={searchActive}
-      />
-      <ScrollView>
+      /> */}
         <View style={{alignItems: 'center'}}>
           { activeProps == null ?
             <View style={{height: 260, width: 340}}>
@@ -71,25 +70,26 @@ function RainbowTheater(props) {
             description={activeProps.description}
             link={activeProps.link}
           />  }
-          <View style={{height: 170}} />
+          <View style={{height: 140}} />
           <View style={{...styles.lineStyle, width: "90%"}} />
-          <RainbowChannel
-            videoArray={props.videoArray}
-            channelTitle={props.channelTitle}
-            channelImage={props.channelImage}
-            currentSearch={searchText}
-            dateInfo={
-              {
-                restriction : "",
-                afterDate : null,
-                beforeDate : null
+          <ScrollView>
+            <RainbowChannel
+              videoArray={props.videoArray}
+              channelTitle={props.channelTitle}
+              channelImage={props.channelImage}
+              currentSearch={searchText}
+              dateInfo={
+                {
+                  restriction : "",
+                  afterDate : null,
+                  beforeDate : null
+                }
               }
-            }
-            broadcastActiveVideo={broadcastActiveVideo}
-            activeId={ activeProps == null ? "" : activeProps.videoId }
-          />
-        </View>
-      </ScrollView>
+              broadcastActiveVideo={broadcastActiveVideo}
+              activeId={ activeProps == null ? "" : activeProps.videoId }
+            />
+          </ScrollView>
+          </View>
     </View>
   );
 }

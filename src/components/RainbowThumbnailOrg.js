@@ -156,7 +156,7 @@ class RainbowThumbnail extends React.Component {
                 activeOpacity={.5}
                 onPress={ () => this.navigation.navigate('Base Screen', {
                   videoArray:   this.props.videoArray,
-                  channelTitle: this.props.title,
+                  channelTitle: this.props.channelTitle,
                   channelImage: this.props.channelImage,
                   startingVideo: this.props.videoInfo
                 }) }

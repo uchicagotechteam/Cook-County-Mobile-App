@@ -7,13 +7,15 @@ import BaseScreen from "./src/screens/BaseScreen.js";
 import HomeScreen from "./src/screens/HomeScreen.js";
 import OrgScreen  from "./src/screens/OrgScreen.js";
 import LogoScreen from "./src/screens/LogoScreen.js";
+import PrivacyPolicyScreen from "./src/screens/PrivacyPolicyScreen.js";
+import LicenseAgreementScreen from "./src/screens/LicenseAgreementScreen.js";
 
 import HeaderLogo from "./src/components/HeaderLogo.js";
 
 import { theme, styles } from './src/scripts/constants.js'
 import withSplashScreen from './src/components/withSplashScreen';
 
- 
+
 const Stack = createStackNavigator();
 /*
 function App() {
@@ -56,6 +58,12 @@ function App() {
         />
         <Stack.Screen name="Logo Screen"
           component={LogoScreen} options={header_options}
+        />
+        <Stack.Screen name="Privacy Screen"
+          component={PrivacyPolicyScreen} options={header_options}
+        />
+        <Stack.Screen name="License Screen"
+          component={LicenseAgreementScreen} options={header_options}
         />
       </Stack.Navigator>
     </NavigationContainer>

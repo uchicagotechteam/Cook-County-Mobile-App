@@ -113,6 +113,7 @@ function FeaturedBanner(props) {
       navigation={navigation}
       titleStyle={{fontSize: 20}}
       textStyle={{fontSize: 17}}
+      cardSpacing={20}
     />
   );
 }

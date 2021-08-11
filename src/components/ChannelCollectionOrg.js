@@ -160,7 +160,7 @@ function ChannelCollection(props) {
       <View key={props.channels.playlistId}>
         <RainbowChannelOrg
           videoArray={getVideoArrayByIndex(props.channels, 0)}
-          channelTitle={props.channels.channelTitle}
+          channelTitle={props.channelTitle}
           channelImage={props.channels.channelImage}
           currentSearch={props.searchText}
           //dateInfo={props.dateInfo}

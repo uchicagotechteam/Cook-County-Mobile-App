@@ -22,7 +22,7 @@ function ShowMoreText(props) {
   const textStyle = getPropDefault(props, "textStyle", {fontSize: 20});
 
   return (
-      <ScrollView style={{height: 160, width: '90%'}}>       
+      <ScrollView style={{height: 130, width: '90%'}}>       
         <Text
           onTextLayout={onTextLayout}
           numberOfLines={textShown ? undefined : 2}

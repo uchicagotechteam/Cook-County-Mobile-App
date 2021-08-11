@@ -4,8 +4,9 @@ import axios from 'axios';
 import { TouchableOpacity, View, Text, Image, ImageBackground, StyleSheet,
           ScrollView, Animated, Dimensions, StatusBar
       } from 'react-native';
-import { styles, theme, PALETTE, RATIOS, api_key } from '../scripts/constants.js'
+import { styles, theme, PALETTE, RATIOS, api_key, FOOTER_HEIGHT } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
+import Footer from '../components/Footer.js'
 
 // The components used in the Homescreen
 import HeaderLogo from  '../components/HeaderLogo.js';
@@ -46,7 +47,7 @@ function HomeScreen({ navigation }) {
   }, []);
 
     // // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
-  const channelArray = [
+ const channelArray = [
     { channelTitle : "Brookfield Zoo",
        channelImage : require('../assets/images/BrookfieldZoo.png'),
        playlistId : "PL8GKxgb3LyNcB01ujLEDS1NH27YqYsOmD",
@@ -63,6 +64,22 @@ function HomeScreen({ navigation }) {
        channelImage : require('../assets/images/MuseumofMexicanArt.png'),
        playlistId : "PL8GKxgb3LyNfBnnwR6pc6JHZUIFLlg-rK",
     },
+    {  channelTitle : "Project Rainbow",
+       channelImage : require('../assets/images/PR_logo_name.png'),  
+       playlistId : "PL8GKxgb3LyNez6eQhoJCu5sJX5xDCkMQt",
+    },
+    {  channelTitle : "Negaunee Music Institute at the Chicago Symphony Orchestra",
+       channelImage : require('../assets/images/ChicagoSymphony.png'),
+       playlistId : "PL8GKxgb3LyNfmdA1XmlTf24ZWj7Hwe52S",
+    },
+    {  channelTitle : "Chicago Botanic Garden",
+       channelImage : require('../assets/images/BotanicGarden.png'),
+       playlistId : "PL8GKxgb3LyNcBU5mOtyhyhpWlXkP-iHxI",
+    },
+    {  channelTitle : "Museum of Contemporary Art Chicago",
+       channelImage : require('../assets/images/mca.png'),  
+       playlistId : "PL8GKxgb3LyNfQ8wz4GaXKXc8qhn0qthx_",
+    }
   ];
 
   const image_ids = [
@@ -70,6 +87,10 @@ function HomeScreen({ navigation }) {
     require('../assets/images/ChildrensMuseum.png'),
     require('../assets/images/ForestPreserves.png'),
     require('../assets/images/MuseumofMexicanArt.png'),
+    require('../assets/images/PR_logo_name.png'),
+    require('../assets/images/ChicagoSymphony.png'),
+    require('../assets/images/BotanicGarden.png'),
+    require('../assets/images/mca.png')
   ];
   
   // Channel id for the CCB user's channel 
@@ -249,7 +270,8 @@ function HomeScreen({ navigation }) {
   const HEADER_COL_HEIGHT = 50;
 
   // Compute the height of the top section - the big logo, sponsor bar, and featured videos
-  const TOP_SECTION_HEIGHT = SCREEN_HEIGHT - HEADER_EXP_HEIGHT + HEADER_COL_HEIGHT  - 40
+  const TOP_SECTION_HEIGHT =
+    SCREEN_HEIGHT - HEADER_EXP_HEIGHT + HEADER_COL_HEIGHT - FOOTER_HEIGHT
 
   // Create a new variable that will track how far the user has scrolled
   const scroll_y = new Animated.Value(0);
@@ -375,7 +397,6 @@ function HomeScreen({ navigation }) {
           {/* Banner showing the logo for each sponsor */}
           <View>
             <Text style={[styles.subheader_text, {textAlign: 'center'}]}>Partners:</Text>
-            {/*{isBusy ? (<View/>) : (*/}
             <SponsorBanner
               image_ids={image_ids}
               channels={channelArray}
@@ -387,7 +408,6 @@ function HomeScreen({ navigation }) {
               parentScrolling={isScrolling}
               imageRatio={RATIOS.sponsors}
             />
-            {/*)}*/}
             <View style={{ paddingRight: 25, width: "100%" }}>
               <TouchableOpacity
                 activeOpacity = {0.5}
@@ -405,7 +425,6 @@ function HomeScreen({ navigation }) {
           </View>
 
           {/*<DividerLine color="blue" style={{ marginVertical: 0 }} />*/}
-          <View style={{height: 10}} />
 
           {/* Banner showing featured videos */}
           <FeaturedBanner imageRatio={RATIOS.featured} navigation={navigation} /> 
@@ -437,6 +456,7 @@ function HomeScreen({ navigation }) {
           imageRatio={RATIOS.channels}
         />
       </ScrollView>
+      <Footer navigation={navigation}/>
     </View>
   );
 }

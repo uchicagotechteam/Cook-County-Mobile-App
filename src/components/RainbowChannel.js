@@ -289,17 +289,6 @@ class RainbowChannel extends React.Component {
     // Define heights
     const top_bar_height = 30;
 
-    // I'm not sure which version is right for RainbowChannel, so I'm leaving the code for both
-    // of them in
-    return (
-      <View style={{ flex: 1, alignItems: 'center' }}>
-         {/* Horizontal padding */}
-        <View style={{ height:20}} />
-        
-        { this.getFilteredVideoArray() }
-      </View>
-    );
-
     return (
       <View>
 
@@ -318,11 +307,11 @@ class RainbowChannel extends React.Component {
       {/* Horizontal ScrollView holding the video icons */}
       <ScrollView
         horizontal={true}
-        style={{ flex: 1 }}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          paddingHorizontal: 20, paddingVertical: 10,
-          alignItems: 'center',
+          paddingHorizontal: 10,
+          paddingVertical: 10,
+          height: this.card_height,
         }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { x: this.state.scroll_x } } }],

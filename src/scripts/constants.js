@@ -7,6 +7,7 @@ import { StyleSheet } from 'react-native';
 // const API_KEY = process.env.EXPO_CCMA_YT_API_KEY;
 // export const api_key = "AIzaSyC-x97X1_c0_zTo2LbfgqNXRemFoDRJ404"; // dummy value to build
 export const api_key = "AIzaSyAvJKBDG3iziQ-oyIG5gch4P6qPfDj69tg";  // dummy value to build
+// export const api_key = "AIzaSyAvJKBDG3iziQ-oyIG5gch4P6qPfDj69tg";  // dummy value to build
 
 // The spacing between two icons in the sponsor bar
 export const SPONSOR_LOGO_SPACING = 10;
@@ -14,6 +15,8 @@ export const SPONSOR_LOGO_SPACING = 10;
 // The time the sponsor bar waits in between each autoscroll, in milliseconds
 // (1000 ms = 1 second)
 export const SPONSOR_AUTOSCROLL_DELAY = 10000;
+
+export const FOOTER_HEIGHT = 42;
 
 
 // The ratios for various images, each formatted as a a fraction of width over height
@@ -539,6 +542,25 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#FFFFFF',
     fontSize: 25,
+  },
+  footerButtonStyle: {
+    marginTop:5,
+    paddingTop:7,
+    paddingBottom:7,
+    marginLeft:5,
+    marginRight:15,
+    marginBottom:5,
+    backgroundColor:'#444454', //with blue gray background ADD8E6, blue gray color #6699CC
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#444454', //#000
+    width: 120,
+  },
+  footerButtonText: {
+    fontFamily: 'sans-serif',
+    textAlign: 'center',
+    color: '#FFFFFF',
+    fontSize: 12,
   },
   buttonStyle: {
     paddingTop:5,
