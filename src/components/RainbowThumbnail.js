@@ -78,7 +78,7 @@ class RainbowThumbnail extends React.Component {
   // Gives a special green background to the thumbnail corresponding to the actively playing video
   getActiveBackground(){
     if(this.props.activeId == this.props.videoId){
-      return {width: this.width + 20, backgroundColor : "#b9ffb7", borderRadius:10, margin: 10,
+      return {width: this.width + 20, backgroundColor : "#b9ffb7", borderRadius:20, margin: 10,
       shadowOffset: {
         width: 10,
         height: -10
@@ -88,7 +88,7 @@ class RainbowThumbnail extends React.Component {
       shadowRadius:  10,
       elevation: 5,};
     } else {
-      return {width: this.width + 20, borderRadius:10, margin: 10,
+      return {width: this.width + 20, borderRadius:20, margin: 10,
         height: (this.width * 4 / 5) + 60}
     }
   }

@@ -266,6 +266,7 @@ class RainbowChannel extends React.Component {
         videoArray={videoArray}
         videoInfo={videoInfo}
         title={videoInfo.title}
+        channelTitle={this.props.channelTitle}
         date={videoInfo.date}
         duration={videoInfo.duration}
         description={videoInfo.description}

@@ -6,6 +6,7 @@ import { TouchableOpacity, View, Text, Image, ImageBackground, StyleSheet,
       } from 'react-native';
 import { styles, theme, PALETTE, RATIOS, api_key } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
+import Footer from '../components/Footer.js'
 
 // The components used in the Homescreen
 import HeaderLogo from  '../components/HeaderLogo.js';
@@ -437,20 +438,7 @@ function HomeScreen({ navigation }) {
           imageRatio={RATIOS.channels}
         />
       </ScrollView>
-      <View style={{flexDirection: "row"}}>
-        <RoundedButton
-          onPress={() => navigation.navigate('License Screen')}
-          buttonStyle={styles.footerButtonStyle}
-          textStyle={styles.footerButtonText}
-          text={"See License"}
-        />
-        <RoundedButton
-          onPress={() => navigation.navigate('Privacy Screen')}
-          buttonStyle={styles.footerButtonStyle}
-          textStyle={styles.footerButtonText}
-          text={"See Privacy Policy"}
-        />
-      </View>
+      <Footer navigation={navigation}/>
     </View>
   );
 }

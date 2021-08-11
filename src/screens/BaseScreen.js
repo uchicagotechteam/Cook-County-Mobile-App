@@ -4,6 +4,7 @@ import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, Tou
 import RainbowTheater from "../components/RainbowTheater.js";
 import { styles, api_key } from '../scripts/constants.js'
 import axios from 'axios';
+import Footer from '../components/Footer.js'
 
 function BaseScreen({ route, navigation }) {
   let [channels, setChannels] = useState([]);
@@ -18,7 +19,7 @@ function BaseScreen({ route, navigation }) {
   }, [])
    
   const getRainbowTheatre = useCallback(() =>{
-    // console.log("Getting the child screen with channel length: " + channels.length);
+    console.log("Getting the child screen with channel length: " + channels.length);
     return (
       <RainbowTheater
         videoArray={videoArray}
@@ -37,6 +38,7 @@ function BaseScreen({ route, navigation }) {
       
       { getRainbowTheatre() }
       
+      <Footer navigation={navigation}/>
     </View>
   );
 }

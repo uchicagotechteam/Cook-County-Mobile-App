@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from 'axios';
-import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, TouchableHighlight, AsyncStorage} from 'react-native';
+import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, TouchableHighlight, AsyncStorage, Dimensions} from 'react-native';
 import { styles, api_key } from '../scripts/constants.js'
 import LogoImage from '../components/LogoImage.js';
 //import LogoTitle from '../components/LogoTitle.js';
@@ -10,6 +10,7 @@ import ChannelCollectionOrg from "../components/ChannelCollectionOrg.js";
 //import RainbowChannel from "../components/RainbowChannel.js";
 import ToggleSearch from "../components/ToggleSearch.js";
 import AdjustableText from "../components/AdjustableText.js";
+import Footer from '../components/Footer.js'
 //import RoundedButton from "../components/RoundedButton.js";
 
 //import { DataContext } from '../App';
@@ -76,12 +77,17 @@ const getChannel = useCallback(() =>{
     return (
       <ChannelCollectionOrg
         channels={channels}
+				channelTitle={channel.channelTitle}
         navigation={navigation}
       />
     )
   }, [channels]);
 
+	// Get the dimensions of the screen
+	const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen')
 
+	// Set the height of the header when expanded and when collapsed
+	const FOOTER_ROOM = 300;
 
   return (
     <View>
@@ -96,15 +102,17 @@ const getChannel = useCallback(() =>{
       style={styles.org_title}
     />
     </View>
-
-    <ScrollView>
+		
+    <ScrollView
+			style={{width: "100%", height: SCREEN_HEIGHT - FOOTER_ROOM}}
+		>
 
       <View style={{ height: 10 }} />
 
       {getChannel()}
 
     </ScrollView>
-
+		<Footer navigation={navigation}/>
     </View>
   );
 
