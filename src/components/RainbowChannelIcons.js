@@ -379,29 +379,33 @@ class RainbowChannelIcons extends React.Component {
     return (
       <View>
 
-      {/* Header - Channel Title */}
-      <View style={{
-        width: this.width * 0.75, height: top_bar_height, paddingLeft: 25,
-      }}>
-        <Text style={[styles.header_text, this.title_style]}>{this.props.channelTitle}</Text>
-      </View>
+      <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end"}}>
 
-      {/* Header - View More */}
-      { this.show_view_all &&
-        <Animated.View style={{
-          width: this.width * 0.25, height: top_bar_height, paddingRight: 25,
-          position: "absolute", right: 0, top: 0,
-          opacity: view_all_opacity, 
+        {/* Header - Channel Title */}
+        <View style={{
+          width: this.width * 0.75, paddingLeft: 25,
         }}>
-          <TouchableOpacity
-            style={{width: "100%"}} activeOpacity = { .5 } onPress={ view_all_nav }
-          >
-            <Text style={[styles.subheader_text, {textAlign: "right", width: "100%"}]} >
-              View All {"\u00BB"}
-            </Text>
-          </TouchableOpacity>
-        </Animated.View>
-      }
+          <Text style={[styles.header_text, this.title_style]}>{this.props.channelTitle}</Text>
+        </View>
+
+        {/* Header - View More */}
+        { this.show_view_all &&
+          <Animated.View style={{
+            width: this.width * 0.25, paddingRight: 25,
+            // position: "absolute", right: 0, top: 0,
+            opacity: view_all_opacity, 
+          }}>
+            <TouchableOpacity
+              style={{width: "100%"}} activeOpacity = { .5 } onPress={ view_all_nav }
+            >
+              <Text style={[styles.subheader_text, {textAlign: "right", width: "100%"}]} >
+                View All {"\u00BB"}
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+        }
+
+      </View>
 
       {/* Horizontal ScrollView holding the video icons */}
       <ScrollView
