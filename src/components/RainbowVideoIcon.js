@@ -45,6 +45,8 @@ class RainbowVideoIcon extends React.Component {
     // Width to Height -> divide
     this.image_ratio = getPropDefault(props, "imageRatio", 5 / 4);
 
+    this.text_style = getPropDefault(props, "textStyle", {});
+
     // bind methods
     this.thumbnailClicked = this.thumbnailClicked.bind(this);
     this.getPauseImage = this.getPauseImage.bind(this);
@@ -164,7 +166,7 @@ class RainbowVideoIcon extends React.Component {
         />
         <View style={{marginHorizontal: 4, marginTop: 10, marginBottom: 0}}>
           {/*<Text style={[styles.subheader_text]}>{this.props.title}</Text>*/}
-          <Text>
+          <Text style={this.text_style}>
             {this.isRecent()}
             { this.props.display !== undefined
                 ? this.props.display["title"].map((s, index) => s.mark

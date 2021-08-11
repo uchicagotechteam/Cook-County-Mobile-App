@@ -72,6 +72,9 @@ class RainbowChannelIcons extends React.Component {
     this.card_height = getPropDefault(props, "cardHeight", dim / this.image_ratio + 90);
     this.card_width  = getPropDefault(props, "cardWidth",  dim);
 
+    this.text_style = getPropDefault(props, "textStyle", {});
+    this.title_style = getPropDefault(props, "titleStyle", {});
+
     // Constant hardcoding the keys in each video's object which will be targetted by the search
     this.searchVals = ["title", "dateString"];
 
@@ -342,6 +345,7 @@ class RainbowChannelIcons extends React.Component {
           style={{ margin: this.card_spacing }}
           imageRatio={this.image_ratio}
           thumbnail={videoInfo.thumbnail}
+          textStyle={this.text_style}
         />
       </TouchableOpacity>
     );
@@ -379,7 +383,7 @@ class RainbowChannelIcons extends React.Component {
       <View style={{
         width: this.width * 0.75, height: top_bar_height, paddingLeft: 25,
       }}>
-        <Text style={styles.header_text}>{this.props.channelTitle}</Text>
+        <Text style={[styles.header_text, this.title_style]}>{this.props.channelTitle}</Text>
       </View>
 
       {/* Header - View More */}
