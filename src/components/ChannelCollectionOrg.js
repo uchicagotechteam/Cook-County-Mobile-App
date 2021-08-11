@@ -42,12 +42,12 @@ function ChannelCollection(props) {
       //console.log(playlistId);
       //console.log(api_key);
       var token_text = (pageToken == null ? "" : "&pageToken=" + pageToken);
-      console.log(token_text);
-      console.log("API CALL cHannel collection")
-      console.log("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text)
+      // console.log(token_text);
+      // console.log("API CALL cHannel collection")
+      // console.log("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text)
       axios({
         "method": "GET",
-        "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text
+        "url": "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,status%2CcontentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + api_key + token_text
       })
       .then((response) => {
         setResponseData(response.data)
@@ -60,7 +60,12 @@ function ChannelCollection(props) {
 
         // Maps the youtube API response to an array of objects with the information necessary to prepare a video, and then sorts the videos by date (from latest to oldest)
         //console.log(response.data.items)
-        let videoArray = response.data.items.map(video => {
+        let videoArray = response.data.items
+        .filter(video => {
+          // Filter out private and deleted videos
+          return video.status.privacyStatus != "private" && video.status.privacyStatus != "privacyStatusUnspecified";
+        })
+        .map(video => {
           let date = new Date(video.contentDetails.videoPublishedAt);
           // If the video will be in a channel for adults, store the description because that could help with the curriculum
           var full_description = video.snippet.description;
