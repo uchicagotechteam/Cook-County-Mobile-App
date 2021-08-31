@@ -26,6 +26,16 @@ export const SPECIAL_CHARS = [
     (a, b) => a.regular.localeCompare(b.regular)
 );
 
+//function to sort channels alphabetically by channel title
+export function compareTitle( a, b ) {
+  if ( a.title < b.title ){
+    return -1;
+  }
+  if ( a.title > b.title ){
+    return 1;
+  }
+  return 0;
+}
 
 
 // The parameter full_object is included for compliance with Tabulator

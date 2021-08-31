@@ -219,7 +219,7 @@ class RainbowChannel extends React.Component {
     if(!this.state.forward){
       dateVideoArray = [...this.props.videoArray].reverse();
     } else {
-      dateVideoArray = this.props.videoArray
+      dateVideoArray = this.props.videoArray;
     }
     
     // Filters the videos by date. Either after, before or between dates (inclusive)
@@ -261,7 +261,7 @@ class RainbowChannel extends React.Component {
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
 */
-    return videoArray.map(videoInfo =>
+    return dateVideoArray.map(videoInfo =>
       <RainbowThumbnailOrg videoId={videoInfo.videoId}
         videoArray={videoArray}
         videoInfo={videoInfo}
@@ -300,6 +300,7 @@ class RainbowChannel extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center' }}>
          {/* Horizontal padding */}
+         <ToggleSort onPress={this.setOrder}/>
         <View style={{ height:20}} />
         
         { this.getFilteredVideoArray() }
