@@ -5,7 +5,7 @@ import AdjustableText from "../components/AdjustableText.js";
 import ToggleSort from "../components/ToggleSort.js";
 import { Dimensions } from 'react-native';
 import { View, ScrollView, StyleSheet, Image, Text, Animated, TouchableOpacity } from 'react-native';
-import {search} from '../scripts/Search.js';
+import {search } from '../scripts/Search.js';
 import { styles, PALETTE } from '../scripts/constants.js'
 
 // Import functions to retrieve props
@@ -387,7 +387,6 @@ class RainbowChannelIcons extends React.Component {
         }}>
           <Text style={[styles.header_text, this.title_style]}>{this.props.channelTitle}</Text>
         </View>
-
         {/* Header - View More */}
         { this.show_view_all &&
           <Animated.View style={{

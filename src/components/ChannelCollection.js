@@ -7,7 +7,6 @@ import RoundedButton from '../components/RoundedButton.js'
 import { styles, api_key } from '../scripts/constants.js'
 import { View } from 'react-native';
 import DividerLine from "../components/DividerLine.js";
-
 // Import functions to retrieve props
 import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
 
