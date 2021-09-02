@@ -5,7 +5,8 @@ import { StyleSheet } from 'react-native';
 // since env variables are bundled into the app's build and thus can be exposed to clients after the app is shipped
 // more info here: https://docs.expo.io/guides/environment-variables/
 // const API_KEY = process.env.EXPO_CCMA_YT_API_KEY;
-export const api_key = "AIzaSyBfWiQp0Lln7qqmxvMY_RStPcYRktIc8Tc"; // dummy value to build
+// export const api_key = "AIzaSyC-x97X1_c0_zTo2LbfgqNXRemFoDRJ404"; // dummy value to build
+export const api_key = "AIzaSyAvJKBDG3iziQ-oyIG5gch4P6qPfDj69tg";  // dummy value to build
 // export const api_key = "AIzaSyAvJKBDG3iziQ-oyIG5gch4P6qPfDj69tg";  // dummy value to build
 
 // The spacing between two icons in the sponsor bar
@@ -14,6 +15,8 @@ export const SPONSOR_LOGO_SPACING = 10;
 // The time the sponsor bar waits in between each autoscroll, in milliseconds
 // (1000 ms = 1 second)
 export const SPONSOR_AUTOSCROLL_DELAY = 10000;
+
+export const FOOTER_HEIGHT = 42;
 
 
 // The ratios for various images, each formatted as a a fraction of width over height

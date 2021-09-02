@@ -92,27 +92,25 @@ const getChannel = useCallback(() =>{
   return (
     <View>
 
-    
-  <View style = {{alignItems: 'center',justifyContent: 'center', padding: 15,}}>
-    <LogoImage source={channel.channelImage} width={175} clickable={false} />
-    <View style={{ height: 10 }} />
-    <AdjustableText
-      fontSize={28}
-      text=<Text>{channel.channelTitle}</Text>
-      style={styles.org_title}
-    />
-    </View>
-		
-    <ScrollView
-			style={{width: "100%", height: SCREEN_HEIGHT - FOOTER_ROOM}}
-		>
+      {/* Header Component - logo and title */}
+      <View style={{ alignItems: 'center', justifyContent: 'center', padding: 15 }}>
+        <LogoImage source={channel.channelImage} width={175} clickable={false} />
+        <View style={{ height: 10 }} />
+          <AdjustableText
+            fontSize={28}
+            text=<Text>{channel.channelTitle}</Text>
+            style={styles.org_title}
+          />
+      </View>
 
-      <View style={{ height: 10 }} />
+      {/* Body Component - channel videos */}
+      <ScrollView style={{width: "100%", height: SCREEN_HEIGHT - FOOTER_ROOM}} >
+        <View style={{ height: 10 }} />
+        { getChannel() }
+      </ScrollView>
 
-      {getChannel()}
-
-    </ScrollView>
-		<Footer navigation={navigation}/>
+      {/* Standard Footer */}
+      <Footer navigation={navigation}/>
     </View>
   );
 

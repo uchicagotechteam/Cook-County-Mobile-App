@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { styles } from '../scripts/constants.js'
+import { styles, FOOTER_HEIGHT } from '../scripts/constants.js'
 import RoundedButton from '../components/RoundedButton.js'
 
 
 function Footer(props) {
   return (
-      <View style={{flexDirection: "row", justifyContent: 'center'}}>
+      <View style={{flexDirection: "row", justifyContent: 'center', height: FOOTER_HEIGHT}}>
         <RoundedButton
           onPress={() => props.navigation.navigate('License Screen')}
           buttonStyle={styles.footerButtonStyle}

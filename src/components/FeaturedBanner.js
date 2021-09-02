@@ -111,6 +111,9 @@ function FeaturedBanner(props) {
       videoArray={videoArray}
       imageRatio={image_ratio}
       navigation={navigation}
+      titleStyle={{fontSize: 20}}
+      textStyle={{fontSize: 17}}
+      cardSpacing={20}
     />
   );
 }
