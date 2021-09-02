@@ -56,16 +56,16 @@ BY CLICKING THE "AGREE" BUTTON BELOW OR DOWNLOADING/ INSTALLING/ USING THE APPLI
         <Text style={{textDecorationLine: 'underline'}}>Collection and Use of Your Information</Text>
 {`. You acknowledge that when you download, install, or use the Application, Cook County may use automatic means (including, for example, cookies and web beacons) to collect information about your Mobile Device and about your use of the Application. You also may be required to provide certain information about yourself as a condition to downloading, installing, or using the Application or certain of its features or functionality. All information we collect through or in connection with this Application is subject to our Privacy Policy `}<Text style={{color: 'blue'}}
       onPress={() => navigation.navigate("Privacy Screen")}>
-  Privacy Screen
+  here
 </Text>{`. By downloading, installing, using, and providing information to or through this Application, you consent to all actions taken by us with respect to your information in compliance with the Privacy Policy.
 
 
 5. `}
 
         <Text style={{textDecorationLine: 'underline'}}>Content and Services</Text>
-{`. The Application may provide you with access to Cook County's website located at www.projectrainbow.cookcountyil.gov (the "Website") and products and services accessible thereon, and certain features, functionality, and content accessible on or through the Application may be hosted on the Website (collectively, "Content and Services"). Your access to and use of such Content and Services are governed by Website's Terms of Use and Privacy Policy located at [TERMS OF USE LINK] and `}<Text style={{color: 'blue'}}
+{`. The Application may provide you with access to Cook County's website located at www.projectrainbow.cookcountyil.gov (the "Website") and products and services accessible thereon, and certain features, functionality, and content accessible on or through the Application may be hosted on the Website (collectively, "Content and Services"). Your access to and use of such Content and Services are governed by Website's Terms of Use and Privacy Policy located `}<Text style={{color: 'blue'}}
       onPress={() => navigation.navigate("Privacy Screen")}>
-  Privacy Screen
+  here
 </Text>{`, which are incorporated herein by this reference. Your access to and use of such Content and Services may require you to acknowledge your acceptance of such Terms of Use and Privacy Policy and/or to register with the Website, and your failure to do so may restrict you from accessing or using certain of the Application's features and functionality. Any violation of such Terms of Use will also be deemed a violation of this Agreement.
 
 
