@@ -135,7 +135,9 @@ class RainbowThumbnail extends React.Component {
         <View style={{height: 60, width: "100%", justifyContent:'center'}}>
           <AdjustableText
             fontSize={30}
-            text=<Text>{this.isRecent()} {this.props.title}
+            text=<Text>{this.isRecent()} {this.props.display !== undefined ? this.props.display["title"].map((s, index) =>
+                    s.mark ? <Text style={styles.search_highlight} key={index}>{s.seg}</Text> : <Text key={index}>{s.seg}</Text>)
+                  : this.props.title}
                   </Text>
             style={styles.videoTitleText}
             maxHeight={60}

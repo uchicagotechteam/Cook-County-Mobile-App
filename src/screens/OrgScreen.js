@@ -5,10 +5,8 @@ import { Button, View, Text, Image, ImageBackground, StyleSheet, ScrollView, Tou
 import { styles, api_key } from '../scripts/constants.js'
 import LogoImage from '../components/LogoImage.js';
 //import LogoTitle from '../components/LogoTitle.js';
-//import SearchArea from '../components/SearchArea';
 import ChannelCollectionOrg from "../components/ChannelCollectionOrg.js";
 //import RainbowChannel from "../components/RainbowChannel.js";
-import ToggleSearch from "../components/ToggleSearch.js";
 import AdjustableText from "../components/AdjustableText.js";
 import Footer from '../components/Footer.js'
 //import RoundedButton from "../components/RoundedButton.js";
@@ -30,9 +28,6 @@ var channel = route.params.channel;
   // console.log("FINALLY!!!");
   // console.log(channel);
   const [isBusy, setBusy] = useState(true);
-  // const [searchText, setSearchText] = useState("");
-  const [searchActive, setSearchActive] = useState(false);
-  const [dateInfo, setDateInfo] = useState({dateRestriction : "Anytime", afterDate : null, beforeDate : null});
 
 
   let [playlistResponseData, setPlaylistResponseData] = useState('');
@@ -43,29 +38,6 @@ var channel = route.params.channel;
   // Array of objects containing the information needed to populate a channel (TODO: figure out if this is okay to hardcode)
   const ccbChannel = "UCLcTO4BeO0tlZFeMS8SKLSg";
 
-  // Function to update the text search results
-  /*
-  const updateSearch = useCallback((search) => {
-    setSearchText(search);
-  }, []);
-  */
-
-  // Function to update the date search results
-  const updateDates = useCallback((dateRestriction, afterDate, beforeDate) => {
-    console.log("New restriction: " + dateRestriction);
-    setDateInfo({dateRestriction, afterDate, beforeDate});
-  }, []);
-
-/*
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <ToggleSearch onPress={active => {setSearchActive(active);}} />
-      ),
-    });
-  }, [navigation]);
-
-*/
 
 useEffect(() => {
   setChannels([channel]);
@@ -91,7 +63,6 @@ const getChannel = useCallback(() =>{
 
   return (
     <View>
-
       {/* Header Component - logo and title */}
       <View style={{ alignItems: 'center', justifyContent: 'center', padding: 15 }}>
         <LogoImage source={channel.channelImage} width={175} clickable={false} />

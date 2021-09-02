@@ -52,6 +52,7 @@ function RainbowTheater(props) {
         updateDates={updateDates}
         searchText={searchText}
         active={searchActive}
+        isOrg={false}
       />
         <View style={{alignItems: 'center'}}>
           { activeProps == null ?

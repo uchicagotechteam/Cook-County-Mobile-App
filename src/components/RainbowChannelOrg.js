@@ -250,18 +250,17 @@ class RainbowChannel extends React.Component {
     }  
     
     // Applies the text search onto the remaining videos
-/*
     let searchResults = this.applySearch(dateVideoArray);
-    console.log(searchResults)
+    // console.log(searchResults)
     let options = searchResults.options
     let displays = searchResults.displays
-    console.log("OPTIONS************")
-  console.log(options)
+  //   console.log("OPTIONS************")
+  // console.log(options)
     if(options.length <= 0){
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
-*/
-    return dateVideoArray.map(videoInfo =>
+
+    return options.map(videoInfo =>
       <RainbowThumbnailOrg videoId={videoInfo.videoId}
         videoArray={videoArray}
         videoInfo={videoInfo}
@@ -271,7 +270,7 @@ class RainbowChannel extends React.Component {
         duration={videoInfo.duration}
         description={videoInfo.description}
         link={videoInfo.link}
-        //display={displays[videoInfo.videoId]}
+        display={displays[videoInfo.videoId]}
         broadcastActiveVideo={this.broadcastActiveVideo}
         activeId={this.props.activeId}
         key={videoInfo.videoId}

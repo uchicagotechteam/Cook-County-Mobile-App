@@ -5,6 +5,8 @@ import RainbowChannelOrg from "../components/RainbowChannelOrg.js";
 import RoundedButton from '../components/RoundedButton.js'
 import { styles, api_key } from '../scripts/constants.js'
 import { View } from 'react-native';
+import SearchArea from '../components/SearchArea';
+import ToggleSearch from "../components/ToggleSearch.js";
 import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
 
 // Props include
@@ -23,6 +25,10 @@ function ChannelCollection(props) {
   let [activeId, setActiveId] = useState('');
   
   let [channelNum, setChannelNum] = useState(0);
+  
+  const [searchText, setSearchText] = useState("");
+  const [searchActive, setSearchActive] = useState(false);
+  const [dateInfo, setDateInfo] = useState({dateRestriction : "Anytime", afterDate : null, beforeDate : null});
 
   const getVideoArrayByIndex = useCallback((channel, index) =>{
     let arrayMatches = videoArrays.filter(videoObject => videoObject.index == index)
@@ -33,6 +39,26 @@ function ChannelCollection(props) {
       return [];
     }
   }, [videoArrays]);
+  
+  // Function to update the text search results
+  const updateSearch = useCallback((search) => {
+    console.log("Searching: " + search);
+    setSearchText(search);
+  }, []);
+
+  // Function to update the date search results
+  const updateDates = useCallback((dateRestriction, afterDate, beforeDate) => {
+    console.log("New restriction: " + dateRestriction);
+    setDateInfo({dateRestriction, afterDate, beforeDate});
+  }, []);
+
+  React.useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <ToggleSearch onPress={active => {setSearchActive(active);}} />
+      ),
+    });
+  }, [props.navigation]);
 
   // useEffect function runs when function initially loads
   // and runs again whenever there is a change to data in second argument array (fetchData)
@@ -158,12 +184,18 @@ function ChannelCollection(props) {
 
   return (
       <View key={props.channels.playlistId}>
+        <SearchArea
+          updateSearch={updateSearch}
+          updateDates={updateDates}
+          searchText={searchText}
+          active={searchActive}
+          isOrg={true}
+        />
         <RainbowChannelOrg
           videoArray={getVideoArrayByIndex(props.channels, 0)}
           channelTitle={props.channelTitle}
           channelImage={props.channels.channelImage}
-          currentSearch={props.searchText}
-          //dateInfo={props.dateInfo}
+          currentSearch={searchText}
           dateInfo={
             {
               restriction : null,

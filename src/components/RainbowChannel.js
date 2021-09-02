@@ -249,7 +249,7 @@ class RainbowChannel extends React.Component {
       return (<Text style={styles.emptySearch}>No videos match your search</Text>)
     }
 
-    return videoArray.map(videoInfo =>
+    return options.map(videoInfo =>
       <RainbowThumbnail videoId={videoInfo.videoId}
         videoInfo={videoInfo}
         title={videoInfo.title}
