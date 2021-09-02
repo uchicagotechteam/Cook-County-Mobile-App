@@ -52,13 +52,13 @@ function ChannelCollection(props) {
     setDateInfo({dateRestriction, afterDate, beforeDate});
   }, []);
 
-  React.useLayoutEffect(() => {
-    props.navigation.setOptions({
-      headerRight: () => (
-        <ToggleSearch onPress={active => {setSearchActive(active);}} />
-      ),
-    });
-  }, [props.navigation]);
+  // React.useLayoutEffect(() => {
+  //   props.navigation.setOptions({
+  //     headerRight: () => (
+  //       <ToggleSearch onPress={active => {setSearchActive(active);}} />
+  //     ),
+  //   });
+  // }, [props.navigation]);
 
   // useEffect function runs when function initially loads
   // and runs again whenever there is a change to data in second argument array (fetchData)
