@@ -169,7 +169,7 @@ class SearchArea extends React.Component {
   render(){
     return (!this.props.active ? null :
       <View>
-        { this.state.showAfterPicker ? <DateTimePicker
+        {/* this.state.showAfterPicker ? <DateTimePicker
           value={this.state.afterDate == null ? new Date() : this.state.afterDate}
           mode={'date'}
           display={"calendar"}
@@ -193,8 +193,8 @@ class SearchArea extends React.Component {
               }
             }
           }}
-        /> : null }
-        { this.state.showBeforePicker ? <DateTimePicker
+        /> : null */}
+        {/* this.state.showBeforePicker ? <DateTimePicker
           value={this.state.beforeDate == null ? new Date() : this.state.beforeDate}
           mode={'date'}
           display={"calendar"}
@@ -210,8 +210,8 @@ class SearchArea extends React.Component {
               this.props.updateDates(this.state.dateRestriction, this.state.afterDate, newDateInc);
             }
           }}
-        /> : null }
-        <Animated.View style={[{top:-100, width:"100%", zIndex: 1, ...styles.searchColor, elevation: 3,position:"absolute"}, {
+        /> : null */}
+        <Animated.View style={[{top:-20, width:"100%", zIndex: 1, ...styles.searchColor, elevation: 3,position:"absolute"}, {
                 opacity: this.state.animationValue
               }]} >
           <View style={{paddingBottom : 5}}>
@@ -222,7 +222,7 @@ class SearchArea extends React.Component {
               platform={"android"}
               round={true}
             />
-            <Text style={styles.baseText}> {this.restrictionToString()}</Text>
+            {/* <Text style={styles.baseText}> {this.restrictionToString()}</Text>
             <View style={{height: 45}}>
               <View style={styles.centerColumn}>
                 <Picker
@@ -247,8 +247,8 @@ class SearchArea extends React.Component {
                   <Picker.Item label="Between" value="Between" />
                 </Picker>
               </View>
-            </View>
-            { this.getDateButtons() }
+            </View> */ }
+            {/* this.getDateButtons() */}
           </View>
         </Animated.View>
       </View>

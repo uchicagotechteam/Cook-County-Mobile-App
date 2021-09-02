@@ -27,14 +27,14 @@ function RainbowTheater(props) {
     setDateInfo({dateRestriction, afterDate, beforeDate});
   }, []);
 
-  // React.useLayoutEffect(() => {
-  //   props.navigation.setOptions({
-  //     headerRight: () => (
-  //       <ToggleSearch onPress={active => {setSearchActive(active);}} />
-  //     ),
-  //     title: props.channelTitle,
-  //   });
-  // }, [props.navigation]);
+  React.useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <ToggleSearch onPress={active => {setSearchActive(active);}} />
+      ),
+      title: props.channelTitle,
+    });
+  }, [props.navigation]);
 
   const broadcastActiveVideo = useCallback((videoProps)=> {
     props.addRecentVideo(videoProps)
@@ -47,12 +47,12 @@ function RainbowTheater(props) {
 
   return (
     <View>
-      {/* <SearchArea
+      <SearchArea
         updateSearch={updateSearch}
         updateDates={updateDates}
         searchText={searchText}
         active={searchActive}
-      /> */}
+      />
         <View style={{alignItems: 'center'}}>
           { activeProps == null ?
             <View style={{height: 260, width: 340}}>
