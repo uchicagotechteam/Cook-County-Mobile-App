@@ -28,10 +28,10 @@ export const SPECIAL_CHARS = [
 
 //function to sort channels alphabetically by channel title
 export function compareTitle( a, b ) {
-  if ( a.title < b.title ){
+  if ( a.channelTitle < b.channelTitle ){
     return -1;
   }
-  if ( a.title > b.title ){
+  if ( a.channelTitle > b.channelTitle ){
     return 1;
   }
   return 0;

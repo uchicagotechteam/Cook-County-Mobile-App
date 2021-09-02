@@ -12,7 +12,9 @@ import Footer from '../components/Footer.js'
 import HeaderLogo from  '../components/HeaderLogo.js';
 import SponsorBanner  from '../components/SponsorBanner.js'
 import FeaturedBanner from '../components/FeaturedBanner.js'
+import {compareTitle} from '../scripts/Search.js';
 import { SearchBar } from 'react-native-elements';
+//import ToggleSortABC from "../components/ToggleSortABC.js";
 import ChannelCollection from "../components/ChannelCollection.js";
 import DividerLine from "../components/DividerLine.js";
 
@@ -40,6 +42,8 @@ function HomeScreen({ navigation }) {
   
   // Logic to maintain the channels returned by the API
   let [channels, setChannels] = useState([]);
+
+
 
   // Function to update the search results
   const updateSearch = useCallback((search) => {
@@ -97,7 +101,7 @@ function HomeScreen({ navigation }) {
   const ccbChannel = "UCLcTO4BeO0tlZFeMS8SKLSg";
 
   useEffect(() => {
-    setChannels(channelArray);
+    setChannels(channelArray.sort(compareTitle));
     }, [])
   /*
   useEffect(() => {
@@ -120,7 +124,7 @@ function HomeScreen({ navigation }) {
           }
         });
         //console.log(playlistArray);
-        setChannels(playlistArray);
+        setChannels(playlistArray.sort(compareTitle));
         console.log("CHANNEL START")
         console.log(channels);
         console.log("CHANNEL END")
@@ -398,8 +402,8 @@ function HomeScreen({ navigation }) {
           <View>
             <Text style={[styles.subheader_text, {textAlign: 'center'}]}>Partners:</Text>
             <SponsorBanner
-              image_ids={image_ids}
               channels={channelArray}
+              image_ids={image_ids}
               navigation={navigation}
               shuffle={true}
               style={{marginHorizontal: 5}}
@@ -444,6 +448,10 @@ function HomeScreen({ navigation }) {
         />
 
         <DividerLine color="blue" style={{ marginTop: 0 }} />
+        
+        <View style={{ paddingLeft: 25 }}>
+        
+        </View>
 
         {/* The list of channels themselves */}
         <ChannelCollection
