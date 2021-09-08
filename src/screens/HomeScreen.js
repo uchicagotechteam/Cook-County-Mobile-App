@@ -14,7 +14,6 @@ import SponsorBanner  from '../components/SponsorBanner.js'
 import FeaturedBanner from '../components/FeaturedBanner.js'
 import {compareTitle} from '../scripts/Search.js';
 import { SearchBar } from 'react-native-elements';
-//import ToggleSortABC from "../components/ToggleSortABC.js";
 import ChannelCollection from "../components/ChannelCollection.js";
 import DividerLine from "../components/DividerLine.js";
 
@@ -448,6 +447,8 @@ function HomeScreen({ navigation }) {
         />
 
         <DividerLine color="blue" style={{ marginTop: 0 }} />
+
+        
         
         <View style={{ paddingLeft: 25 }}>
         

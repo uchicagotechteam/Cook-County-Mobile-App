@@ -9,6 +9,7 @@ import SearchArea from '../components/SearchArea';
 import ToggleSearch from "../components/ToggleSearch.js";
 import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
 
+
 // Props include
 //   channels : Array    - array of objects that describe a channel. [{channelTitle : String, channelImage : String, playlistID : String}]
 //   searchText : String - string typed into the search bar

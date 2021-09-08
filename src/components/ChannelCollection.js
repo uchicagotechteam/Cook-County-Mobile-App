@@ -10,6 +10,7 @@ import DividerLine from "../components/DividerLine.js";
 // Import functions to retrieve props
 import { getProp, getPropRequired, getPropDefault } from "../scripts/GetProps.js";
 
+
 // Props include
 //   channels : Array    - array of objects that describe a channel. [{channelTitle : String, channelImage : String, playlistID : String}]
 //   searchText : String - string typed into the search bar
@@ -241,8 +242,8 @@ useEffect(() => {
           imageRatio={image_ratio}
         />
         {/*<View style={{height: 160}} />*/}
-      </View>
-    ));
+      </View> 
+      ));
 }
 
 
