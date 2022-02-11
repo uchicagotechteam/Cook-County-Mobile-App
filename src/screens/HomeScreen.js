@@ -399,19 +399,9 @@ function HomeScreen({ navigation }) {
 
           {/* Banner showing the logo for each sponsor */}
           <View>
-            <Text style={[styles.subheader_text, {textAlign: 'center'}]}>Partners:</Text>
-            <SponsorBanner
-              channels={channelArray}
-              image_ids={image_ids}
-              navigation={navigation}
-              shuffle={true}
-              style={{marginHorizontal: 5}}
-              onGrab={onGrab}
-              onRelease={onRelease}
-              parentScrolling={isScrolling}
-              imageRatio={RATIOS.sponsors}
-            />
             <View style={{ paddingRight: 25, width: "100%" }}>
+            <Text style={[styles.subheader_text, {textAlign: 'left', fontSize: 20, fontWeight: 'bold', marginLeft: 25}]}>Partners</Text>
+
               <TouchableOpacity
                 activeOpacity = {0.5}
                 onPress={() => navigation.navigate('Logo Screen', { /*image_ids,*/ channels })}
@@ -425,6 +415,18 @@ function HomeScreen({ navigation }) {
                 </Text>
               </TouchableOpacity>
             </View>
+            <SponsorBanner
+              channels={channelArray}
+              image_ids={image_ids}
+              navigation={navigation}
+              shuffle={true}
+              style={{marginHorizontal: 5}}
+              onGrab={onGrab}
+              onRelease={onRelease}
+              parentScrolling={isScrolling}
+              imageRatio={RATIOS.sponsors}
+            />
+            
           </View>
 
           {/*<DividerLine color="blue" style={{ marginVertical: 0 }} />*/}
