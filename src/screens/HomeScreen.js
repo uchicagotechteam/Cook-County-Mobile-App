@@ -269,7 +269,7 @@ function HomeScreen({ navigation }) {
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen')
 
   // Set the height of the header when expanded and when collapsed
-  const HEADER_EXP_HEIGHT = 180;
+  const HEADER_EXP_HEIGHT = 230;
   const HEADER_COL_HEIGHT = 50;
 
   // Compute the height of the top section - the big logo, sponsor bar, and featured videos
