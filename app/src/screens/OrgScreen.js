@@ -129,11 +129,6 @@ const getChannel = useCallback(() =>{
         }}>
           <LogoImage source={channel.channelImage} width={SCREEN_WIDTH * 1/2} clickable={false} />
         
-          <AdjustableText
-            fontSize={28}
-            text=<Text>{channel.channelTitle}</Text>
-            style={styles.org_title}
-          />
         </Animated.View>
 
       </Animated.View>

@@ -3,7 +3,7 @@ node_modules/
 
 .idea/*
 .expo/*
-
+app/.expo/*
 
 
 *.zip
