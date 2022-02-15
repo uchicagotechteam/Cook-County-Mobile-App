@@ -1,0 +1,1 @@
+Get AWS credentials from Joe Gaydos and add to the ".env" file.  Do not push this file with credentials to GITHUB!  (.env file is ignored in .gitignore)
