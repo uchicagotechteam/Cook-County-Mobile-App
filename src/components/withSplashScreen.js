@@ -62,6 +62,7 @@ function LoadingMessage() {
 	const logo = width < height
 		? require("../assets/images/PR_logo_vertical.png")
 		: require("../assets/images/PR_logo_horizontal.png");
+	const cookCountyLogo = require("../assets/images/Cook_County_Logo.png");
 
 	return (
 		// https://stackoverflow.com/questions/47203728/center-a-text-in-the-screen-with-react-native
@@ -74,6 +75,11 @@ function LoadingMessage() {
 				source={logo}
 				style={styles.splashLogo}
 				resizeMode={"contain"}
+			/>
+			<Image
+				source={cookCountyLogo}
+				style={styles.splashLogo}
+				resizeMode={"contain"}			
 			/>
 		</FadeInOutView>
 	)

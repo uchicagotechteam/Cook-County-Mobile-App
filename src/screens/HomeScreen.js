@@ -269,7 +269,7 @@ function HomeScreen({ navigation }) {
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen')
 
   // Set the height of the header when expanded and when collapsed
-  const HEADER_EXP_HEIGHT = 180;
+  const HEADER_EXP_HEIGHT = 230;
   const HEADER_COL_HEIGHT = 50;
 
   // Compute the height of the top section - the big logo, sponsor bar, and featured videos
@@ -399,7 +399,8 @@ function HomeScreen({ navigation }) {
 
           {/* Banner showing the logo for each sponsor */}
           <View>
-            <Text style={[styles.subheader_text, {textAlign: 'center'}]}>Partners:</Text>
+          <Text style={[styles.subheader_text, {textAlign: 'left', fontSize: 20, fontWeight: 'bold', marginLeft: 25}]}>Partners</Text>
+          
             <SponsorBanner
               channels={channelArray}
               image_ids={image_ids}
@@ -434,21 +435,15 @@ function HomeScreen({ navigation }) {
 
         </View>
 
-        <DividerLine color="blue" style={{ marginVertical: 0 }} />
-
         {/* The search bar for the channels */}
         <SearchBar
-          containerStyle={{ margin: 15, borderRadius: 25 }}
+          containerStyle={{ margin: 15, borderRadius: 50, marginTop: 230, borderColor: PALETTE.black.light, borderWidth: 1 }}
           placeholder="Search title or date"
           onChangeText={updateSearch}
           value={searchText}
           platform={"android"}
           round={true}
         />
-
-        <DividerLine color="blue" style={{ marginTop: 0 }} />
-
-        
         
         <View style={{ paddingLeft: 25 }}>
         
