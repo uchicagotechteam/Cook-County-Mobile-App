@@ -1,0 +1,6 @@
+{
+  "name": "reactApp",
+  "android": {
+    "package": "com.projectRainbow"
+  }
+}
